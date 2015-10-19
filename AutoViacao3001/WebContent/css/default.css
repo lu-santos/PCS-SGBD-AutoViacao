@@ -1,0 +1,239 @@
+@CHARSET "ISO-8859-1";
+
+@font-face {
+	font-family: openSans;
+	src: url('../fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+	font-family: openSans;
+	src: url('../fonts/OpenSans-Bold.ttf');
+	font-weight: bold;
+}
+
+html, body {
+	font: 100%/1.4 openSans, Arial, Helvetica, sans-serif;
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+}
+
+header {
+	background-color: #175c8d;
+	height: 70px;
+	width: 100%;
+	color: #fff;
+	border-bottom: 5px solid #c3dbef;
+}
+
+header h1 {
+	margin-top: 0px;
+	float: left;
+	font-weight: lighter;
+}
+
+header a { 
+	color: #fff;
+}
+
+header a:hover {
+	text-decoration: none;
+}
+
+#menu-principal, #menu-login {
+	float: right;
+	margin: 10px;
+}
+
+#menu-principal ul, #menu-login ul{
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#menu-principal ul li, #menu-login ul li{
+	display: inline;	
+}
+
+#menu-principal ul li a{
+	padding: 5px 10px;
+	display: inline-block;
+	text-transform: uppercase;	
+}
+
+#menu-principal ul li a:hover{
+	background-color: #fff;
+	color: #333;	
+}
+
+#menu-login ul li a{
+	padding: 5px 10px;
+	display: inline-block;
+	text-transform: uppercase;	
+	background-color: #fff;
+	color: #333;	
+	opacity: 0.9;
+    filter: alpha(opacity=90); /* For IE8 and earlier */
+}
+
+#menu-login ul li a:hover{
+	opacity: 1.0;
+    filter: alpha(opacity=100); /* For IE8 and earlier */
+}
+
+#container-header {
+	width: 1024px;
+	margin: 0px auto;
+	padding: 10px 10px;
+}
+
+#global-index {
+	width: 100%;
+	margin: 0px;
+	background: -webkit-linear-gradient(#c3dbef, #dbe9f5, #FFF); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#c3dbef, #dbe9f5, #FFF); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#c3dbef, #dbe9f5, #FFF); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#c3dbef, #dbe9f5, #FFF); /* Standard syntax */
+}
+
+#global {
+	width: 100%;
+	margin: 0px;
+	margin-top: 50px;
+}
+
+.conteudo {
+	width: 1024px;
+	margin: 0px auto;
+	padding: 0 10px;
+}
+
+#item {
+	margin: -20px auto;
+	width: 70%;
+}
+
+#item div{
+	width: 250px;
+	text-align: center;
+}
+
+#item div:first-child {
+	float: left;
+}
+
+#item div:nth-child(2) {
+	float: right;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+footer {
+	margin: 0 auto;
+	background-color: #0083FD;
+	color: #fff;
+	padding: 10px 0px;
+	margin-top: 50px;
+}
+
+form {
+	border: 5px solid #f1f1f1;
+	background-color: #fff;
+	padding: 20px;
+	margin: 0 auto;
+}
+
+form h2 {
+	margin: -20px -20px 20px;
+    padding: 15px 20px 20px;
+    background-color: #f1f1f1;
+}
+
+h2 {
+	margin-top: -2px;
+	color: #5b5b5b;
+}
+
+.clearfix:after, .clearfix:before {
+	clear: both;
+	content: "";
+	display: table;
+}
+
+select {
+	height: 35px; 
+	font-size: 100%; 
+	width: 100%; 
+	padding: 5px; 
+	margin-top: 10px;
+}
+
+input[type="text"], input[type="number"], input[type="password"], input[type="date"] {
+	padding: 3px 3px 3px 1px;
+	margin: 10px 0;
+	height: 25px;
+	width: 100%;
+	font-size: 100%;
+}
+
+input[type="submit"], input[type="button"] {
+	padding: 2px 6px;
+	width: 50%;
+	height: 35px;
+	margin-top: 15px;
+	border: 0;
+	font-size: 100%;
+}
+
+.button-green {
+	background-color: #89c754;
+	color: #fff;
+	box-shadow: 0px 3px 0px #6d9f43;
+}
+
+table {
+	text-align: center;
+    margin: 0 auto;
+    word-break: break-word;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+th, td {
+	padding: 7px;
+}
+
+/* --- página de login --- */
+
+#login {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	padding: 20px;
+	width: 300px;
+	margin-top: -100px;
+	margin-left: -150px; 
+}
+
+/* --- página de cadastro de cliente --- */
+
+.caixa-padrao {
+	display: inline-block; 
+	float: left; 
+	margin-top: 15px;
+	margin-left: 30px;
+}
+
+/* --- página home --- */
+
+.icones-home {
+	width: 33%;
+    float: left;
+    text-align: center;
+}
