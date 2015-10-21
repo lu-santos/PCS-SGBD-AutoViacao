@@ -1,17 +1,15 @@
 package actions;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import modelo.dao.ConexaoPostgres;
-import modelo.dao.FuncionarioDAO;
 import modelo.dao.OnibusDAO;
-import modelo.entidade.Funcionario;
+import modelo.dao.PoltronaDAO;
 import modelo.entidade.Onibus;
+import modelo.entidade.Poltrona;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -23,15 +21,27 @@ public class OnibusAction extends ActionSupport{
 	private List<Onibus> listaDeOnibus;
 	private ConexaoPostgres conexao = new ConexaoPostgres();
 	private OnibusDAO oDAO = new OnibusDAO(conexao);
+	private PoltronaDAO pDAO = new PoltronaDAO(conexao);
 	private String mensagem;
 	
 	public String adicionar() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
 		try {
-			if (oDAO.incluir(this.onibus) == true) {
+			Integer idOnibus; 
+			if ((idOnibus = oDAO.incluirComRetornoDeId(this.onibus)) != null) {
 				mensagem = "Ônibus cadastrado com sucesso.";	
 			}
+			
+			// criação das poltronas do ônibus:
+			for (int numero=1; numero <= onibus.getCapacidade(); numero++){
+				
+				Poltrona poltrona = new Poltrona();
+				poltrona.setIdOnibus(idOnibus);
+				poltrona.setNumero(numero);
+				pDAO.incluir(poltrona);
+			}
+			
 		} catch (Exception e) {
 			mensagem = e.getMessage();
 			return OnibusAction.INPUT;

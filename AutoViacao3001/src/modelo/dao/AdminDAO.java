@@ -91,19 +91,19 @@ public class AdminDAO extends BaseCrudDAO<Admin> {
 	public boolean existe(Admin entidade) throws Exception {
         conectar = conexao.abrirConexao();
         String query = getQueryDeExiste(entidade);
-        int exiteNoBanco = 0;
+        int existeNoBanco = 0;
         try{
             PreparedStatement pst = conectar.prepareStatement(query);
             ResultSet registro = pst.executeQuery();
             while(registro.next()){
-            	exiteNoBanco = registro.getRow();
+            	existeNoBanco = registro.getRow();
             }
         }catch(SQLException e){
             System.out.println("Erro ao verificar se existe a tupla no banco: " + e.getMessage());
         }finally{
             conexao.fecharConexao();
         }        
-        return exiteNoBanco != 0;
+        return existeNoBanco != 0;
     }
 
 	

@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import modelo.entidade.Admin;
 import modelo.entidade.Onibus;
-import modelo.entidade.Passagem;
 import modelo.entidade.Viagem;
 
 public class OnibusDAO extends BaseCrudDAO<Onibus> {
@@ -23,6 +21,22 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 	public OnibusDAO(ConexaoDAO conexao) {
 		super(conexao);
 	}
+	
+	
+	public Integer incluirComRetornoDeId(Onibus onibus) throws Exception {
+		Integer idOnibus = null;
+        conectar = conexao.abrirConexao();
+        String query = getQueryDeInclusao();
+        PreparedStatement pst = conectar.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+        incluirDadosNoBanco(pst, onibus);
+        pst.executeUpdate();
+        ResultSet rs = pst.getGeneratedKeys();
+        while (rs.next()){
+        	idOnibus = rs.getInt("id_onibus");
+        }        
+        conexao.fecharConexao();
+        return idOnibus;
+    }
 
 	@Override
 	public String getQueryDeExiste(Onibus entidade) {
@@ -42,7 +56,7 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 
 	@Override
 	public String getQueryDeRemocao(Onibus onibus) {
-		return "DELETE FROM poltrona WHERE id_onibus = " + onibus.getIdOnibus() + "; DELETE FROM " + tabelaOnibus + " WHERE id_onibus = " + onibus.getIdOnibus();
+		return "DELETE FROM onibus WHERE id_onibus = " + onibus.getIdOnibus() + "; DELETE FROM " + tabelaOnibus + " WHERE id_onibus = " + onibus.getIdOnibus();
 	}
 
 	@Override
