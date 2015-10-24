@@ -170,6 +170,29 @@
 			<result name="input">/admin/EditarOnibus.jsp</result>
 		</action>
 		
+		<action name="ObterListas" class="actions.MetodosAuxiliares" method="obterListasParaFormularioCadastroViagem">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/CadastroViagem.jsp</result>
+		</action>
+		<action name="AdicionarViagem" class="actions.ViagemAction" method="adicionar">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/GerenciarViagens.jsp</result>
+			<result name="input">/admin/GerenciarViagens.jsp</result>
+		</action>
+		<action name="ListarViagens" class="actions.ViagemAction" method="listar">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/ListarViagens.jsp</result>
+		</action>
+		
 				
 	</package>
 </struts>

@@ -72,7 +72,7 @@ public class FuncionarioAction extends ActionSupport{
 	
 	public String listarMotorista() {
 		try {
-			String query = "SELECT cpf, nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular, cargo, salario, data_contratacao FROM pessoa JOIN funcionario ON cpf = cpf_funcionario WHERE cargo = 'motorista'";
+			String query = "SELECT cpf, nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular, cargo, salario, data_contratacao FROM pessoa JOIN funcionario ON cpf = cpf_funcionario WHERE cargo = 'motorista'  OR cargo = 'MOTORISTA'";
 			this.funcionarios = fDAO.Consulta(query);
 		} catch (Exception e) {
 			mensagem = e.getMessage();

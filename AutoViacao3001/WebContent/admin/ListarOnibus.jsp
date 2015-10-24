@@ -1,5 +1,5 @@
 <div id="global" style="height: 100%">
-	<div class="conteudo clearfix">
+	<div>
 		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
 			<s:property value="mensagem"/>
 		</p>

@@ -3,27 +3,25 @@ package modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.text.DateFormat;
+import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import modelo.entidade.Onibus;
 import modelo.entidade.Passagem;
 import modelo.entidade.Viagem;
+import util.DataUtil;
 
 public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	
+	private final String tabelaViagem = "viagem";
+	private final String nomeDasColunasViagem = "data_partida, data_chegada, distancia, "
+			+ "id_local_partida, id_local_destino, id_onibus, cpf_motorista";
+	
 	public ViagemDAO() {}
-	
-	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	private static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
-	
+
 	public ViagemDAO(ConexaoDAO conexao) {
 		super(conexao);
 	}
@@ -36,8 +34,7 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 
 	@Override
 	public String getQueryDeInclusao() {
-		// TODO Auto-generated method stub
-		return null;
+		return "INSERT INTO " + tabelaViagem + " (" + nomeDasColunasViagem + ") VALUES(?, ?, ?, ?, ?, ?, ?)";
 	}
 
 	@Override
@@ -54,8 +51,7 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 
 	@Override
 	public String getQueryDeListar() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SELECT * FROM " + tabelaViagem;
 	}
 
 	@Override
@@ -70,17 +66,19 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
         try {
         	viagem = new Viagem();
         	viagem.setIdViagem(registro.getInt("id_viagem"));
-        	viagem.setDataPartida(DATE_FORMAT.format(registro.getDate(("data_partida"))));
-        	viagem.setHoraPartida(TIME_FORMAT.format(registro.getTime("hora_partida")));
-        	viagem.setDataChegada(DATE_FORMAT.format(registro.getString("data_chegada")));
-        	viagem.setHoraChegada(TIME_FORMAT.format(registro.getString("hora_chegada")));
+        	try {
+				viagem.setDataHoraPartida(DataUtil.converterDataComHoraParaString(registro.getTimestamp("data_partida")));
+				viagem.setDataHoraChegada(DataUtil.converterDataComHoraParaString(registro.getTimestamp("data_chegada")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
         	viagem.setDistancia(registro.getDouble("distancia"));
         	viagem.setIdLocalPartida(registro.getInt("id_local_partida"));
         	viagem.setIdLocalDestino(registro.getInt("id_local_destino"));
-        	viagem.setIdOnibus(registro.getInt("onibus"));
+        	viagem.setIdOnibus(registro.getInt("id_onibus"));
         	viagem.setCpfMotorista(registro.getString("cpf_motorista"));
         	return viagem;
-        } catch (SQLException | ParseException ex) {
+        } catch (SQLException ex) {
         	System.out.println("Erro ao pegar entidade no banco - " + ex);
             Logger.getLogger(ViagemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -88,8 +86,18 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	}
 
 	@Override
-	public void incluirDadosNoBanco(PreparedStatement pst, Viagem entidade) {
-		// TODO Auto-generated method stub
+	public void incluirDadosNoBanco(PreparedStatement pst, Viagem viagem) {
+		try {
+			pst.setTimestamp(1, new Timestamp(viagem.getDataHoraPartida().getTime()));
+			pst.setTimestamp(2, new Timestamp(viagem.getDataHoraChegada().getTime()));
+			pst.setDouble(3, viagem.getDistancia());
+			pst.setInt(4, viagem.getIdLocalPartida());
+			pst.setInt(5, viagem.getIdLocalDestino());
+			pst.setInt(6, viagem.getIdOnibus());
+			pst.setString(7, viagem.getCpfMotorista());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -111,5 +119,42 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 			e.printStackTrace();
 		}
 		  return entidade;
+	}
+	
+	public boolean existeConflitoDeOnibus(Viagem viagem) throws Exception{
+		String query = "select v.id_viagem from viagem v, onibus o where v.data_partida < '" + viagem.getDataHoraPartidaString() + "' and "
+				+ "v.data_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + " union "
+						+ "select v.id_viagem from viagem v, onibus o where v.data_partida = '" + viagem.getDataHoraPartidaString() + 
+						"' and v.id_onibus = " + viagem.getIdOnibus() + " union select v.id_viagem from viagem v, onibus o where "
+								+ "v.data_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_partida < '"
+										+ viagem.getDataHoraChegadaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + ";";
+		
+		return existeAlgumResultado(query);		
+	}
+	
+	public boolean existeConflitoDeMotorista(Viagem viagem) throws Exception{
+		String query = "select v.id_viagem from viagem v, pessoa p, funcionario f where v.data_partida < '" + viagem.getDataHoraPartidaString()
+				+ "' and v.data_chegada > '" + viagem.getDataHoraPartidaString() + "' and p.cpf = '" + viagem.getCpfMotorista() + 
+				"' and p.cpf = f.cpf_funcionario and (f.cargo = 'motorista' or f.cargo = 'MOTORISTA' or f.cargo='Motorista') union "
+				+ "select v.id_viagem from viagem v, pessoa p, funcionario f where v.data_partida = '" + viagem.getDataHoraPartidaString() + 
+				"' and p.cpf = '" + viagem.getCpfMotorista() + "' and p.cpf = f.cpf_funcionario and (f.cargo = 'motorista' or "
+						+ "f.cargo = 'MOTORISTA' or f.cargo='Motorista') union select v.id_viagem from viagem v, pessoa p, funcionario f "
+						+ "where v.data_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_partida < '" + viagem.getDataHoraChegadaString() + 
+						"' and p.cpf = '" + viagem.getCpfMotorista() + "' and p.cpf = f.cpf_funcionario and (f.cargo = 'motorista' or f.cargo = 'MOTORISTA' or f.cargo='Motorista')";
+		
+        return existeAlgumResultado(query);	
+	}
+	
+	private boolean existeAlgumResultado(String query) throws Exception, SQLException {
+		conectar = conexao.abrirConexao();
+
+		PreparedStatement pst = conectar.prepareStatement(query);
+		ResultSet registro = pst.executeQuery();
+
+		if (registro.next()) {
+			return true;
+		}
+
+		return false;
 	}
 }

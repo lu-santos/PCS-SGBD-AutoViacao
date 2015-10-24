@@ -26,7 +26,7 @@ public abstract class BaseCrudDAO<T> {
         incluirDadosNoBanco(pst, entidade);
         inclusaoRealizada = pst.executeUpdate();
         conexao.fecharConexao();
-        System.out.println("inclusão de moto: " + inclusaoRealizada);
+        System.out.println("inclusão: " + inclusaoRealizada);
         return inclusaoRealizada != 0;
     }
     

@@ -1,17 +1,17 @@
 package modelo.entidade;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import util.DataUtil;
+
 public class Viagem {
 	private Integer idViagem;
-	private Date dataPartida;
-	private String horaPartida;
-	private Date dataChegada;
-	private String horaChegada;
+	private Date dataHoraPartida;
+	private String dataHoraPartidaString;
+	private Date dataHoraChegada;
+	private String dataHoraChegadaString;
 	private Double distancia;
 	private Integer idLocalPartida;
 	private Integer idLocalDestino;
@@ -19,18 +19,27 @@ public class Viagem {
 	private String cpfMotorista;
 	private List<Passagem> passagens;
 	
-	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+//	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+//	private static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm:ss");
 	
 	public Viagem() {}
 	
-	public Viagem(Integer idViagem, Date dataPartida, String horaPartida, Date dataChegada, 
-			String horaChegada, Double distancia, Integer idLocalPartida, Integer idLocalDestino,
-			Integer idOnibus, String cpfMotorista){
+	public Viagem(Integer idViagem, Date dataHoraPartida, Date dataHoraChegada, Double distancia,
+			Integer idLocalPartida, Integer idLocalDestino, Integer idOnibus, String cpfMotorista){
 		this.idViagem = idViagem;
-		this.dataPartida = dataPartida;
-		this.horaPartida = horaPartida;
-		this.dataChegada = dataChegada;
-		this.horaChegada = horaChegada;
+		this.dataHoraPartida = dataHoraPartida;
+		this.dataHoraPartida = dataHoraChegada;
+		this.distancia = distancia;
+		this.idLocalPartida = idLocalPartida;
+		this.idLocalDestino = idLocalDestino;
+		this.idOnibus = idOnibus;
+		this.cpfMotorista = cpfMotorista;
+	}
+	
+	public Viagem(Date dataHoraPartida, Date dataHoraChegada, Double distancia,
+			Integer idLocalPartida, Integer idLocalDestino, Integer idOnibus, String cpfMotorista){
+		this.dataHoraPartida = dataHoraPartida;
+		this.dataHoraPartida = dataHoraChegada;
 		this.distancia = distancia;
 		this.idLocalPartida = idLocalPartida;
 		this.idLocalDestino = idLocalDestino;
@@ -46,38 +55,22 @@ public class Viagem {
 		this.idViagem = idViagem;
 	}
 
-	public String getDataPartida() {
-		return DATETIME_FORMAT.format(dataPartida);
+	public Date getDataHoraPartida() {
+		return dataHoraPartida;
 	}
 
-	public void setDataPartida(String dataPartida) throws ParseException {
-		Date dataFormatada = DATETIME_FORMAT.parse(dataPartida);
-		this.dataPartida = dataFormatada;
+	public void setDataHoraPartida(String dataHoraPartida) throws ParseException {
+		dataHoraPartidaString = dataHoraPartida;
+		this.dataHoraPartida = DataUtil.converterStringParaDataComHora(dataHoraPartida);
 	}
 
-	public String getHoraParttida() {
-		return horaPartida;
+	public Date getDataHoraChegada() {
+		return dataHoraChegada;
 	}
 
-	public void setHoraPartida(String horaPartida) {
-		this.horaPartida = horaPartida;
-	}
-
-	public String getDataChegada() {
-		return DATETIME_FORMAT.format(dataChegada);
-	}
-
-	public void setDataChegada(String dataChegada) throws ParseException {
-		Date dataFormatada = DATETIME_FORMAT.parse(dataChegada);
-		this.dataChegada = dataFormatada;
-	}
-
-	public String getHoraChegada() {
-		return horaChegada;
-	}
-
-	public void setHoraChegada(String horaChegada) {
-		this.horaChegada = horaChegada;
+	public void setDataHoraChegada(String dataHoraChegada) throws ParseException {
+		dataHoraChegadaString = dataHoraChegada;
+		this.dataHoraChegada = DataUtil.converterStringParaDataComHora(dataHoraChegada);
 	}
 
 	public Double getDistancia() {
@@ -127,5 +120,16 @@ public class Viagem {
 	public void setPassagens(List<Passagem> passagens) {
 		this.passagens = passagens;
 	}
+
+	public String getDataHoraPartidaString() {
+		return dataHoraPartidaString;
+	}
+
+	public String getDataHoraChegadaString() {
+		return dataHoraChegadaString;
+	}
 	
+
 }
+
+	

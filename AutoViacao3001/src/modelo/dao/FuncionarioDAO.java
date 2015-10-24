@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,6 +114,11 @@ public class FuncionarioDAO extends BaseCrudDAO<Funcionario> {
 			e.printStackTrace();
 		}
 		  return entidade;
+	}
+	
+	public List<Funcionario> listarMotoristas() throws Exception{
+		String query = "SELECT cpf, nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular, cargo, salario, data_contratacao FROM pessoa JOIN funcionario ON cpf = cpf_funcionario WHERE cargo = 'motorista' OR cargo = 'MOTORISTA'";
+		return Consulta(query);
 	}
 
 }
