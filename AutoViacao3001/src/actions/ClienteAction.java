@@ -2,17 +2,16 @@ package actions;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts2.ServletActionContext;
-
 import modelo.dao.ClienteDAO;
 import modelo.dao.ConexaoPostgres;
 import modelo.entidade.Cliente;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -36,13 +35,13 @@ public class ClienteAction extends ActionSupport{
 			}
 		} catch (Exception e) {
 			if (e.getMessage().contains("duplicate key value violates unique constraint"))
-				mensagem = "CPF já cadastrado. Preencha com outro cpf.";
+				mensagem = "CPF já cadastrado. Preencha com outro CPF.";
 			else
 				mensagem = e.getMessage();
 			return ClienteAction.INPUT;
 		}
 		this.cliente = new Cliente();
-		if(session.getAttribute("papel").equals("admin"))
+		if(session.getAttribute("papel") != null && session.getAttribute("papel").equals("admin"))
 			return "sucessoAdmin";
 		return ClienteAction.SUCCESS ;
 	}
@@ -104,7 +103,7 @@ public class ClienteAction extends ActionSupport{
 	}
 
 	public List<String> getEstados() {
-		return MetodosAuxiliares.estadosBrasileiro();
+		return MetodosAuxiliares.estadosBrasileiros();
 	}
 	
 	public boolean camposEmBranco() {

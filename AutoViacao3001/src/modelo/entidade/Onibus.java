@@ -9,17 +9,21 @@ public class Onibus {
 	private String fabricante;
 	private Integer ano;
 	private Integer capacidade;
+	private String tipoLeito;
 	private boolean arCondicionado;
 	private boolean banheiro;
 	private boolean frigobar;
 	private boolean dvd;
-//	private List<Poltrona> poltronas;
+	// private List<Poltrona> poltronas;
 	private List<Viagem> viagens;
-	
-	public Onibus() {}
-	
-	public Onibus(Integer idOnibus, String placa, String modelo, String fabricante, Integer ano, 
-			Integer capacidade, boolean ar_condicionado, boolean banheiro, boolean frigobar, boolean dvd) {
+
+	public Onibus() {
+	}
+
+	public Onibus(Integer idOnibus, String placa, String modelo,
+			String fabricante, Integer ano, Integer capacidade,
+			boolean ar_condicionado, boolean banheiro, boolean frigobar,
+			boolean dvd) {
 		this.idOnibus = idOnibus;
 		this.placa = placa;
 		this.modelo = modelo;
@@ -80,6 +84,14 @@ public class Onibus {
 		this.capacidade = capacidade;
 	}
 
+	public String getTipoLeito() {
+		return tipoLeito;
+	}
+
+	public void setTipoLeito(String tipoLeito) {
+		this.tipoLeito = tipoLeito;
+	}
+
 	public boolean isArCondicionado() {
 		return arCondicionado;
 	}
@@ -119,5 +131,5 @@ public class Onibus {
 	public void setViagens(List<Viagem> viagens) {
 		this.viagens = viagens;
 	}
-	
+
 }

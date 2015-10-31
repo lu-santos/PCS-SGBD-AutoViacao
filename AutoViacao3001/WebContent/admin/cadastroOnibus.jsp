@@ -21,9 +21,18 @@
 				<label>Ano*</label>
 				<input type="number" required name="onibus.ano">
             </div>
-			<div class="caixa-padrao" style="width: 13.3%; float: none">
+			<div class="caixa-padrao" style="width: 13.3%">
 				<label>Capacidade*</label><br>
 				<input type="number" required name="onibus.capacidade"><br>
+            </div>
+            <div class="caixa-padrao" style="width: 20%; float: none">
+				<label>Tipo*</label><br>
+				<select name="onibus.tipoLeito">
+					<option value="LEITO">LEITO</option>
+					<option value="SEMI-LEITO">SEMI-LEITO</option>
+					<option value="EXECUTIVO">EXECUTIVO</option>
+					<option value="CONVENCIONAL">CONVENCIONAL</option>
+				</select>
             </div>
   			<div style="width: 21.6%; float: none; display: block; margin-left: 0px; margin-top: 15px">
 				<label>O ônibus possui:</label><br><br>

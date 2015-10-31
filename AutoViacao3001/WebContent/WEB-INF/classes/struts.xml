@@ -85,44 +85,44 @@
 		</action>
 		
 		
-		<action name="AdicionarFuncionario" class="actions.FuncionarioAction" method="adicionar">
+		<action name="AdicionarMotorista" class="actions.MotoristaAction" method="adicionar">
 			<interceptor-ref name="defaultStack"/>
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarMotoristas.jsp</result>
-			<result name="input">/admin/cadastroFuncionario.jsp</result>
+			<result name="input">/admin/cadastroMotorista.jsp</result>
 		</action>
-		<action name="ListarMotoristas" class="actions.FuncionarioAction" method="listarMotorista">
+		<action name="ListarMotoristas" class="actions.MotoristaAction" method="listarMotorista">
 			<interceptor-ref name="defaultStack"/>
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/ListarMotoristas.jsp</result>
 		</action>
-		<action name="VisualizarFuncionario" class="actions.FuncionarioAction" method="visualizar">
+		<action name="VisualizarMotorista" class="actions.MotoristaAction" method="visualizar">
 			<interceptor-ref name="defaultStack"/>
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
-			<result name="success">/admin/VisualizarFuncionario.jsp</result>
+			<result name="success">/admin/VisualizarMotorista.jsp</result>
 		</action>
-		<action name="PrepararAlteracaoFuncionario" class="actions.FuncionarioAction" method="visualizar">
+		<action name="PrepararAlteracaoMotorista" class="actions.MotoristaAction" method="visualizar">
 			<interceptor-ref name="defaultStack"/>
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
-			<result name="success">/admin/EditarFuncionario.jsp</result>
+			<result name="success">/admin/EditarMotorista.jsp</result>
 		</action>
-		<action name="EditarFuncionario" class="actions.FuncionarioAction" method="editar">
+		<action name="EditarMotorista" class="actions.MotoristaAction" method="editar">
 			<interceptor-ref name="defaultStack"/>
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarMotoristas.jsp</result>
-			<result name="input">/admin/EditarFuncionario.jsp</result>
+			<result name="input">/admin/EditarMotorista.jsp</result>
 		</action>
-		<action name="ExcluirFuncionario" class="actions.FuncionarioAction" method="excluir">
+		<action name="ExcluirMotorista" class="actions.MotoristaAction" method="excluir">
 			<interceptor-ref name="defaultStack"/>
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>

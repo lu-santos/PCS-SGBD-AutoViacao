@@ -3,12 +3,10 @@ package modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import modelo.entidade.Passagem;
-import modelo.entidade.Viagem;
 
 public class PassagemDAO extends BaseCrudDAO<Passagem>{
 
@@ -60,7 +58,7 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
         try {
         	passagem = new Passagem();
         	passagem.setIdPassagem(registro.getInt("id_passagem"));
-        	passagem.setNumeroPoltrona(registro.getInt("numero_poltrona"));
+        	passagem.setIdPoltrona(registro.getInt("numero_poltrona"));
         	passagem.setPreco(registro.getDouble("preco"));
         	passagem.setIdViagem(registro.getInt("id_viagem"));
         	passagem.setCpfCliente(registro.getString("cpf_cliente"));

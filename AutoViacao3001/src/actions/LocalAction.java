@@ -3,8 +3,8 @@ package actions;
 import java.util.List;
 
 import modelo.dao.ConexaoPostgres;
-import modelo.dao.LocalDAO;
-import modelo.entidade.Local;
+import modelo.dao.LocaisDAO;
+import modelo.entidade.Locais;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -12,8 +12,8 @@ import com.opensymphony.xwork2.ActionSupport;
 public class LocalAction extends ActionSupport {
 	
 	private ConexaoPostgres conexao = new ConexaoPostgres();
-	private LocalDAO lDAO = new LocalDAO(conexao);
-	private List<Local> locais;
+	private LocaisDAO lDAO = new LocaisDAO(conexao);
+	private List<Locais> locais;
 	String mensagem;
 	
 	public String exibir(){
@@ -29,11 +29,11 @@ public class LocalAction extends ActionSupport {
 		return LocalAction.SUCCESS;
 	}
 
-	public List<Local> getLocais() {
+	public List<Locais> getLocais() {
 		return locais;
 	}
 
-	public void setLocais(List<Local> locais) {
+	public void setLocais(List<Locais> locais) {
 		this.locais = locais;
 	}
 	

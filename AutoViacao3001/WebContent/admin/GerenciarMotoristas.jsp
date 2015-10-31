@@ -6,7 +6,7 @@
 			</p>
 			<img src="${pageContext.request.contextPath}/images/icon_gerenciar_motorista.png">
 			<h2>Gerenciar Motoristas</h2>
-			<a href="${pageContext.request.contextPath}/admin/cadastroFuncionario.jsp">
+			<a href="${pageContext.request.contextPath}/admin/cadastroMotorista.jsp">
 				Cadastrar Motorista
 			</a><br>
 			<s:a action="ListarMotoristas">

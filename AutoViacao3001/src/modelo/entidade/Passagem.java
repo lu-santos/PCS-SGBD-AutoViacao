@@ -2,16 +2,16 @@ package modelo.entidade;
 
 public class Passagem {
 	private Integer idPassagem;
-	private Integer numeroPoltrona;
+	private Integer idPoltrona;
 	private Double preco;
 	private Integer idViagem;
 	private String cpfCliente;
 	
 	public Passagem() {}
 	
-	public Passagem(Integer idPassagem, Integer numeroPoltrona, Double preco, Integer idViagem, String cpfCliente) {
+	public Passagem(Integer idPassagem, Integer idPoltrona, Double preco, Integer idViagem, String cpfCliente) {
 		this.idPassagem = idPassagem;
-		this.numeroPoltrona = numeroPoltrona;
+		this.idPoltrona = idPoltrona;
 		this.preco = preco;
 		this.idViagem = idViagem;
 		this.cpfCliente = cpfCliente;
@@ -25,12 +25,12 @@ public class Passagem {
 		this.idPassagem = idPassagem;
 	}
 
-	public Integer getNumeroPoltrona() {
-		return numeroPoltrona;
+	public Integer getIdPoltrona() {
+		return idPoltrona;
 	}
 
-	public void setNumeroPoltrona(Integer numeroPoltrona) {
-		this.numeroPoltrona = numeroPoltrona;
+	public void setIdPoltrona(Integer idPoltrona) {
+		this.idPoltrona = idPoltrona;
 	}
 
 	public Double getPreco() {

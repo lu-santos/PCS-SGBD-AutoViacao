@@ -4,10 +4,10 @@
 			<s:property value="mensagem"/>
 		</p>
 		<h2 style="text-align: center">Gerenciar Motoristas - Lista de Motoristas Cadastrados</h2>
-		<c:if test="${not empty funcionarios}">
+		<c:if test="${not empty motoristas}">
 			<table>
 				<tr>
-					<th>Cpf</th>
+					<th>CPF</th>
 					<th>Nome</th>
 					<th>Data de Nascimento</th>
 					<th>Visualizar</th>
@@ -15,33 +15,33 @@
 					<th>Remover</th>
 					<th>Viagens Realizadas</th>
 				</tr>
-				<s:iterator value="funcionarios" status="status">
+				<s:iterator value="motoristas" status="status">
 					<tr style="background-color: ${status.even ? '#EEEEEE ':'#FFFFFF'}">
 						<td><s:property value="cpf"/></td>
 						<td><s:property value="nome"/></td>
 						<td><s:property value="dataDeNascimento"/></td>
 						<td>
-							<s:a action="VisualizarFuncionario">
+							<s:a action="VisualizarMotorista">
 								VISUALIZAR
-								<s:param name="funcionario.cpf" value="cpf"/>
+								<s:param name="motorista.cpf" value="cpf"/>
 							</s:a>
 						</td>
 						<td>
-							<s:a action="PrepararAlteracaoFuncionario">
+							<s:a action="PrepararAlteracaoMotorista">
 								ALTERAR
-								<s:param name="funcionario.cpf" value="cpf"/>
+								<s:param name="motorista.cpf" value="cpf"/>
 							</s:a>
 						</td>
 						<td>
-							<s:a action="ExcluirFuncionario">
+							<s:a action="ExcluirMotorista">
 								REMOVER
-								<s:param name="funcionario.cpf" value="cpf"/>
+								<s:param name="motorista.cpf" value="cpf"/>
 							</s:a>
 						</td>
 						<td>
 							<s:a action="HistoricoDeViagens">
 								VIAGENS
-								<s:param name="funcionario.cpf" value="cpf"/>
+								<s:param name="motorista.cpf" value="cpf"/>
 							</s:a>
 						</td>
 					</tr>
@@ -49,7 +49,7 @@
 			</table>
 		</c:if>
 	
-		<c:if test="${empty funcionarios}">
+		<c:if test="${empty motoristas}">
 			<p>Sem motoristas cadastrados.</p>
 		</c:if>
 	</div>

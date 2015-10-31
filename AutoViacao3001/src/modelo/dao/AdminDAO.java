@@ -13,7 +13,7 @@ public class AdminDAO extends BaseCrudDAO<Admin> {
 	private final String tabelaAdmin = "administrador";
 	private final String tabelaPessoa = "pessoa";
 	private final String nomeDasColunasPessoa = "cpf, nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular";
-	private final String nomeDasColunasAdmin = "cpf_administrador, senha";
+	private final String nomeDasColunasAdmin = "cpf_adm, senha";
 	
 	public AdminDAO(ConexaoDAO conexao) {
 		super(conexao);
@@ -21,7 +21,7 @@ public class AdminDAO extends BaseCrudDAO<Admin> {
 	}
 
 	public String getQueryDeExiste(Admin admin) {
-		return "SELECT DISTINCT * FROM " + tabelaAdmin + " WHERE cpf_administrador = '" + admin.getCpf() + "' AND senha = '" + admin.getSenha() + "'";
+		return "SELECT DISTINCT * FROM " + tabelaAdmin + " WHERE cpf_adm = '" + admin.getCpf() + "' AND senha = '" + admin.getSenha() + "'";
 	}
 
 	@Override

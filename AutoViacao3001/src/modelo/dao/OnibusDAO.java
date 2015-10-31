@@ -14,7 +14,7 @@ import modelo.entidade.Viagem;
 public class OnibusDAO extends BaseCrudDAO<Onibus> {
 
 	private final String tabelaOnibus = "onibus";
-	private final String nomeDasColunasOnibus = "placa, modelo, fabricante, ano, capacidade, ar_condicionado, banheiro, frigobar, dvd";
+	private final String nomeDasColunasOnibus = "placa, modelo, fabricante, ano, capacidade, tipo_leito, ar_condicionado, banheiro, frigobar, dvd";
 	private final String tabelaViagem = "viagem";
 	private final String tabelaPassagem = "passagem";
 	
@@ -32,7 +32,7 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
         pst.executeUpdate();
         ResultSet rs = pst.getGeneratedKeys();
         while (rs.next()){
-        	idOnibus = rs.getInt("id_onibus");
+        	idOnibus = rs.getInt("id");
         }        
         conexao.fecharConexao();
         return idOnibus;
@@ -46,17 +46,17 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 
 	@Override
 	public String getQueryDeInclusao() {
-		return "INSERT INTO " + tabelaOnibus + " (" + nomeDasColunasOnibus + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		return "INSERT INTO " + tabelaOnibus + " (" + nomeDasColunasOnibus + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 
 	@Override
 	public String getQueryDeAlteracao(Onibus onibus) {
-		return "UPDATE " + tabelaOnibus + " SET placa = ?, modelo = ?, fabricante = ?, ano = ?, capacidade = ?, ar_condicionado = ?, banheiro = ?, frigobar = ? WHERE id_onibus = " + onibus.getIdOnibus();
+		return "UPDATE " + tabelaOnibus + " SET placa = ?, modelo = ?, fabricante = ?, ano = ?, capacidade = ?, tipo_leito = ?, ar_condicionado = ?, banheiro = ?, frigobar = ? WHERE id_onibus = " + onibus.getIdOnibus();
 	}
 
 	@Override
 	public String getQueryDeRemocao(Onibus onibus) {
-		return "DELETE FROM onibus WHERE id_onibus = " + onibus.getIdOnibus() + "; DELETE FROM " + tabelaOnibus + " WHERE id_onibus = " + onibus.getIdOnibus();
+		return "DELETE FROM onibus WHERE id = " + onibus.getIdOnibus() + "; DELETE FROM " + tabelaOnibus + " WHERE id_onibus = " + onibus.getIdOnibus();
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 
 	@Override
 	public String getQueryDeBusca(Object identificador) {
-		return "SELECT * FROM " + tabelaOnibus + " LEFT JOIN " + tabelaViagem + " USING (id_onibus) LEFT JOIN " + tabelaPassagem + " USING (id_viagem) WHERE id_onibus = " + identificador;
+		return "SELECT * FROM " + tabelaOnibus + " LEFT JOIN " + tabelaViagem + " USING (id) LEFT JOIN " + tabelaPassagem + " USING (id_viagem) WHERE id = " + identificador;
 	}
 	
 	@Override
@@ -75,12 +75,12 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 			  List<Viagem> viagens = new ArrayList<>();
 			  Integer idOnibus = null;
 			  while(registro.next()){
-				  if(!idOnibus.equals(registro.getInt("id_onibus"))) {
+				  if(!idOnibus.equals(registro.getInt("id"))) {
 					  entidade = getEntidade(registro);
 				  }
 				  ViagemDAO viagemDAO = new ViagemDAO();
 				  viagens.add(viagemDAO.getEntidade(registro));
-				  idOnibus = registro.getInt("id_onibus");
+				  idOnibus = registro.getInt("id");
 			  }
 			  entidade.setViagens(viagens);
 		} catch (SQLException e) {
@@ -95,12 +95,13 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 		Onibus onibus;
         try {
         	onibus = new Onibus();
-        	onibus.setIdOnibus(registro.getInt("id_onibus"));
+        	onibus.setIdOnibus(registro.getInt("id"));
         	onibus.setPlaca(registro.getString("placa"));
         	onibus.setModelo(registro.getString("modelo"));
         	onibus.setFabricante(registro.getString("fabricante"));
         	onibus.setAno(registro.getInt("ano"));
         	onibus.setCapacidade(registro.getInt("capacidade"));
+        	onibus.setTipoLeito(registro.getString("tipo_leito"));
         	onibus.setArCondicionado(registro.getBoolean("ar_condicionado"));
         	onibus.setBanheiro(registro.getBoolean("banheiro"));
         	onibus.setFrigobar(registro.getBoolean("frigobar"));
@@ -122,10 +123,11 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 		    pst.setString(3, entidade.getFabricante());
 		    pst.setInt(4, entidade.getAno());
 		    pst.setInt(5, entidade.getCapacidade());
-		    pst.setBoolean(6, entidade.isArCondicionado());
-		    pst.setBoolean(7, entidade.isBanheiro());
-		    pst.setBoolean(8, entidade.isFrigobar());
-		    pst.setBoolean(9, entidade.isDvd());
+		    pst.setString(6, entidade.getTipoLeito());
+		    pst.setBoolean(7, entidade.isArCondicionado());
+		    pst.setBoolean(8, entidade.isBanheiro());
+		    pst.setBoolean(9, entidade.isFrigobar());
+		    pst.setBoolean(10, entidade.isDvd());
         } catch (SQLException ex) {
         	System.out.println("Erro ao incluir no banco - " + ex);
             Logger.getLogger(OnibusDAO.class.getName()).log(Level.SEVERE, null, ex);

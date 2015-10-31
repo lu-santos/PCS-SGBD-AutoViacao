@@ -17,8 +17,8 @@ import util.DataUtil;
 public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	
 	private final String tabelaViagem = "viagem";
-	private final String nomeDasColunasViagem = "data_partida, data_chegada, distancia, "
-			+ "id_local_partida, id_local_destino, id_onibus, cpf_motorista";
+	private final String nomeDasColunasViagem = "data_hora_partida, data_hora_chegada, id_onibus, cpf_motorista, "
+			+ "id_locais";
 	
 	public ViagemDAO() {}
 
@@ -34,7 +34,7 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 
 	@Override
 	public String getQueryDeInclusao() {
-		return "INSERT INTO " + tabelaViagem + " (" + nomeDasColunasViagem + ") VALUES(?, ?, ?, ?, ?, ?, ?)";
+		return "INSERT INTO " + tabelaViagem + " (" + nomeDasColunasViagem + ") VALUES(?, ?, ?, ?, ?)";
 	}
 
 	@Override
@@ -67,14 +67,12 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
         	viagem = new Viagem();
         	viagem.setIdViagem(registro.getInt("id_viagem"));
         	try {
-				viagem.setDataHoraPartida(DataUtil.converterDataComHoraParaString(registro.getTimestamp("data_partida")));
-				viagem.setDataHoraChegada(DataUtil.converterDataComHoraParaString(registro.getTimestamp("data_chegada")));
+				viagem.setDataHoraPartida(DataUtil.converterDataComHoraParaString(registro.getTimestamp("data_hora_partida")));
+				viagem.setDataHoraChegada(DataUtil.converterDataComHoraParaString(registro.getTimestamp("data_hora_chegada")));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-        	viagem.setDistancia(registro.getDouble("distancia"));
-        	viagem.setIdLocalPartida(registro.getInt("id_local_partida"));
-        	viagem.setIdLocalDestino(registro.getInt("id_local_destino"));
+        	viagem.setIdLocais(registro.getInt("id_locais"));
         	viagem.setIdOnibus(registro.getInt("id_onibus"));
         	viagem.setCpfMotorista(registro.getString("cpf_motorista"));
         	return viagem;
@@ -90,11 +88,9 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 		try {
 			pst.setTimestamp(1, new Timestamp(viagem.getDataHoraPartida().getTime()));
 			pst.setTimestamp(2, new Timestamp(viagem.getDataHoraChegada().getTime()));
-			pst.setDouble(3, viagem.getDistancia());
-			pst.setInt(4, viagem.getIdLocalPartida());
-			pst.setInt(5, viagem.getIdLocalDestino());
-			pst.setInt(6, viagem.getIdOnibus());
-			pst.setString(7, viagem.getCpfMotorista());
+			pst.setInt(3, viagem.getIdOnibus());
+			pst.setString(4, viagem.getCpfMotorista());
+			pst.setInt(5, viagem.getIdLocais());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -122,25 +118,24 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	}
 	
 	public boolean existeConflitoDeOnibus(Viagem viagem) throws Exception{
-		String query = "select v.id_viagem from viagem v, onibus o where v.data_partida < '" + viagem.getDataHoraPartidaString() + "' and "
-				+ "v.data_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + " union "
-						+ "select v.id_viagem from viagem v, onibus o where v.data_partida = '" + viagem.getDataHoraPartidaString() + 
+		String query = "select v.id_viagem from viagem v, onibus o where v.data_hora_partida < '" + viagem.getDataHoraPartidaString() + "' and "
+				+ "v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + " union "
+						+ "select v.id_viagem from viagem v, onibus o where v.data_hora_partida = '" + viagem.getDataHoraPartidaString() + 
 						"' and v.id_onibus = " + viagem.getIdOnibus() + " union select v.id_viagem from viagem v, onibus o where "
-								+ "v.data_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_partida < '"
+								+ "v.data_hora_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_hora_partida < '"
 										+ viagem.getDataHoraChegadaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + ";";
 		
 		return existeAlgumResultado(query);		
 	}
 	
 	public boolean existeConflitoDeMotorista(Viagem viagem) throws Exception{
-		String query = "select v.id_viagem from viagem v, pessoa p, funcionario f where v.data_partida < '" + viagem.getDataHoraPartidaString()
-				+ "' and v.data_chegada > '" + viagem.getDataHoraPartidaString() + "' and p.cpf = '" + viagem.getCpfMotorista() + 
-				"' and p.cpf = f.cpf_funcionario and (f.cargo = 'motorista' or f.cargo = 'MOTORISTA' or f.cargo='Motorista') union "
-				+ "select v.id_viagem from viagem v, pessoa p, funcionario f where v.data_partida = '" + viagem.getDataHoraPartidaString() + 
-				"' and p.cpf = '" + viagem.getCpfMotorista() + "' and p.cpf = f.cpf_funcionario and (f.cargo = 'motorista' or "
-						+ "f.cargo = 'MOTORISTA' or f.cargo='Motorista') union select v.id_viagem from viagem v, pessoa p, funcionario f "
-						+ "where v.data_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_partida < '" + viagem.getDataHoraChegadaString() + 
-						"' and p.cpf = '" + viagem.getCpfMotorista() + "' and p.cpf = f.cpf_funcionario and (f.cargo = 'motorista' or f.cargo = 'MOTORISTA' or f.cargo='Motorista')";
+		String query = "select v.id_viagem from viagem v, pessoa p, motorista m where v.data_hora_partida < '" + viagem.getDataHoraPartidaString()
+				+ "' and v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and p.cpf = '" + viagem.getCpfMotorista() + 
+				"' and p.cpf = m.cpf_motorista union "
+				+ "select v.id_viagem from viagem v, pessoa p, motorista m where v.data_hora_partida = '" + viagem.getDataHoraPartidaString() + 
+				"' and p.cpf = '" + viagem.getCpfMotorista() + "' and p.cpf = m.cpf_motorista union select v.id_viagem from viagem v, pessoa p, motorista m "
+						+ "where v.data_hora_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_hora_partida < '" + viagem.getDataHoraChegadaString() + 
+						"' and p.cpf = '" + viagem.getCpfMotorista() + "' and p.cpf = m.cpf_motorista";
 		
         return existeAlgumResultado(query);	
 	}

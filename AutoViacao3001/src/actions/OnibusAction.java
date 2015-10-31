@@ -2,16 +2,11 @@ package actions;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import modelo.dao.ConexaoPostgres;
 import modelo.dao.OnibusDAO;
 import modelo.dao.PoltronaDAO;
 import modelo.entidade.Onibus;
 import modelo.entidade.Poltrona;
-
-import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -25,8 +20,6 @@ public class OnibusAction extends ActionSupport{
 	private String mensagem;
 	
 	public String adicionar() {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		HttpSession session = request.getSession();
 		try {
 			Integer idOnibus; 
 			if ((idOnibus = oDAO.incluirComRetornoDeId(this.onibus)) != null) {
@@ -115,5 +108,9 @@ public class OnibusAction extends ActionSupport{
 
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
+	}
+	
+	public List<String> getTiposLeito(){
+		return MetodosAuxiliares.tiposLeitoOnibus();
 	}
 }

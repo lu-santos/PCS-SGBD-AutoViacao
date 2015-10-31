@@ -11,7 +11,7 @@ import modelo.entidade.Poltrona;
 public class PoltronaDAO extends BaseCrudDAO<Poltrona> {
 	
 	private final String tabelaPoltrona = "poltrona";
-	private final String nomeDasColunasPoltrona = "id_onibus, numero_poltrona";
+	private final String nomeDasColunasPoltrona = "id_onibus, numero";
 	
 	public PoltronaDAO(ConexaoDAO conexao) {
 		super(conexao);
@@ -19,7 +19,7 @@ public class PoltronaDAO extends BaseCrudDAO<Poltrona> {
 
 	@Override
 	public String getQueryDeExiste(Poltrona poltrona) {
-		return "SELECT DISTINCT * FROM " + tabelaPoltrona + " WHERE id_onibus = '" + poltrona.getIdOnibus() + "' AND numero_poltrona = '" + poltrona.getNumero() + "'";
+		return "SELECT DISTINCT * FROM " + tabelaPoltrona + " WHERE id_onibus = '" + poltrona.getIdOnibus() + "' AND numero = '" + poltrona.getNumero() + "'";
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class PoltronaDAO extends BaseCrudDAO<Poltrona> {
         try {
         	poltrona = new Poltrona();
         	poltrona.setIdOnibus(registro.getInt("id_onibus"));
-        	poltrona.setNumero(registro.getInt("numero_poltrona"));
+        	poltrona.setNumero(registro.getInt("numero"));
         	return poltrona;
         } catch (SQLException ex) {
         	System.out.println("Erro ao pegar entidade no banco - " + ex);
