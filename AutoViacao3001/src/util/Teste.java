@@ -14,6 +14,8 @@ public class Teste {
 			
 			System.out.println(DataUtil.converterDataParaString(data));
 			
+			System.out.println(DataUtil.converterDataComHoraParaFormatoJSP(data));
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

@@ -3,20 +3,17 @@ package modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import modelo.entidade.Onibus;
-import modelo.entidade.Viagem;
 
 public class OnibusDAO extends BaseCrudDAO<Onibus> {
 
 	private final String tabelaOnibus = "onibus";
 	private final String nomeDasColunasOnibus = "placa, modelo, fabricante, ano, capacidade, tipo_leito, ar_condicionado, banheiro, frigobar, dvd";
-	private final String tabelaViagem = "viagem";
-	private final String tabelaPassagem = "passagem";
+//	private final String tabelaViagem = "viagem";
+//	private final String tabelaPassagem = "passagem";
 	
 	public OnibusDAO(ConexaoDAO conexao) {
 		super(conexao);
@@ -51,12 +48,12 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 
 	@Override
 	public String getQueryDeAlteracao(Onibus onibus) {
-		return "UPDATE " + tabelaOnibus + " SET placa = ?, modelo = ?, fabricante = ?, ano = ?, capacidade = ?, tipo_leito = ?, ar_condicionado = ?, banheiro = ?, frigobar = ? WHERE id_onibus = " + onibus.getIdOnibus();
+		return "UPDATE " + tabelaOnibus + " SET placa = ?, modelo = ?, fabricante = ?, ano = ?, capacidade = ?, tipo_leito = ?, ar_condicionado = ?, banheiro = ?, frigobar = ? WHERE id = " + onibus.getIdOnibus();
 	}
 
 	@Override
 	public String getQueryDeRemocao(Onibus onibus) {
-		return "DELETE FROM onibus WHERE id = " + onibus.getIdOnibus() + "; DELETE FROM " + tabelaOnibus + " WHERE id_onibus = " + onibus.getIdOnibus();
+		return "DELETE FROM " + tabelaOnibus + " WHERE id = " + onibus.getIdOnibus();
 	}
 
 	@Override
@@ -66,28 +63,20 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 
 	@Override
 	public String getQueryDeBusca(Object identificador) {
-		return "SELECT * FROM " + tabelaOnibus + " LEFT JOIN " + tabelaViagem + " USING (id) LEFT JOIN " + tabelaPassagem + " USING (id_viagem) WHERE id = " + identificador;
+		return "SELECT * FROM " + tabelaOnibus + " WHERE id = " + identificador;
 	}
 	
 	@Override
-	public Onibus metodoDeBusca(ResultSet registro, Onibus entidade) {
-		  try {
-			  List<Viagem> viagens = new ArrayList<>();
-			  Integer idOnibus = null;
-			  while(registro.next()){
-				  if(!idOnibus.equals(registro.getInt("id"))) {
-					  entidade = getEntidade(registro);
-				  }
-				  ViagemDAO viagemDAO = new ViagemDAO();
-				  viagens.add(viagemDAO.getEntidade(registro));
-				  idOnibus = registro.getInt("id");
-			  }
-			  entidade.setViagens(viagens);
+	public Onibus metodoDeBusca(ResultSet registro, Onibus onibus) {
+		try {
+			while (registro.next()) {
+				onibus = getEntidade(registro);
+			}
 		} catch (SQLException e) {
 			System.out.println("Erro no método de busca: " + e.getMessage());
 			e.printStackTrace();
 		}
-		  return entidade;
+		return onibus;
 	}
 
 	@Override
@@ -134,5 +123,5 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
         }
 		
 	}
-
+	
 }

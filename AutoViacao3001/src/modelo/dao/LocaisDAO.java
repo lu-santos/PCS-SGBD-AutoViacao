@@ -46,13 +46,12 @@ public class LocaisDAO extends BaseCrudDAO<Locais> {
 
 	@Override
 	public String getQueryDeListar() {
-		return "select * from " + tabelaLocais;
+		return "SELECT * FROM " + tabelaLocais;
 	}
 
 	@Override
 	public String getQueryDeBusca(Object identificador) {
-		// TODO Auto-generated method stub
-		return null;
+		return "SELECT * FROM " + tabelaLocais + " WHERE id = " + identificador;
 	}
 
 	@Override
@@ -80,9 +79,16 @@ public class LocaisDAO extends BaseCrudDAO<Locais> {
 	}
 
 	@Override
-	public Locais metodoDeBusca(ResultSet registro, Locais entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public Locais metodoDeBusca(ResultSet registro, Locais locais) {
+		try {
+			while (registro.next()) {
+				locais = getEntidade(registro);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro no método de busca: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return locais;
 	}
 
 	

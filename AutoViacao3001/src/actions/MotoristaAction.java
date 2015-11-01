@@ -105,7 +105,8 @@ public class MotoristaAction extends ActionSupport{
 	}
 	
 	public List<String> getEstados() {
-		return MetodosAuxiliares.estadosBrasileiros();
+		estados = MetodosAuxiliares.estadosBrasileiros();
+		return estados;
 	}
 	
 	public void setEstados(List<String> estados) {

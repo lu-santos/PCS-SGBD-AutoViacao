@@ -10,7 +10,7 @@
 					<s:property value="mensagem"/>
 				</p>
 				<div class="caixa-padrao" style="margin-left: 0px; width: 90%">
-					<label>Local de Partida / Local de Origem / Distância*</label><br>
+					<label>Local de Partida / Local de Origem / Distância (KM)*</label><br>
 					<s:select listKey="idLocais" listValue="label" headerKey="-1" list="listaDeLocais" name="viagem.idLocais"/><br>
 	            </div>
 				<div class="caixa-padrao" style="margin-left: 0px; width: 35%">
@@ -27,7 +27,7 @@
 	    		</div>
 	    		<div class="caixa-padrao" style="width: 50%">
 					<label>Motorista*</label><br>
-					<s:select listKey="cpf" listValue="nome" headerKey="-1" list="listaDeMotoristas" name="viagem.cpfMotorista"/><br><br>
+					<s:select listKey="cpf" listValue="nome" headerKey="-1" list="listaDeMotoristas" name="viagem.cpf"/><br><br>
 	    		</div>
 	   			<div align="center">
 	   				<input type="submit" value="Cadastrar" class="button-green" style="width: 20%; display: block; clear: both">

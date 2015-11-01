@@ -169,6 +169,14 @@
 			<result name="success">/admin/GerenciarOnibus.jsp</result>
 			<result name="input">/admin/EditarOnibus.jsp</result>
 		</action>
+		<action name="ExcluirOnibus" class="actions.OnibusAction" method="excluir">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/GerenciarOnibus.jsp</result>
+			<result name="input">/admin/GerenciarOnibus.jsp</result>
+		</action>
 		
 		<action name="ObterListas" class="actions.MetodosAuxiliares" method="obterListasParaFormularioCadastroViagem">
 			<interceptor-ref name="defaultStack"/>
@@ -191,6 +199,36 @@
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/ListarViagens.jsp</result>
+		</action>
+		<action name="VisualizarViagem" class="actions.ViagemAction" method="visualizar">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/VisualizarViagem.jsp</result>
+		</action>
+		<action name="PrepararAlteracaoViagem" class="actions.ViagemAction" method="prepararAlteracao">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/EditarViagem.jsp</result>
+		</action>
+		<action name="EditarViagem" class="actions.ViagemAction" method="editar">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/GerenciarViagens.jsp</result>
+			<result name="input">/admin/GerenciarViagens.jsp</result>
+		</action>
+		<action name="ExcluirViagem" class="actions.ViagemAction" method="excluir">
+			<interceptor-ref name="defaultStack"/>
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/GerenciarViagens.jsp</result>
+			<result name="input" type="redirectAction">ListarViagens</result>
 		</action>
 		
 				

@@ -35,7 +35,7 @@
 						<td>
 							<s:a action="ExcluirOnibus">
 								REMOVER
-								<s:param name="onibus.idOnibus" value="cpf"/>
+								<s:param name="onibus.idOnibus" value="idOnibus"/>
 							</s:a>
 						</td>
 						<td>

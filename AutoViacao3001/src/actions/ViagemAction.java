@@ -32,12 +32,12 @@ public class ViagemAction extends ActionSupport {
 		try {
 			if (vDAO.existeConflitoDeOnibus(this.viagem)){
 				mensagem = "Viagem não cadastrada: o ônibus já foi selecionado para uma outra viagem, cujo horário é conflitante com o da viagem atual.";
-				return MotoristaAction.INPUT;
+				return ViagemAction.INPUT;
 			}
 			
 			if (vDAO.existeConflitoDeMotorista(this.viagem)){
 				mensagem = "Viagem não cadastrada: o motorista já está escalado para uma outra viagem, cujo horário é conflitante com o da viagem atual.";
-				return MotoristaAction.INPUT;
+				return ViagemAction.INPUT;
 			}
 			
 			if (vDAO.incluir(this.viagem) == true) {
@@ -46,10 +46,10 @@ public class ViagemAction extends ActionSupport {
 		} catch (Exception e) {
 			mensagem = "Falha ao adicionar a viagem: " + e.getMessage();
 			e.printStackTrace();
-			return MotoristaAction.INPUT;
+			return ViagemAction.INPUT;
 		}
 		this.viagem = new Viagem();
-		return MotoristaAction.SUCCESS;
+		return ViagemAction.SUCCESS;
 	}
 
 	public String listar() {
@@ -57,6 +57,68 @@ public class ViagemAction extends ActionSupport {
 			this.listaDeViagens = vDAO.listar();
 		} catch (Exception e) {
 			mensagem = "Falha ao listar viagens: " + e.getMessage();
+		}
+		return ViagemAction.SUCCESS;
+	}
+	
+	public String visualizar() {
+		try {
+			this.viagem = vDAO.buscar(this.viagem.getIdViagem());
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+		}
+		return ViagemAction.SUCCESS;
+	}
+	
+	public String prepararAlteracao() {
+		obterListasParaFormulario();
+		try {			
+			this.viagem = vDAO.buscar(this.viagem.getIdViagem());
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+		}
+		return ViagemAction.SUCCESS;
+	}
+	
+	public String editar() {
+		try {
+			if(camposEmBranco() == true) {
+				mensagem = "Não foram preenchidos todos os campos obrigatórios";
+				return ClienteAction.INPUT;
+			}
+			
+			if (vDAO.existeConflitoDeOnibusNaAtualizacao(this.viagem)){
+				mensagem = "Viagem não alterada: o ônibus já foi selecionado para uma outra viagem, cujo horário é conflitante com o da viagem atual.";
+				return ViagemAction.INPUT;
+			}
+			
+			if (vDAO.existeConflitoDeMotoristaNaAtualizacao(this.viagem)){
+				mensagem = "Viagem não alterada: o motorista já está escalado para uma outra viagem, cujo horário é conflitante com o da viagem atual.";
+				return ViagemAction.INPUT;
+			}
+			
+			else if (vDAO.alterar(this.viagem) == true) {
+				mensagem = "Alteração realizada com sucesso";
+			}
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+		}
+		this.viagem = new Viagem();
+		return MotoristaAction.SUCCESS;
+	}
+	
+	public String excluir() {
+		try {
+			if(vDAO.remover(viagem)) {
+				mensagem = "Exclusão realizada com sucesso";
+			}
+			else {
+				mensagem = "Falha na exclusão";
+				return ViagemAction.INPUT;
+			}
+		} catch (Exception e) {
+			mensagem = "Ocorreu o seguinte erro: " + e.getMessage();
+			e.printStackTrace();
 		}
 		return ViagemAction.SUCCESS;
 	}
@@ -118,6 +180,14 @@ public class ViagemAction extends ActionSupport {
 
 	public void setViagem(Viagem viagem) {
 		this.viagem = viagem;
+	}
+	
+	public boolean camposEmBranco() {
+		if (viagem.getCpf().length() == 0 || viagem.getDataHoraChegadaFormatoJSP().length() == 0
+				|| viagem.getDataHoraPartidaFormatoJSP().length() == 0|| viagem.getIdLocais() == null || viagem.getIdOnibus() == null) {
+			return true;
+		}
+		return false;
 	}
 
 

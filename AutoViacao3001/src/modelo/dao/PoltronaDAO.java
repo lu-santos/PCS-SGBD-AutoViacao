@@ -12,6 +12,8 @@ public class PoltronaDAO extends BaseCrudDAO<Poltrona> {
 	
 	private final String tabelaPoltrona = "poltrona";
 	private final String nomeDasColunasPoltrona = "id_onibus, numero";
+	private final String tabelaOnibus = "onibus";
+	private final String tabelaViagem = "viagem";
 	
 	public PoltronaDAO(ConexaoDAO conexao) {
 		super(conexao);
@@ -34,9 +36,8 @@ public class PoltronaDAO extends BaseCrudDAO<Poltrona> {
 	}
 
 	@Override
-	public String getQueryDeRemocao(Poltrona entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getQueryDeRemocao(Poltrona poltrona) {
+		return "DELETE FROM " + tabelaPoltrona + " WHERE id_onibus = " + poltrona.getIdOnibus() + " AND numero = " + poltrona.getNumero();
 	}
 
 	@Override
@@ -82,6 +83,47 @@ public class PoltronaDAO extends BaseCrudDAO<Poltrona> {
 	public Poltrona metodoDeBusca(ResultSet registro, Poltrona entidade) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public boolean removerPoltronasOnibus(Integer idOnibus) throws Exception{
+		int exclusaoRealizada = 0;
+		if (onibusPossuiViagem(idOnibus)){
+			return false;
+		} else{
+			String query = "DELETE FROM " + tabelaPoltrona + " WHERE id_onibus = " + idOnibus;
+			try {
+				conectar = conexao.abrirConexao();
+				PreparedStatement pst = conectar.prepareStatement(query);
+				exclusaoRealizada = pst.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally{
+				conexao.fecharConexao();
+			}
+			return exclusaoRealizada != 0;
+			
+		}
+		
+	}
+	
+	public boolean onibusPossuiViagem(Integer idOnibus) throws Exception{
+		String query = "SELECT * FROM " + tabelaOnibus + " o, " + tabelaViagem + " v WHERE v.id_onibus = o.id AND o.id = " + idOnibus;
+		return existeAlgumResultado(query);
+	}
+	
+	private boolean existeAlgumResultado(String query) throws Exception, SQLException {
+		conectar = conexao.abrirConexao();
+
+		PreparedStatement pst = conectar.prepareStatement(query);
+		ResultSet registro = pst.executeQuery();
+		
+		conexao.fecharConexao();
+
+		if (registro.next()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -42,7 +42,7 @@
 				<br>
 				<s:checkbox name="onibus.frigobar" value="onibus.frigobar" fieldValue="true"/><label>Frigobar</label> 
 				<br>
-				<s:checkbox name="onibus.dvd" value="onibus.dvd" fieldValue="true"/><label>Dvd</label>
+				<s:checkbox name="onibus.dvd" value="onibus.dvd" fieldValue="true"/><label>DVD</label>
     		</div>
    			<center><input type="submit" value="Cadastrar" class="button-green" style="width: 20%; display: block; clear: both"></center>
 		</form>

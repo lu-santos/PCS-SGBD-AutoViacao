@@ -16,6 +16,7 @@ public class Onibus {
 	private boolean dvd;
 	// private List<Poltrona> poltronas;
 	private List<Viagem> viagens;
+	private String label;
 
 	public Onibus() {
 	}
@@ -131,5 +132,12 @@ public class Onibus {
 	public void setViagens(List<Viagem> viagens) {
 		this.viagens = viagens;
 	}
+
+	public String getLabel() {
+		label = modelo + " - " + placa;
+		return label;
+	}
+	
+	
 
 }

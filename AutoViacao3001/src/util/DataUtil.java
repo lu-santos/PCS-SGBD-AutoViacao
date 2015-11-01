@@ -9,6 +9,8 @@ public class DataUtil {
 
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final DateFormat DATA_COM_BARRAS = new SimpleDateFormat("dd/MM/yyyy");
+	private static final DateFormat DATA_HORA_COM_BARRAS = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 	/**
 	 * Esta função recebe um java.util.Date e o retorna numa String com o seguinte formato:
@@ -51,6 +53,22 @@ public class DataUtil {
 		}
 		
 		return DATETIME_FORMAT.parse(novaDataString);
+	}
+	
+	public static String converterDataComHoraParaFormatoJSP(Date data){
+		return formatarData(data, "yyyy-MM-dd'T'HH:mm");
+	}
+	
+	public static String formatarData(Date data){
+		return DATA_COM_BARRAS.format(data);
+	}
+	
+	public static String formatarData(Date data, String pattern){
+		return new SimpleDateFormat(pattern).format(data);
+	}
+	
+	public static String formatarDataHora (Date data){
+		return DATA_HORA_COM_BARRAS.format(data);
 	}
 
 }

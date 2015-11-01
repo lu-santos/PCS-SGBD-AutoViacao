@@ -45,7 +45,7 @@ public class Locais {
 	}
 
 	public String getLabel() {
-		this.label = lDAO.getNomeLocal(idLocalOrigem) + " / " + lDAO.getNomeLocal(idLocalDestino) + " / " + distancia + " KM";
+		this.label = lDAO.getNomeLocal(idLocalOrigem) + " / " + lDAO.getNomeLocal(idLocalDestino) + " / " + distancia;
 		return label;
 	}
 	

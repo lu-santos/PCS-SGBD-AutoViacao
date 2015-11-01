@@ -77,6 +77,32 @@ public class OnibusAction extends ActionSupport{
 		return OnibusAction.SUCCESS;
 	}
 	
+	public String excluir() {
+		try {
+			if (pDAO.removerPoltronasOnibus(onibus.getIdOnibus())){
+				
+				if(oDAO.remover(onibus)) {
+					mensagem = "Exclusão realizada com sucesso";
+					return OnibusAction.SUCCESS;
+				}else {
+					mensagem = "Falha na exclusão";
+				}
+				
+			}
+			
+			else {
+				mensagem = "Falha na exclusão. Verifique se não há viagens cadastradas com esse ônibus.";
+			}
+			
+		} catch (Exception e) {
+			mensagem = "Ocorreu o seguinte erro: " + e.getMessage();
+			e.printStackTrace();
+		}
+		
+		return OnibusAction.INPUT;
+		
+	}
+	
 	public boolean camposEmBranco() {
 		if (onibus.getPlaca().length() == 0 || onibus.getModelo().length() == 0 || 
 				onibus.getFabricante().length() == 0 || onibus.getCapacidade() == null ||
