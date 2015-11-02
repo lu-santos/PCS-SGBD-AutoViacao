@@ -39,7 +39,7 @@
 							</s:a>
 						</td>
 						<td>
-							<s:a action="HistoricoDeViagens">
+							<s:a action="ViagensMotorista">
 								VIAGENS
 								<s:param name="motorista.cpf" value="cpf"/>
 							</s:a>

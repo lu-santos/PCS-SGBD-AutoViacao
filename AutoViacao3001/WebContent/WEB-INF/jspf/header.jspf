@@ -14,7 +14,7 @@
 		<body>
 			<header>
 				<div id="container-header" class="clearfix">
-					<h1><a href="${pageContext.request.contextPath}/index.jsp">Auto Viação 3001</a></h1>
+					<h1><a href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/images/logo_3001_header.png"></a></h1>
 					<nav id="menu-login">
 						<ul>
 							<c:choose>
@@ -45,7 +45,7 @@
 				</div>
 			</header>
 			<c:if test="${autenticado == 'sim'}">
-				<div style="background:#c3dbef; width:100%; height:30px">
+				<div style="background:#c3dbef; width:100%; height:40px">
 					<div style="margin:0 auto; width:1024px" class="clearfix">
 						<span style="float:right; padding:0 10px">
 							Olá <b>
