@@ -1,9 +1,14 @@
 <div id="global">
 	<div class="conteudo">
-		<form style="width: 90%" method="post">
-			<h2>Consulta dos Dados da Viagem</h2>
+		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
+			<s:property value="mensagem" />
+		</p>
+		<form action="GerarPassagens" style="width: 90%" method="post">
+			<h2>Gerar Passagens para a Viagem</h2>
 			<p style="color: #e62117">
 				<s:property value="mensagem" />
+				<s:hidden name="viagem.idOnibus"/>
+				<s:hidden name="viagem.idViagem"/>
 			</p>
 			<div class="caixa-padrao" style="margin-left: 0px; width: 90%">
 				<label>Local de Partida / Local de Origem / Distância (KM)</label><br>
@@ -17,29 +22,22 @@
 			<div class="caixa-padrao" style="width: 35%">
 				<label>Data/Hora de Chegada</label><br>
 				<s:textfield disabled="true" name="viagem.dataHoraChegadaFormatada" />
-				<br>
 			</div>
 			<div class="caixa-padrao" style="width: 40%; margin-left: 0px">
 				<label>Ônibus</label><br>
 				<s:textfield disabled="true" name="viagem.labelOnibus" />
-			</div>
-			<div class="caixa-padrao" style="width: 50%">
-				<label>Motorista</label><br>
-				<s:textfield disabled="true" name="viagem.nomeMotorista" />
 				<br>
 			</div>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
+			<div class="caixa-padrao" style="width: 30%">
+				<label>Preço das Passagens (R$)*</label><br>
+				<input type="text" required name="passagem.preco" style="width: 50%">
+				<br>
+				<br>
+			</div>
+			<div align="center">
+				<input type="submit" value="Gerar" class="button-green"
+					style="width: 20%; display: block; clear: both">
+			</div>
 		</form>
 	</div>
 </div>

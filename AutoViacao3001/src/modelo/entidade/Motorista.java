@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import util.DataUtil;
+
 public class Motorista extends Pessoa {
 	private Double salario;
 	private Date dataDeContratacao;
@@ -56,5 +58,13 @@ public class Motorista extends Pessoa {
 
 	public void setViagens(List<Viagem> viagens) {
 		this.viagens = viagens;
+	}
+	
+	public String getDataDeNascimentoFormatada(){
+		return DataUtil.formatarData(dataDeNascimento);
+	}
+	
+	public String getDataDeContratacaoFormatada(){
+		return DataUtil.formatarData(dataDeContratacao);
 	}
 }

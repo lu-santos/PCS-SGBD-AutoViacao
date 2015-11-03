@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +15,7 @@ import util.DataUtil;
 public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	
 	private final String tabelaViagem = "viagem";
+	private final String tabelaPassagem = "passagem";
 	private final String nomeDasColunasViagem = "data_hora_partida, data_hora_chegada, id_onibus, cpf_motorista, "
 			+ "id_locais";
 	
@@ -162,5 +164,16 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 		}
 
 		return false;
+	}
+	
+	public List<Viagem> listarViagensSemPassagem() throws Exception{
+		String query = "SELECT * FROM " + tabelaViagem + " EXCEPT (SELECT v.id_viagem, v.data_hora_partida, v.data_hora_chegada, v.id_onibus, v.cpf_motorista, v.id_locais from " 
+	+ tabelaPassagem + " p, " + tabelaViagem + " v WHERE v.id_viagem = p.id_viagem)";
+		return Consulta(query);
+	}
+	
+	public List<Viagem> listarViagensMotorista(String cpfMotorista) throws Exception{
+		String query = "SELECT * FROM " + tabelaViagem + " WHERE cpf_motorista = '" + cpfMotorista + "' ORDER BY data_hora_partida";
+		return Consulta(query);
 	}
 }

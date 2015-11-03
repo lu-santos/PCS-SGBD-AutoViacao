@@ -45,7 +45,7 @@
 				<label>Salario*</label>
 				<s:textfield disabled="true" name="motorista.salario"/>
     		</div>
-    		<div class="caixa-padrao" style="width: 21%; margin-left: 0px; float: none">
+    		<div class="caixa-padrao" style="width: 21%; float: none">
 				<label>Data de Contratação*</label><br>
 				<s:textfield type="date" disabled="true" name="motorista.dataDeContratacao"/><br>
             </div>

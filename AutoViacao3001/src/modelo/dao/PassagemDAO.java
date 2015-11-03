@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 import modelo.entidade.Passagem;
 
 public class PassagemDAO extends BaseCrudDAO<Passagem>{
+	
+	private final String tabelaPassagem = "passagem";
 
 	public PassagemDAO(ConexaoDAO conexao) {
 		super(conexao);
@@ -24,8 +26,7 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 
 	@Override
 	public String getQueryDeInclusao() {
-		// TODO Auto-generated method stub
-		return null;
+		return "INSERT INTO " + tabelaPassagem + " (id_viagem, id_onibus, numero_poltrona, preco) VALUES(?, ?, ?, ?)";
 	}
 
 	@Override
@@ -42,8 +43,7 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 
 	@Override
 	public String getQueryDeListar() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SELECT * FROM " + tabelaPassagem;
 	}
 
 	@Override
@@ -57,8 +57,9 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 		Passagem passagem;
         try {
         	passagem = new Passagem();
-        	passagem.setIdPassagem(registro.getInt("id_passagem"));
-        	passagem.setIdPoltrona(registro.getInt("numero_poltrona"));
+        	passagem.setId(registro.getInt("id"));
+        	passagem.setIdOnibus(registro.getInt("id_onibus"));
+        	passagem.setNumeroPoltrona(registro.getInt("numero_poltrona"));
         	passagem.setPreco(registro.getDouble("preco"));
         	passagem.setIdViagem(registro.getInt("id_viagem"));
         	passagem.setCpfCliente(registro.getString("cpf_cliente"));
@@ -71,8 +72,15 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 	}
 
 	@Override
-	public void incluirDadosNoBanco(PreparedStatement pst, Passagem entidade) {
-		// TODO Auto-generated method stub
+	public void incluirDadosNoBanco(PreparedStatement pst, Passagem passagem) {
+		try {
+			pst.setInt(1, passagem.getIdViagem());
+			pst.setInt(2, passagem.getIdOnibus());
+			pst.setInt(3, passagem.getNumeroPoltrona());
+			pst.setDouble(4, passagem.getPreco());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

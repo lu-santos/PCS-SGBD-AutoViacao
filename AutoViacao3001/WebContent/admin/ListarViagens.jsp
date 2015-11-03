@@ -1,3 +1,18 @@
+<%@taglib prefix="s" uri="/struts-tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+<style type="text/css">
+	tr.odd 
+	{
+	        background-color: #fff
+	}
+	
+	tr.tableRowEven,tr.even 
+	{
+	        background-color: #eee
+	}
+</style>
+
 <div id="global" style="height: 100%">
 	<div class="conteudo clearfix">
 		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
@@ -5,53 +20,17 @@
 		</p>
 		<h2 style="text-align: center">Gerenciar Viagens - Lista de Viagens Cadastradas</h2>
 		<c:if test="${not empty listaDeViagens}">
-			<table style="width: 100%">
-				<tr>
-					<th>Data/Hora de Partida</th>
-					<th>Partida/Destino/Distância(KM)</th>
-					<th>Visualizar</th>
-					<th>Alterar</th>
-					<th>Remover</th>
-					<th>Passageiros</th>
-					<th>Lucro Bruto</th>
-				</tr>
-				<s:iterator value="listaDeViagens" status="status">
-					<tr style="background-color: ${status.even ? '#EEEEEE ':'#FFFFFF'}">
-						<td><s:property value="dataHoraPartidaFormatada"/></td>
-						<td><s:property value="labelLocais"/></td>
-						<td>
-							<s:a action="VisualizarViagem">
-								VISUALIZAR
-								<s:param name="viagem.idViagem" value="idViagem"/>
-							</s:a>
-						</td>
-						<td>
-							<s:a action="PrepararAlteracaoViagem">
-								ALTERAR
-								<s:param name="viagem.idViagem" value="idViagem"/>
-							</s:a>							
-						</td>
-						<td>
-							<s:a action="ExcluirViagem">
-								REMOVER
-								<s:param name="viagem.idViagem" value="idViagem"/>
-							</s:a>							
-						</td>
-						<td>
-							<s:a action="PassageirosViagem">
-								PASSAGEIROS
-								<s:param name="viagem.idViagem" value="idViagem"/>
-							</s:a>	
-						</td>
-						<td>
-							<s:a action="LucroBrutoViagem">
-								LUCRO BRUTO
-								<s:param name="viagem.idViagem" value="idViagem"/>
-							</s:a>	
-						</td>
-					</tr>
-				</s:iterator>
-			</table>
+			<div align="center">
+				<display:table id="tabelaViagens" name="listaDeViagens" pagesize="20" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
+					<display:column property="dataHoraPartidaFormatada" title="Data/Hora de Partida"/>
+					<display:column property="labelLocais" title="Partida/Destino/Distância(KM)"/>
+					<display:column href="VisualizarViagem" paramId="viagem.idViagem" property="idViagem" title="Visualizar"/>
+					<display:column href="PrepararAlteracaoViagem" paramId="viagem.idViagem" property="idViagem" title="Alterar"/>
+					<display:column href="ExcluirViagem" paramId="viagem.idViagem" property="idViagem" title="Remover"/>
+					<display:column href="PassageirosViagem" paramId="viagem.idViagem" property="idViagem" title="Passageiros"/>
+					<display:column href="LucroBrutoViagem" paramId="viagem.idViagem" property="idViagem" title="Lucro Bruto"/>
+				</display:table>
+			</div>
 		</c:if>
 	
 		<c:if test="${empty listaDeViagens}">

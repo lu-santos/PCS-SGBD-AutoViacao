@@ -1,3 +1,18 @@
+<%@taglib prefix="s" uri="/struts-tags"%>
+<%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+
+<style type="text/css">
+	tr.odd 
+	{
+	        background-color: #fff
+	}
+	
+	tr.tableRowEven,tr.even 
+	{
+	        background-color: #eee
+	}
+</style>
+
 <div id="global" style="height: 100%">
 	<div>
 		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
@@ -5,50 +20,18 @@
 		</p>
 		<h2 style="text-align: center">Gerenciar Ônibus - Lista de Ônibus Cadastrados</h2>
 		<c:if test="${not empty listaDeOnibus}">
-			<table>
-				<tr>
-					<th>Placa</th>
-					<th>Modelo</th>
-					<th>Fabricante</th>
-					<th>Visualizar</th>
-					<th>Alterar</th>
-					<th>Remover</th>
-					<th>Viagens</th>
-				</tr>
-				<s:iterator value="listaDeOnibus" status="status">
-					<tr style="background-color: ${status.even ? '#EEEEEE ':'#FFFFFF'}">
-						<td><s:property value="placa"/></td>
-						<td><s:property value="modelo"/></td>
-						<td><s:property value="fabricante"/></td>
-						<td>
-							<s:a action="VisualizarOnibus">
-								VISUALIZAR
-								<s:param name="onibus.idOnibus" value="idOnibus"/>
-							</s:a>
-						</td>
-						<td>
-							<s:a action="PrepararAlteracaoOnibus">
-								ALTERAR
-								<s:param name="onibus.idOnibus" value="idOnibus"/>
-							</s:a>
-						</td>
-						<td>
-							<s:a action="ExcluirOnibus">
-								REMOVER
-								<s:param name="onibus.idOnibus" value="idOnibus"/>
-							</s:a>
-						</td>
-						<td>
-							<s:a action="ViagensDoOnibus">
-								VIAGENS
-								<s:param name="onibus.idOnibus" value="idOnibus"/>
-							</s:a>
-						</td>
-					</tr>
-				</s:iterator>
-			</table>
+			<div align="center">
+				<display:table id="tabelaOnibus" name="listaDeOnibus" pagesize="20" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
+					<display:column property="placa" title="Placa"/>
+					<display:column property="modelo" title="Modelo"/>
+					<display:column property="fabricante" title="Fabricante"/>
+					<display:column href="VisualizarOnibus" paramId="onibus.idOnibus" property="idOnibus" title="Visualizar"/>
+					<display:column href="PrepararAlteracaoOnibus" paramId="onibus.idOnibus" property="idOnibus" title="Alterar"/>
+					<display:column href="ExcluirOnibus" paramId="onibus.idOnibus" property="idOnibus" title="Remover"/>
+					<display:column href="ViagensDoOnibus" paramId="onibus.idOnibus" property="idOnibus" title="Viagens"/>
+				</display:table>
+			</div>
 		</c:if>
-	
 		<c:if test="${empty listaDeOnibus}">
 			<p>Sem ônibus cadastrados.</p>
 		</c:if>

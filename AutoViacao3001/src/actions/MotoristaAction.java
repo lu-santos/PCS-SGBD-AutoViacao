@@ -10,7 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import modelo.dao.MotoristaDAO;
 import modelo.dao.ConexaoPostgres;
+import modelo.dao.ViagemDAO;
 import modelo.entidade.Motorista;
+import modelo.entidade.Viagem;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -22,8 +24,10 @@ public class MotoristaAction extends ActionSupport{
 	private List<Motorista> motoristas;
 	private ConexaoPostgres conexao = new ConexaoPostgres();
 	private MotoristaDAO mDAO = new MotoristaDAO(conexao);
+	private ViagemDAO vDAO = new ViagemDAO(conexao);
 	private String mensagem;
 	private List<String> estados;
+	private List<Viagem> viagens;
 	
 	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -95,6 +99,21 @@ public class MotoristaAction extends ActionSupport{
 		}
 		return MotoristaAction.SUCCESS;
 	}
+	
+	public String viagensMotorista(){
+		
+		try {
+			viagens = vDAO.listarViagensMotorista(motorista.getCpf());
+			motorista = mDAO.buscar(motorista.getCpf());
+			return SUCCESS;
+		} catch (Exception e) {
+			mensagem = "Falha na busca das viagens do motorista: " + e.getMessage();
+			e.printStackTrace();
+		}
+		
+		return INPUT;
+		
+	}
 
 	public Motorista getMotorista() {
 		return motorista;
@@ -139,4 +158,13 @@ public class MotoristaAction extends ActionSupport{
 	public void setMotoristas(List<Motorista> motoristas) {
 		this.motoristas = motoristas;
 	}
+
+	public List<Viagem> getViagens() {
+		return viagens;
+	}
+
+	public void setViagens(List<Viagem> viagens) {
+		this.viagens = viagens;
+	}
+	
 }

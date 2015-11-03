@@ -4,56 +4,66 @@
 	"http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
+
 	<constant name="struts.devMode" value="true" />
 	<package name="default" namespace="/" extends="struts-default">
-		<interceptors>
-			<interceptor name="acessoActions" class="controleDeAcesso.InterceptorDeActions"/>
-			<interceptor-stack name="sessaoStack">
-				<interceptor-ref name="defaultStack"/>
-				<interceptor-ref name="acessoActions"/>
-			</interceptor-stack>
-		</interceptors>
 		
+		<interceptors>
+			<interceptor name="acessoActions" class="controleDeAcesso.InterceptorDeActions" />
+			<interceptor-stack name="sessaoStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="acessoActions" />
+			</interceptor-stack>
+			
+		</interceptors>
+
 		<global-results>
-            <result name="acessoRecusado">/index.jsp</result>
-        </global-results>
-	
+			<result name="acessoRecusado">/index.jsp</result>
+		</global-results>
+		
+		
+
 		<action name="Login" class="actions.AutenticacaoAction" method="login">
 			<result name="cliente" type="redirect">/cliente/Home.jsp</result>
 			<result name="admin" type="redirect">/admin/Home.jsp</result>
 			<result name="input">/public/Login.jsp</result>
 		</action>
-		<action name="Logout" class="actions.AutenticacaoAction" method="logout">
+		<action name="Logout" class="actions.AutenticacaoAction"
+			method="logout">
 			<result name="success" type="redirect">/</result>
 		</action>
-		
-		
+
+
 		<action name="HomeCliente">
 			<result type="redirect">/cliente/Home.jsp</result>
 		</action>
-		
-		
-		<action name="AdicionarCliente" class="actions.ClienteAction" method="adicionar">
+
+
+		<action name="AdicionarCliente" class="actions.ClienteAction"
+			method="adicionar">
 			<result name="success">/public/Login.jsp</result>
 			<result name="sucessoAdmin">/admin/GerenciarClientes.jsp</result>
 			<result name="input">/public/cadastroCliente.jsp</result>
 		</action>
-		<action name="VisualizarCliente" class="actions.ClienteAction" method="visualizar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="VisualizarCliente" class="actions.ClienteAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin, cliente</param>
 			</interceptor-ref>
 			<result name="success">/cliente/VisualizarConta.jsp</result>
 		</action>
-		<action name="PrepararAlteracaoCliente" class="actions.ClienteAction" method="visualizar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="PrepararAlteracaoCliente" class="actions.ClienteAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin, cliente</param>
 			</interceptor-ref>
 			<result name="success">/cliente/EditarConta.jsp</result>
 		</action>
-		<action name="EditarCliente" class="actions.ClienteAction" method="editar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="EditarCliente" class="actions.ClienteAction"
+			method="editar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin, cliente</param>
 			</interceptor-ref>
@@ -61,176 +71,235 @@
 			<result name="sucessoAdmin">/admin/GerenciarClientes.jsp</result>
 			<result name="input">/cliente/EditarConta.jsp</result>
 		</action>
-		<action name="ExcluirCliente" class="actions.ClienteAction" method="excluir">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ExcluirCliente" class="actions.ClienteAction"
+			method="excluir">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin, cliente</param>
 			</interceptor-ref>
 			<result name="success">/cliente/Home.jsp</result>
 			<result name="input">/cliente/Home.jsp</result>
 		</action>
-		<action name="ListarClientes" class="actions.ClienteAction" method="listar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ListarClientes" class="actions.ClienteAction"
+			method="listar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/ListarClientes.jsp</result>
 		</action>
-		<action name="HistoricoDeCompra" class="actions.ClienteAction" method="visualizar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="HistoricoDeCompra" class="actions.ClienteAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
-			<result name="success">/admin/ListarHistoricoDeCompraDoCliente.jsp</result>
+			<result name="success">/admin/ListarHistoricoDeCompraDoCliente.jsp
+			</result>
 		</action>
-		
-		
-		<action name="AdicionarMotorista" class="actions.MotoristaAction" method="adicionar">
-			<interceptor-ref name="defaultStack"/>
+
+
+		<action name="AdicionarMotorista" class="actions.MotoristaAction"
+			method="adicionar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarMotoristas.jsp</result>
 			<result name="input">/admin/cadastroMotorista.jsp</result>
 		</action>
-		<action name="ListarMotoristas" class="actions.MotoristaAction" method="listarMotorista">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ListarMotoristas" class="actions.MotoristaAction"
+			method="listarMotorista">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/ListarMotoristas.jsp</result>
 		</action>
-		<action name="VisualizarMotorista" class="actions.MotoristaAction" method="visualizar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="VisualizarMotorista" class="actions.MotoristaAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/VisualizarMotorista.jsp</result>
 		</action>
-		<action name="PrepararAlteracaoMotorista" class="actions.MotoristaAction" method="visualizar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="PrepararAlteracaoMotorista" class="actions.MotoristaAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/EditarMotorista.jsp</result>
 		</action>
-		<action name="EditarMotorista" class="actions.MotoristaAction" method="editar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="EditarMotorista" class="actions.MotoristaAction"
+			method="editar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarMotoristas.jsp</result>
 			<result name="input">/admin/EditarMotorista.jsp</result>
 		</action>
-		<action name="ExcluirMotorista" class="actions.MotoristaAction" method="excluir">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ExcluirMotorista" class="actions.MotoristaAction"
+			method="excluir">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarMotoristas.jsp</result>
 			<result name="input" type="redirectAction">ListarMotoristas</result>
 		</action>
-		
-		
-		<action name="AdicionarOnibus" class="actions.OnibusAction" method="adicionar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ViagensMotorista" class="actions.MotoristaAction" method="viagensMotorista">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/ViagensMotorista.jsp</result>
+			<result name="input">/admin/GerenciarMotoristas.jsp</result>
+		</action>
+
+
+		<action name="AdicionarOnibus" class="actions.OnibusAction"
+			method="adicionar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarOnibus.jsp</result>
 			<result name="input">/admin/cadastroOnibus.jsp</result>
 		</action>
-		<action name="ListarOnibus" class="actions.OnibusAction" method="listar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ListarOnibus" class="actions.OnibusAction"
+			method="listar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/ListarOnibus.jsp</result>
 		</action>
-		<action name="VisualizarOnibus" class="actions.OnibusAction" method="visualizar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="VisualizarOnibus" class="actions.OnibusAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/VisualizarOnibus.jsp</result>
 		</action>
-		<action name="PrepararAlteracaoOnibus" class="actions.OnibusAction" method="visualizar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="PrepararAlteracaoOnibus" class="actions.OnibusAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/EditarOnibus.jsp</result>
 		</action>
-		<action name="EditarOnibus" class="actions.OnibusAction" method="editar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="EditarOnibus" class="actions.OnibusAction"
+			method="editar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarOnibus.jsp</result>
 			<result name="input">/admin/EditarOnibus.jsp</result>
 		</action>
-		<action name="ExcluirOnibus" class="actions.OnibusAction" method="excluir">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ExcluirOnibus" class="actions.OnibusAction"
+			method="excluir">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarOnibus.jsp</result>
 			<result name="input">/admin/GerenciarOnibus.jsp</result>
 		</action>
-		
-		<action name="ObterListas" class="actions.MetodosAuxiliares" method="obterListasParaFormularioCadastroViagem">
-			<interceptor-ref name="defaultStack"/>
+
+		<action name="ObterListas" class="actions.MetodosAuxiliares"
+			method="obterListasParaFormularioCadastroViagem">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/CadastroViagem.jsp</result>
 		</action>
-		<action name="AdicionarViagem" class="actions.ViagemAction" method="adicionar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="AdicionarViagem" class="actions.ViagemAction"
+			method="adicionar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarViagens.jsp</result>
 			<result name="input">/admin/GerenciarViagens.jsp</result>
 		</action>
-		<action name="ListarViagens" class="actions.ViagemAction" method="listar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ListarViagens" class="actions.ViagemAction"
+			method="listar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/ListarViagens.jsp</result>
 		</action>
-		<action name="VisualizarViagem" class="actions.ViagemAction" method="visualizar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="VisualizarViagem" class="actions.ViagemAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/VisualizarViagem.jsp</result>
 		</action>
-		<action name="PrepararAlteracaoViagem" class="actions.ViagemAction" method="prepararAlteracao">
-			<interceptor-ref name="defaultStack"/>
+		<action name="PrepararAlteracaoViagem" class="actions.ViagemAction"
+			method="prepararAlteracao">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/EditarViagem.jsp</result>
 		</action>
-		<action name="EditarViagem" class="actions.ViagemAction" method="editar">
-			<interceptor-ref name="defaultStack"/>
+		<action name="EditarViagem" class="actions.ViagemAction"
+			method="editar">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarViagens.jsp</result>
 			<result name="input">/admin/GerenciarViagens.jsp</result>
 		</action>
-		<action name="ExcluirViagem" class="actions.ViagemAction" method="excluir">
-			<interceptor-ref name="defaultStack"/>
+		<action name="ExcluirViagem" class="actions.ViagemAction"
+			method="excluir">
+			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin</param>
 			</interceptor-ref>
 			<result name="success">/admin/GerenciarViagens.jsp</result>
 			<result name="input" type="redirectAction">ListarViagens</result>
 		</action>
-		
-				
+		<action name="ListarViagensParaGerarPassagens" class="actions.PassagemAction" method="listarViagensSemPassagem">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/ListarViagensParaPassagens.jsp</result>
+			<result name="input">/admin/GerenciarPassagens.jap</result>
+		</action>
+		<action name="PrepararGerarPassagens" class="actions.PassagemAction" method="prepararParaGerar">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/GerarPassagens.jsp</result>
+		</action>
+		<action name="GerarPassagens" class="actions.PassagemAction" method="gerarPassagens">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/GerenciarPassagens.jsp</result>
+			<result name="input">/admin/GerenciarPassagens.jsp</result>
+		</action>
+		<action name="ListarPassagens" class="actions.PassagemAction" method="listar">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/ListarPassagens.jsp</result>
+		</action>
 	</package>
 </struts>

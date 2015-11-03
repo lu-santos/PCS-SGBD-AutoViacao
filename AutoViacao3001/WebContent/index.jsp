@@ -1,6 +1,6 @@
 <div id="global-index">
 	<div class="clearfix">
-		<center><img src="${pageContext.request.contextPath}/images/bus_512.png"></center>
+		<center><img src="${pageContext.request.contextPath}/images/bus_3001.png"></center>
 	</div>
 </div>
 <div class="conteudo clearfix">

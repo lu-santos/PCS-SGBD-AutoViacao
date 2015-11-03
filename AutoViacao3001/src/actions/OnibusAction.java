@@ -33,6 +33,7 @@ public class OnibusAction extends ActionSupport{
 				poltrona.setIdOnibus(idOnibus);
 				poltrona.setNumero(numero);
 				pDAO.incluir(poltrona);
+				
 			}
 			
 		} catch (Exception e) {
