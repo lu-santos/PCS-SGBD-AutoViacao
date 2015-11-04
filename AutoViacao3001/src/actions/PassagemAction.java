@@ -24,6 +24,7 @@ public class PassagemAction extends ActionSupport {
 	private List<Passagem> listaDePassagens;
 	private Viagem viagem;
 	private Passagem passagem;
+	
 
 	public String listarViagensSemPassagem() {
 		try {
