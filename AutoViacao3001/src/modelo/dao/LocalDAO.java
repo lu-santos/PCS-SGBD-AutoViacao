@@ -3,29 +3,31 @@ package modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import modelo.entidade.Cliente;
 import modelo.entidade.Local;
 
 public class LocalDAO extends BaseCrudDAO<Local> {
 	
 	private final String tabelaLocal = "local";
+	private final String nomeDasColunasLocal = "nome";
 
 	public LocalDAO(ConexaoDAO conexao) {
 		super(conexao);
 	}
 
 	@Override
-	public String getQueryDeExiste(Local entidade) {
+	public String getQueryDeExiste(Local local) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getQueryDeInclusao() {
-		// TODO Auto-generated method stub
-		return null;
+		return "INSERT INTO " + tabelaLocal + " (" + nomeDasColunasLocal + ") VALUES(?)";
 	}
 
 	@Override
@@ -42,8 +44,7 @@ public class LocalDAO extends BaseCrudDAO<Local> {
 
 	@Override
 	public String getQueryDeListar() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SELECT * FROM " + tabelaLocal;
 	}
 
 	@Override
@@ -68,8 +69,12 @@ public class LocalDAO extends BaseCrudDAO<Local> {
 
 	@Override
 	public void incluirDadosNoBanco(PreparedStatement pst, Local entidade) {
-		// TODO Auto-generated method stub
-		
+		try {
+		    pst.setString(1, entidade.getNome());
+        } catch (SQLException ex) {
+        	System.out.println("Erro ao incluir/alterar no banco - " + ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
 	}
 
 	@Override
@@ -94,6 +99,5 @@ public class LocalDAO extends BaseCrudDAO<Local> {
 		}
 		return nome;
 	}
-
 	
 }

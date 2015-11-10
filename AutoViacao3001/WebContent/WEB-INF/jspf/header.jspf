@@ -47,7 +47,7 @@
 			<c:if test="${autenticado == 'sim'}">
 				<div style="background:#c3dbef; width:100%; height:40px">
 					<div style="margin:0 auto; width:1024px" class="clearfix">
-						<span style="float:right; padding:0 10px">
+						<span style="float:right; padding:0 10px; margin-top:5px">
 							Olá <b>
 							<c:if test="${papel == 'cliente'}">
 								Cliente <s:property value="#session.usuario.nome" />

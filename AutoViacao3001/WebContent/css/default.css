@@ -30,6 +30,7 @@ header h1 {
 	margin-top: 0px;
 	float: left;
 	font-weight: lighter;
+	margin-bottom: 0px;
 }
 
 header a { 
@@ -42,16 +43,16 @@ header a:hover {
 
 #menu-principal, #menu-login {
 	float: right;
-	margin: 10px;
+	margin: 18px 10px 10px;
 }
 
-#menu-principal ul, #menu-login ul{
+#menu-principal ul, #menu-login ul, .pagelinks ul{
 	list-style: none;
 	padding: 0px;
 	margin: 0px;
 }
 
-#menu-principal ul li, #menu-login ul li{
+#menu-principal ul li, #menu-login ul li, .pagelinks ul li{
 	display: inline;	
 }
 
@@ -205,8 +206,13 @@ table {
     border-collapse: collapse;
 }
 
+thead {
+	background-color: rgb(102, 180, 253);
+	color: #FFF;
+}
+
 th, td {
-	padding: 7px;
+	padding: 15px;
 }
 
 /* --- página de login --- */
@@ -236,4 +242,30 @@ th, td {
 	width: 33%;
     float: left;
     text-align: center;
+}
+
+/* ---- DisplayTag ----- */
+
+.pagelinks ul li{ 
+	background-color: #66b4fd;
+	padding: 5px 10px;
+	display: inline-block;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 100px;
+	margin: 10px 3px;
+}
+
+.pagelinks ul li a{
+	color: #fff;
+}
+
+.pagelinks ul li a:hover{
+	color: #333;	
+	text-decoration: none;
+}
+
+.pagebanner {
+	display: block;
+	margin-bottom: 20px;
 }

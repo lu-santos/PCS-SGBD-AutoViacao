@@ -49,6 +49,4 @@ public class Locais {
 		return label;
 	}
 	
-	
-
 }

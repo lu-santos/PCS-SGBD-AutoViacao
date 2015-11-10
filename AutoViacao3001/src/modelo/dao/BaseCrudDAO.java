@@ -26,7 +26,6 @@ public abstract class BaseCrudDAO<T> {
         incluirDadosNoBanco(pst, entidade);
         inclusaoRealizada = pst.executeUpdate();
         conexao.fecharConexao();
-        System.out.println("inclusão: " + inclusaoRealizada);
         return inclusaoRealizada != 0;
     }
     
@@ -108,6 +107,7 @@ public abstract class BaseCrudDAO<T> {
         }finally{
             conexao.fecharConexao();
         }
+        System.out.println("lista size: " + listaDeEntidade.size());
         return listaDeEntidade; 
     }
     

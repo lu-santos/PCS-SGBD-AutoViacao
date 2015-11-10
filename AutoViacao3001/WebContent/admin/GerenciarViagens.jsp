@@ -11,6 +11,12 @@
 			</s:a><br>
 			<s:a action="ListarViagens">
 				Listar Viagens
+			</s:a><br>
+			<s:a action="ObterLocaisSemDistancia">
+				Cadastrar Locais
+			</s:a><br>
+			<s:a action="ListarLocais">
+				Listar Locais
 			</s:a>
 		</section>
 	</div>

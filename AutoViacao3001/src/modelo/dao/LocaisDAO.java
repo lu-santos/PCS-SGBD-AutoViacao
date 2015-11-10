@@ -15,21 +15,20 @@ import modelo.entidade.Viagem;
 public class LocaisDAO extends BaseCrudDAO<Locais> {
 
 	private final String tabelaLocais = "locais";
+	private final String nomeDasColunasLocais = "id_local_destino, id_local_origem, distancia";
 
 	public LocaisDAO(ConexaoDAO conexao) {
 		super(conexao);
 	}
 
 	@Override
-	public String getQueryDeExiste(Locais entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getQueryDeExiste(Locais locais) {
+		return "SELECT " + nomeDasColunasLocais + " FROM " + tabelaLocais + " WHERE id_local_destino = " + locais.getIdLocalDestino() + " AND id_local_origem = " + locais.getIdLocalOrigem();
 	}
 
 	@Override
 	public String getQueryDeInclusao() {
-		// TODO Auto-generated method stub
-		return null;
+		return "INSERT INTO " + tabelaLocais + " (" + nomeDasColunasLocais + ") VALUES(?, ?, ?)";
 	}
 
 	@Override
@@ -74,8 +73,14 @@ public class LocaisDAO extends BaseCrudDAO<Locais> {
 
 	@Override
 	public void incluirDadosNoBanco(PreparedStatement pst, Locais entidade) {
-		// TODO Auto-generated method stub
-		
+		try {
+		    pst.setInt(1, entidade.getIdLocalDestino());
+		    pst.setInt(2, entidade.getIdLocalOrigem());
+		    pst.setDouble(3, entidade.getDistancia());
+        } catch (SQLException ex) {
+        	System.out.println("Erro ao incluir/alterar no banco - " + ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
 	}
 
 	@Override
@@ -90,6 +95,21 @@ public class LocaisDAO extends BaseCrudDAO<Locais> {
 		}
 		return locais;
 	}
-
 	
+	@Override
+	public boolean incluir(Locais entidade) throws Exception {
+		int inclusaoRealizada = 0;
+		if (Consulta(getQueryDeExiste(entidade)).size() > 0) {
+			return false;
+		}
+		else {
+	        conectar = conexao.abrirConexao();
+	        String query = getQueryDeInclusao();
+	        PreparedStatement pst = conectar.prepareStatement(query);
+	        incluirDadosNoBanco(pst, entidade);
+	        inclusaoRealizada = pst.executeUpdate();
+	        conexao.fecharConexao();
+		}
+        return inclusaoRealizada != 0;
+    }
 }

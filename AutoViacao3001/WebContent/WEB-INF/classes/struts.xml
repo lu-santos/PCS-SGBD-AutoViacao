@@ -211,6 +211,35 @@
 			<result name="success">/admin/GerenciarOnibus.jsp</result>
 			<result name="input">/admin/GerenciarOnibus.jsp</result>
 		</action>
+		
+		
+		<action name="ObterLocaisSemDistancia" class="actions.LocalAction"
+			method="listarLocaisSemDistancia">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/CadastroLocal.jsp</result>
+		</action>
+		<action name="AdicionarLocal" class="actions.LocalAction"
+			method="adicionarLocal">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/CadastroLocal.jsp</result>
+			<result name="input">/admin/CadastroLocal.jsp</result>
+		</action>
+		<action name="AdicionarDistancia" class="actions.LocalAction"
+			method="adicionarDistancia">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/CadastroLocal.jsp</result>
+			<result name="input">/admin/CadastroLocal.jsp</result>
+		</action>
+		
 
 		<action name="ObterListas" class="actions.MetodosAuxiliares"
 			method="obterListasParaFormularioCadastroViagem">

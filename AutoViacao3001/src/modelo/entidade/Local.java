@@ -19,5 +19,21 @@ public class Local {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+
+
+	@Override
+	public boolean equals(Object local) 
+	{
+	    if (local instanceof Local) 
+	    {
+	      Local localComparado = (Local) local;
+	      if (this.id.equals(localComparado.getId()))
+	         return true;
+	    }
+	    return false;
+	}
+	
+
 
 }
