@@ -25,9 +25,9 @@
 				<label>Bairro*</label><br>
 				<input type="text" maxlength="100" required name="motorista.bairro"><br>
             </div>
-  			<div class="caixa-padrao" style="width: 21.6%">
-				<label>CEP*</label>
-				<input type="number" maxlength="8" required name="motorista.cep">
+            <div class="caixa-padrao" style="width: 21%">
+				<label>Cidade*</label><br>
+				<input type="text" maxlength="50" required name="motorista.cidade"><br>
             </div>
 			<div class="caixa-padrao" style="width: 12%">
 				<label>Estado*</label>
@@ -61,7 +61,11 @@
 					<option value="TO">TO</option>
 				</select>
             </div>
-            <div class="caixa-padrao" style="width: 20%; margin-left: 0px">
+            <div class="caixa-padrao" style="width: 21.6%; margin-left: 0px">
+				<label>CEP*</label>
+				<input type="number" maxlength="8" required name="motorista.cep">
+            </div>
+            <div class="caixa-padrao" style="width: 20%">
 				<label>Telefone Residencial*</label>
 				<input type="number" maxlength="10" required name="motorista.telefoneResidencial">
     		</div>
@@ -70,15 +74,17 @@
 				<label>Telefone Celular*</label>
 				<input type="number" maxlength="11" required name="motorista.telefoneCelular"><br>
     		</div>
-    		<div class="caixa-padrao" style="width: 20%">
+    		<div class="caixa-padrao" style="width: 10%">
 				<label>Salario*</label>
 				<input type="number" maxlength="10" required name="motorista.salario">
     		</div>
-    		<div class="caixa-padrao" style="width: 20%;">
-				<label>Data de Contratação*</label><br>
+    		<div class="caixa-padrao" style="width: 15%;">
+				<label>Contratação*</label><br>
 				<input type="date" required name="motorista.dataDeContratacao"><br>
             </div>
-   			<center><input type="submit" value="Cadastrar" class="button-green" style="width: 20%; display: block; clear: both"></center>
+   			<div align="center">
+   				<input type="submit" value="Cadastrar" class="button-green" style="width: 20%; display: block; clear: both">
+   			</div>
 		</form>
 	</div>
 </div>

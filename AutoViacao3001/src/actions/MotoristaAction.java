@@ -1,20 +1,12 @@
 package actions;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import modelo.dao.MotoristaDAO;
 import modelo.dao.ConexaoPostgres;
+import modelo.dao.MotoristaDAO;
 import modelo.dao.ViagemDAO;
 import modelo.entidade.Motorista;
 import modelo.entidade.Viagem;
-
-import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -29,11 +21,7 @@ public class MotoristaAction extends ActionSupport{
 	private List<String> estados;
 	private List<Viagem> viagens;
 	
-	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	
 	public String adicionar() {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		HttpSession session = request.getSession();
 		try {
 			if (mDAO.incluir(this.motorista) == true) {
 				mensagem = "Motorista cadastrado com sucesso.";	
@@ -76,7 +64,7 @@ public class MotoristaAction extends ActionSupport{
 	
 	public String listarMotorista() {
 		try {
-			String query = "SELECT cpf, nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular, salario, data_contratacao FROM pessoa JOIN motorista ON cpf = cpf_motorista";
+			String query = "SELECT cpf, nome, data_nascimento, endereco, bairro, cidade, cep, estado, telefone_residencial, telefone_celular, salario, data_contratacao FROM pessoa JOIN motorista ON cpf = cpf_motorista";
 			this.motoristas = mDAO.Consulta(query);
 		} catch (Exception e) {
 			mensagem = e.getMessage();
@@ -134,7 +122,7 @@ public class MotoristaAction extends ActionSupport{
 	
 	public boolean camposEmBranco() {
 		if (motorista.getNome().length() == 0 || motorista.getEndereco().length() == 0 || 
-				motorista.getBairro().length() == 0 || motorista.getCep().length() == 0 ||
+				motorista.getBairro().length() == 0 || motorista.getCidade().length() == 0 || motorista.getCep().length() == 0 ||
 				motorista.getTelefoneResidencial().length() == 0 || 
 				motorista.getTelefoneCelular().length() == 0 ||
 				motorista.getSalario() == null || motorista.getSalario().isNaN() == true || motorista.getDataDeContratacao().length() == 0) {
