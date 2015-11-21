@@ -19,12 +19,12 @@ public class Motorista extends Pessoa {
 		
 	}
 	
-	public Motorista(String cpf, String nome, Date dataDeNascimento, String endereco, String bairro, String cep, String estado, String telefoneResidencial, String telefoneCelular, String salario, String dataDeContratacao) throws ParseException {
+	public Motorista(String cpf, String nome, Date dataDeNascimento, String endereco, String cidade, String bairro, String cep, String estado, String telefoneResidencial, String telefoneCelular, String salario, String dataDeContratacao) throws ParseException {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.dataDeNascimento = dataDeNascimento;
 		this.endereco = endereco;
-		this.bairro = bairro;
+		this.cidade = cidade;
 		this.cep = cep;
 		this.estado = estado;
 		this.telefoneResidencial = telefoneResidencial;

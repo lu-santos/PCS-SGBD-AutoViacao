@@ -19,7 +19,7 @@ public class ClienteDAO extends BaseCrudDAO<Cliente> {
 	
 	private final String tabelaCliente = "cliente";
 	private final String tabelaPessoa = "pessoa";
-	private final String nomeDasColunasPessoa = "nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular, cpf";
+	private final String nomeDasColunasPessoa = "nome, data_nascimento, endereco, bairro, cidade, cep, estado, telefone_residencial, telefone_celular, cpf";
 	private final String nomeDasColunasCliente = "senha, cpf_cliente";
 	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
   
@@ -33,12 +33,12 @@ public class ClienteDAO extends BaseCrudDAO<Cliente> {
     
 	@Override
 	public String getQueryDeInclusao() {
-		return "INSERT INTO " + tabelaPessoa + " (" + nomeDasColunasPessoa + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?); INSERT INTO " + tabelaCliente + " (" + nomeDasColunasCliente + ") VALUES(?, ?)";
+		return "INSERT INTO " + tabelaPessoa + " (" + nomeDasColunasPessoa + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?); INSERT INTO " + tabelaCliente + " (" + nomeDasColunasCliente + ") VALUES(?, ?)";
 	}
 	
 	@Override
 	public String getQueryDeAlteracao(Cliente cliente) {
-		return "UPDATE " + tabelaPessoa + " SET nome = ?, data_nascimento = ?, endereco = ?, bairro = ?, cep = ?, estado = ?, telefone_residencial = ?, telefone_celular = ? WHERE cpf = ?; UPDATE " + tabelaCliente + " SET senha = ? WHERE cpf_cliente = ?";
+		return "UPDATE " + tabelaPessoa + " SET nome = ?, data_nascimento = ?, endereco = ?, bairro = ?, cidade = ?, cep = ?, estado = ?, telefone_residencial = ?, telefone_celular = ? WHERE cpf = ?; UPDATE " + tabelaCliente + " SET senha = ? WHERE cpf_cliente = ?";
 	}
 	
 	@Override
@@ -53,23 +53,15 @@ public class ClienteDAO extends BaseCrudDAO<Cliente> {
 
 	@Override
 	public String getQueryDeBusca(Object identificador) {
-		return "SELECT * FROM " + tabelaPessoa + " JOIN " + tabelaCliente + " ON cpf = cpf_cliente AND cpf = '" + identificador + "' LEFT JOIN passagem USING (cpf_cliente)";
+		return "SELECT * FROM " + tabelaPessoa + " JOIN " + tabelaCliente + " ON cpf = cpf_cliente AND cpf = '" + identificador + "'";
 	}
 
 	@Override
 	public Cliente metodoDeBusca(ResultSet registro, Cliente entidade) {  
 		try {
-			List<Passagem> passagens = new ArrayList<>();
-			String cpf = "";
 			while(registro.next()){
-				if(!cpf.equals(registro.getString("cpf").trim())) {
-					entidade = getEntidade(registro);
-				}
-			  	PassagemDAO passagemDAO = new PassagemDAO();
-			  	passagens.add(passagemDAO.getEntidade(registro));
-			  	cpf = registro.getString("cpf").trim();
+				entidade = getEntidade(registro);
 			  }
-			entidade.setPassagens(passagens);			
 		} catch (SQLException e) {
 			System.out.println("Erro no método de busca: " + e.getMessage());
 			e.printStackTrace();
@@ -87,6 +79,7 @@ public class ClienteDAO extends BaseCrudDAO<Cliente> {
         	cliente.setDataDeNascimento(DATETIME_FORMAT.format(registro.getDate(("data_nascimento"))));
         	cliente.setEndereco(registro.getString("endereco"));
         	cliente.setBairro(registro.getString("bairro"));
+        	cliente.setCidade(registro.getString("cidade"));
         	cliente.setCep(registro.getString("cep").trim());
         	cliente.setEstado(registro.getString("estado"));
         	cliente.setTelefoneResidencial(registro.getString("telefone_residencial").trim());
@@ -94,7 +87,7 @@ public class ClienteDAO extends BaseCrudDAO<Cliente> {
         	cliente.setSenha(registro.getString("senha"));
         	return cliente;
         } catch (SQLException | ParseException ex) {
-        	System.out.println("Erro ao pegar entidade no banco - " + ex);
+        	System.out.println("Erro ao pegar cliente no banco - " + ex);
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -107,13 +100,14 @@ public class ClienteDAO extends BaseCrudDAO<Cliente> {
 		    pst.setDate(2, new java.sql.Date(DATETIME_FORMAT.parse(entidade.getDataDeNascimento()).getTime()));
 		    pst.setString(3, entidade.getEndereco());
 		    pst.setString(4, entidade.getBairro());
-		    pst.setString(5, entidade.getCep());
-		    pst.setString(6, entidade.getEstado());
-		    pst.setString(7, entidade.getTelefoneResidencial());
-		    pst.setString(8, entidade.getTelefoneCelular());
-            pst.setString(9, entidade.getCpf());
-            pst.setString(10, entidade.getSenha());
-            pst.setString(11, entidade.getCpf());
+		    pst.setString(5, entidade.getCidade());
+		    pst.setString(6, entidade.getCep());
+		    pst.setString(7, entidade.getEstado());
+		    pst.setString(8, entidade.getTelefoneResidencial());
+		    pst.setString(9, entidade.getTelefoneCelular());
+            pst.setString(10, entidade.getCpf());
+            pst.setString(11, entidade.getSenha());
+            pst.setString(12, entidade.getCpf());
         } catch (SQLException | ParseException ex) {
         	System.out.println("Erro ao incluir/alterar no banco - " + ex);
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,17 +1,12 @@
 package modelo.entidade;
 
-import modelo.dao.ConexaoPostgres;
-import modelo.dao.LocalDAO;
-
 public class Locais {
 	private Integer idLocais;
-	private Integer idLocalDestino;
-	private Integer idLocalOrigem;
-	private double distancia;
+	private Local localDeOrigem;
+	private Local localDeDestino;
+	private Double distancia;
 	private String label;
-	private ConexaoPostgres conexao = new ConexaoPostgres();
-	private LocalDAO lDAO = new LocalDAO(conexao);
-
+	
 	public Integer getIdLocais() {
 		return idLocais;
 	}
@@ -20,33 +15,34 @@ public class Locais {
 		this.idLocais = idLocais;
 	}
 
-	public Integer getIdLocalDestino() {
-		return idLocalDestino;
-	}
-
-	public void setIdLocalDestino(Integer idLocalDestino) {
-		this.idLocalDestino = idLocalDestino;
-	}
-
-	public Integer getIdLocalOrigem() {
-		return idLocalOrigem;
-	}
-
-	public void setIdLocalOrigem(Integer idLocalOrigem) {
-		this.idLocalOrigem = idLocalOrigem;
-	}
-
-	public double getDistancia() {
+	public Double getDistancia() {
 		return distancia;
 	}
 
-	public void setDistancia(double distancia) {
-		this.distancia = distancia;
+	public void setDistancia(String distancia) {
+		Double formatado = Double.valueOf(distancia);
+		this.distancia = formatado;
 	}
 
 	public String getLabel() {
-		this.label = lDAO.getNomeLocal(idLocalOrigem) + " / " + lDAO.getNomeLocal(idLocalDestino) + " / " + distancia;
+		this.label = localDeOrigem.getNome() + " / " + localDeDestino.getNome() + " / " + distancia;
 		return label;
+	}
+
+	public Local getLocalDeOrigem() {
+		return localDeOrigem;
+	}
+
+	public void setLocalDeOrigem(Local localDeOrigem) {
+		this.localDeOrigem = localDeOrigem;
+	}
+
+	public Local getLocalDeDestino() {
+		return localDeDestino;
+	}
+
+	public void setLocalDeDestino(Local localDeDestino) {
+		this.localDeDestino = localDeDestino;
 	}
 	
 }

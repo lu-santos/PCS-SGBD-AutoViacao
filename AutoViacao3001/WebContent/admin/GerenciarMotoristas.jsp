@@ -6,11 +6,14 @@
 			</p>
 			<img src="${pageContext.request.contextPath}/images/icon_gerenciar_motorista.png">
 			<h2>Gerenciar Motoristas</h2>
-			<a href="${pageContext.request.contextPath}/admin/cadastroMotorista.jsp">
+			<s:a action="PaginaDeCadastrarMotorista">
 				Cadastrar Motorista
-			</a><br>
+			</s:a><br>
 			<s:a action="ListarMotoristas">
 				Listar Motoristas
+			</s:a><br>
+			<s:a action="ListarMotoristasComMaisViagens">
+				Consultar Motoristas com mais Viagens
 			</s:a>
 		</section>
 	</div>

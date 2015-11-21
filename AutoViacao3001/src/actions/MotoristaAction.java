@@ -25,9 +25,9 @@ public class MotoristaAction extends ActionSupport{
 	private ConexaoPostgres conexao = new ConexaoPostgres();
 	private MotoristaDAO mDAO = new MotoristaDAO(conexao);
 	private ViagemDAO vDAO = new ViagemDAO(conexao);
+	private Viagem viagem = new Viagem();
 	private String mensagem;
 	private List<String> estados;
-	private List<Viagem> viagens;
 	
 	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
@@ -76,8 +76,7 @@ public class MotoristaAction extends ActionSupport{
 	
 	public String listarMotorista() {
 		try {
-			String query = "SELECT cpf, nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular, salario, data_contratacao FROM pessoa JOIN motorista ON cpf = cpf_motorista";
-			this.motoristas = mDAO.Consulta(query);
+			this.motoristas = mDAO.listar();
 		} catch (Exception e) {
 			mensagem = e.getMessage();
 		}
@@ -103,8 +102,8 @@ public class MotoristaAction extends ActionSupport{
 	public String viagensMotorista(){
 		
 		try {
-			viagens = vDAO.listarViagensMotorista(motorista.getCpf());
 			motorista = mDAO.buscar(motorista.getCpf());
+			motorista.setViagens(vDAO.listarViagensMotorista(motorista.getCpf()));
 			return SUCCESS;
 		} catch (Exception e) {
 			mensagem = "Falha na busca das viagens do motorista: " + e.getMessage();
@@ -113,6 +112,17 @@ public class MotoristaAction extends ActionSupport{
 		
 		return INPUT;
 		
+	} 
+	
+	public String resultadoDaConsultaMotorista() {
+		try {
+			this.motoristas = mDAO.listarMotoristaComMaisViagem(this.viagem.getDataHoraPartidaString(), this.viagem.getDataHoraChegadaString());
+			if (motoristas.size() == 0)
+				this.mensagem = "Não foram encontrados resultados para os filtros selecionados.";
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+		}
+		return ViagemAction.SUCCESS;
 	}
 
 	public Motorista getMotorista() {
@@ -135,6 +145,7 @@ public class MotoristaAction extends ActionSupport{
 	public boolean camposEmBranco() {
 		if (motorista.getNome().length() == 0 || motorista.getEndereco().length() == 0 || 
 				motorista.getBairro().length() == 0 || motorista.getCep().length() == 0 ||
+				motorista.getCidade().length() == 0 ||
 				motorista.getTelefoneResidencial().length() == 0 || 
 				motorista.getTelefoneCelular().length() == 0 ||
 				motorista.getSalario() == null || motorista.getSalario().isNaN() == true || motorista.getDataDeContratacao().length() == 0) {
@@ -159,12 +170,11 @@ public class MotoristaAction extends ActionSupport{
 		this.motoristas = motoristas;
 	}
 
-	public List<Viagem> getViagens() {
-		return viagens;
+	public Viagem getViagem() {
+		return this.viagem;
 	}
 
-	public void setViagens(List<Viagem> viagens) {
-		this.viagens = viagens;
+	public void setViagem(Viagem viagem) {
+		this.viagem = viagem;
 	}
-	
 }

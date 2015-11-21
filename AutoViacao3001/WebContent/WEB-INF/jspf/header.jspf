@@ -23,7 +23,7 @@
 								</c:when>
 								<c:otherwise>
 									<li><a href="${pageContext.request.contextPath}/public/Login.jsp">Login</a></li>
-									<li><a href="${pageContext.request.contextPath}/public/cadastroCliente.jsp">Cadastro</a></li>
+									<li><s:a action="PaginaDeCadastrarCliente">Cadastro</s:a></li>
 								</c:otherwise>
 							</c:choose>
 						</ul>
@@ -38,7 +38,7 @@
 								<s:a action="HomeCliente">Home</s:a>
 							</c:if>
 							</li>
-							<li><a href="">Viagens</a></li>
+							<li><s:a action="ConsultarViagem">Viagens</s:a></li>
 							<li><a href="">Ônibus</a></li>
 						</ul>
 					</nav>

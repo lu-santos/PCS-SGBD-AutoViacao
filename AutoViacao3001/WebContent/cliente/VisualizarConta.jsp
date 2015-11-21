@@ -1,6 +1,6 @@
 <div id="global">
-	<div class="conteudo">
-		<form style="width: 90%" method="post">
+	<div class="conteudo clearfix">
+		<form class="clearfix" style="width: 90%" method="post">
 			<h2>Consulta dos dados da Conta</h2>
 			<p style="color:#e62117">
 				<s:property value="mensagem"/>
@@ -34,6 +34,10 @@
 				<s:textfield disabled="true" name="cliente.estado"/>
             </div>
             <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
+				<label>Cidade*</label>
+				<s:textfield disabled="true" name="cliente.cidade"/>
+    		</div>
+            <div class="caixa-padrao" style="width: 22%;">
 				<label>Telefone Residencial*</label>
 				<s:textfield disabled="true" name="cliente.telefoneResidencial"/>
     		</div>
@@ -41,7 +45,7 @@
 				<label>Telefone Celular*</label>
 				<s:textfield disabled="true" name="cliente.telefoneCelular"/><br>
     		</div>
-    		<div style="clear: both; width: 22%; padding-top: 15px;">
+    		<div class="caixa-padrao" style="width: 24%">
 				<label>Senha*</label>
 				<s:textfield disabled="true" name="cliente.senha"/>
     		</div>

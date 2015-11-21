@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +19,9 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	private final String tabelaPassagem = "passagem";
 	private final String nomeDasColunasViagem = "data_hora_partida, data_hora_chegada, id_onibus, cpf_motorista, "
 			+ "id_locais";
+	private OnibusDAO onibusDAO;
+	private MotoristaDAO motoristaDAO;
+	private LocaisDAO locaisDAO;
 	
 	public ViagemDAO() {}
 
@@ -68,14 +72,19 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-        	viagem.setIdLocais(registro.getInt("id_locais"));
-        	viagem.setIdOnibus(registro.getInt("id_onibus"));
-        	viagem.setCpf(registro.getString("cpf_motorista").trim());
+        	onibusDAO = new OnibusDAO(conexao);
+        	motoristaDAO = new MotoristaDAO(conexao);
+        	locaisDAO =  new LocaisDAO(conexao);
+        	viagem.setOnibus(onibusDAO.buscar(registro.getInt("id_onibus")));
+        	viagem.setMotorista(motoristaDAO.buscar(registro.getString("cpf_motorista")));
+        	viagem.setLocais(locaisDAO.buscar(registro.getInt("id_locais")));
         	return viagem;
         } catch (SQLException ex) {
-        	System.out.println("Erro ao pegar entidade no banco - " + ex);
+        	System.out.println("Erro ao pegar viagem no banco - " + ex);
             Logger.getLogger(ViagemDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
         return null;
 	}
 
@@ -84,9 +93,9 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 		try {
 			pst.setTimestamp(1, new Timestamp(viagem.getDataHoraPartida().getTime()));
 			pst.setTimestamp(2, new Timestamp(viagem.getDataHoraChegada().getTime()));
-			pst.setInt(3, viagem.getIdOnibus());
-			pst.setString(4, viagem.getCpf());
-			pst.setInt(5, viagem.getIdLocais());
+			pst.setInt(3, viagem.getOnibus().getIdOnibus());
+			pst.setString(4, viagem.getMotorista().getCpf());
+			pst.setInt(5, viagem.getLocais().getIdLocais());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -108,45 +117,45 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 
 	public boolean existeConflitoDeOnibus(Viagem viagem) throws Exception{
 		String query = "select v.id_viagem from viagem v where v.data_hora_partida < '" + viagem.getDataHoraPartidaString() + "' and "
-				+ "v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + " union "
+				+ "v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.id_onibus = " + viagem.getOnibus().getIdOnibus() + " union "
 						+ "select v.id_viagem from viagem v where v.data_hora_partida = '" + viagem.getDataHoraPartidaString() + 
-						"' and v.id_onibus = " + viagem.getIdOnibus() + " union select v.id_viagem from viagem v where "
+						"' and v.id_onibus = " + viagem.getOnibus().getIdOnibus() + " union select v.id_viagem from viagem v where "
 								+ "v.data_hora_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_hora_partida < '"
-										+ viagem.getDataHoraChegadaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + ";";
+										+ viagem.getDataHoraChegadaString() + "' and v.id_onibus = " + viagem.getOnibus().getIdOnibus() + ";";
 		
 		return existeAlgumResultado(query);		
 	}
 	
 	public boolean existeConflitoDeMotorista(Viagem viagem) throws Exception{
 		String query = "select v.id_viagem from viagem v, motorista m where v.data_hora_partida < '" + viagem.getDataHoraPartidaString()
-				+ "' and v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.cpf_motorista = '" + viagem.getCpf() + 
+				+ "' and v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.cpf_motorista = '" + viagem.getMotorista().getCpf() + 
 				"' union select v.id_viagem from viagem v, motorista m where v.data_hora_partida = '" + viagem.getDataHoraPartidaString() + 
-				"' and v.cpf_motorista = '" + viagem.getCpf() + "' union select v.id_viagem from viagem v, motorista m "
+				"' and v.cpf_motorista = '" + viagem.getMotorista().getCpf() + "' union select v.id_viagem from viagem v, motorista m "
 						+ "where v.data_hora_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_hora_partida < '" + viagem.getDataHoraChegadaString() + 
-						"' and v.cpf_motorista = '" + viagem.getCpf() + "'";
+						"' and v.cpf_motorista = '" + viagem.getMotorista().getCpf() + "'";
 		
         return existeAlgumResultado(query);	
 	}
 	
 	public boolean existeConflitoDeOnibusNaAtualizacao(Viagem viagem) throws Exception{
 		String query = "select v.id_viagem from viagem v where v.data_hora_partida < '" + viagem.getDataHoraPartidaString() + "' and "
-				+ "v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + ""
+				+ "v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.id_onibus = " + viagem.getOnibus().getIdOnibus() + ""
 						+ " and v.id_viagem <> " + viagem.getIdViagem() + " union "
 						+ "select v.id_viagem from viagem v where v.data_hora_partida = '" + viagem.getDataHoraPartidaString() + 
-						"' and v.id_onibus = " + viagem.getIdOnibus() + " and v.id_viagem <> " + viagem.getIdViagem() + " union select v.id_viagem from viagem v where "
+						"' and v.id_onibus = " + viagem.getOnibus().getIdOnibus() + " and v.id_viagem <> " + viagem.getIdViagem() + " union select v.id_viagem from viagem v where "
 								+ "v.data_hora_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_hora_partida < '"
-										+ viagem.getDataHoraChegadaString() + "' and v.id_onibus = " + viagem.getIdOnibus() + " and v.id_viagem <> " + viagem.getIdViagem();
+										+ viagem.getDataHoraChegadaString() + "' and v.id_onibus = " + viagem.getOnibus().getIdOnibus() + " and v.id_viagem <> " + viagem.getIdViagem();
 		
 		return existeAlgumResultado(query);		
 	}
 	
 	public boolean existeConflitoDeMotoristaNaAtualizacao(Viagem viagem) throws Exception{
 		String query = "select v.id_viagem from viagem v, motorista m where v.data_hora_partida < '" + viagem.getDataHoraPartidaString()
-				+ "' and v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.cpf_motorista = '" + viagem.getCpf() + 
+				+ "' and v.data_hora_chegada > '" + viagem.getDataHoraPartidaString() + "' and v.cpf_motorista = '" + viagem.getMotorista().getCpf() + 
 				"' and v.id_viagem <> " + viagem.getIdViagem() + " union select v.id_viagem from viagem v, motorista m where v.data_hora_partida = '" + viagem.getDataHoraPartidaString() + 
-				"' and v.cpf_motorista = '" + viagem.getCpf() + "' and v.id_viagem <> " + viagem.getIdViagem() + " union select v.id_viagem from viagem v, motorista m "
+				"' and v.cpf_motorista = '" + viagem.getMotorista().getCpf() + "' and v.id_viagem <> " + viagem.getIdViagem() + " union select v.id_viagem from viagem v, motorista m "
 						+ "where v.data_hora_partida > '" + viagem.getDataHoraPartidaString() + "' and v.data_hora_partida < '" + viagem.getDataHoraChegadaString() + 
-						"' and v.cpf_motorista = '" + viagem.getCpf() + "' and v.id_viagem <> " + viagem.getIdViagem();
+						"' and v.cpf_motorista = '" + viagem.getMotorista().getCpf() + "' and v.id_viagem <> " + viagem.getIdViagem();
 		
         return existeAlgumResultado(query);	
 	}
@@ -174,6 +183,16 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	
 	public List<Viagem> listarViagensMotorista(String cpfMotorista) throws Exception{
 		String query = "SELECT * FROM " + tabelaViagem + " WHERE cpf_motorista = '" + cpfMotorista + "' ORDER BY data_hora_partida";
+		return Consulta(query);
+	}
+	
+	public List<Viagem> listarViagensOnibus(Integer idOnibus) throws Exception{
+		String query = "SELECT * FROM " + tabelaViagem + " WHERE id_onibus = " + idOnibus + " ORDER BY data_hora_partida";
+		return Consulta(query);
+	}
+	
+	public List<Viagem> ListarResultadoDaConsultaViagens(Integer idLocais, String data) throws Exception {
+		String query = "SELECT * FROM " + tabelaViagem + " WHERE id_locais = " + idLocais + " and data_hora_partida >= '" + data + "' ORDER BY data_hora_partida";
 		return Consulta(query);
 	}
 }

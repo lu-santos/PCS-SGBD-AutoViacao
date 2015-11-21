@@ -3,11 +3,6 @@ package modelo.entidade;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-
-import modelo.dao.ConexaoPostgres;
-import modelo.dao.LocaisDAO;
-import modelo.dao.MotoristaDAO;
-import modelo.dao.OnibusDAO;
 import util.DataUtil;
 
 public class Viagem {
@@ -20,43 +15,37 @@ public class Viagem {
 	private String dataHoraChegadaString;
 	private String dataHoraChegadaFormatada;
 	private String dataHoraChegadaFormatoJSP;
-	private Integer idOnibus;
-	private String cpf;
-	private Integer idLocais;
-	private List<Passagem> passagens;
-	private String labelLocais;
-	private String labelOnibus;
-	private String nomeMotorista;
-	private ConexaoPostgres conexao = new ConexaoPostgres();
-	private LocaisDAO lDAO = new LocaisDAO(conexao);
-	private OnibusDAO oDAO = new OnibusDAO(conexao);
-	private MotoristaDAO mDAO = new MotoristaDAO(conexao);
-
+	//private List<Passagem> passagens;
+	private Onibus onibus;
+	private Motorista motorista;
+	private Locais locais;
+	private List<Passagem> passageiros;
+	
 	// private static final DateFormat DATETIME_FORMAT = new
 	// SimpleDateFormat("yyyy-MM-dd");
 	// private static final DateFormat TIME_FORMAT = new
 	// SimpleDateFormat("hh:mm:ss");
-
+	
 	public Viagem() {
 	}
 
 	public Viagem(Integer idViagem, Date dataHoraPartida, Date dataHoraChegada,
-			Integer idLocais, Integer idOnibus, String cpfMotorista) {
+			Locais locais, Onibus onibus, Motorista motorista) {
 		this.idViagem = idViagem;
 		this.dataHoraPartida = dataHoraPartida;
 		this.dataHoraPartida = dataHoraChegada;
-		this.idLocais = idLocais;
-		this.idOnibus = idOnibus;
-		this.cpf = cpfMotorista;
+		this.locais = locais;
+		this.onibus = onibus;
+		this.motorista = motorista;
 	}
 
-	public Viagem(Date dataHoraPartida, Date dataHoraChegada, Integer idLocais,
-			Integer idOnibus, String cpfMotorista) {
+	public Viagem(Date dataHoraPartida, Date dataHoraChegada, Locais locais, 
+			Onibus onibus, Motorista motorista) {
 		this.dataHoraPartida = dataHoraPartida;
 		this.dataHoraPartida = dataHoraChegada;
-		this.idLocais = idLocais;
-		this.idOnibus = idOnibus;
-		this.cpf = cpfMotorista;
+		this.locais = locais;
+		this.onibus = onibus;
+		this.motorista = motorista;
 	}
 
 	public Integer getIdViagem() {
@@ -89,38 +78,6 @@ public class Viagem {
 				.converterStringParaDataComHora(dataHoraChegada);
 	}
 
-	public Integer getIdOnibus() {
-		return idOnibus;
-	}
-
-	public void setIdOnibus(Integer idOnibus) {
-		this.idOnibus = idOnibus;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public Integer getIdLocais() {
-		return idLocais;
-	}
-
-	public void setIdLocais(Integer idLocais) {
-		this.idLocais = idLocais;
-	}
-
-	public List<Passagem> getPassagens() {
-		return passagens;
-	}
-
-	public void setPassagens(List<Passagem> passagens) {
-		this.passagens = passagens;
-	}
-
 	public String getDataHoraPartidaString() {
 		dataHoraPartidaString = DataUtil.converterDataComHoraParaString(dataHoraPartida);
 		return dataHoraPartidaString;
@@ -139,39 +96,6 @@ public class Viagem {
 	public String getDataHoraChegadaFormatada() {
 		dataHoraChegadaFormatada = DataUtil.formatarDataHora(dataHoraChegada);
 		return dataHoraChegadaFormatada;
-	}
-
-	public String getLabelLocais() {
-		try {
-			Locais locais = lDAO.buscar(idLocais);
-			this.labelLocais = locais.getLabel();
-		} catch (Exception e) {
-			this.labelLocais = "";
-			e.printStackTrace();
-		}
-		return labelLocais;
-	}
-
-	public String getLabelOnibus() {
-		try {
-			Onibus onibus = oDAO.buscar(idOnibus);
-			labelOnibus = onibus.getLabel();
-		} catch (Exception e) {
-			labelOnibus = "";
-			e.printStackTrace();
-		}
-		return labelOnibus;
-	}
-
-	public String getNomeMotorista() {
-		try {
-			Motorista motorista = mDAO.buscar(cpf);
-			nomeMotorista = motorista.getNome();
-		} catch (Exception e) {
-			nomeMotorista = "";
-			e.printStackTrace();
-		}
-		return nomeMotorista;
 	}
 
 	public String getDataHoraPartidaFormatoJSP() {
@@ -200,6 +124,38 @@ public class Viagem {
 			e.printStackTrace();
 		}
 		this.dataHoraChegadaFormatoJSP = dataHoraChegadaFormatoJSP;
+	}
+
+	public Onibus getOnibus() {
+		return onibus;
+	}
+
+	public void setOnibus(Onibus onibus) {
+		this.onibus = onibus;
+	}
+
+	public Motorista getMotorista() {
+		return motorista;
+	}
+
+	public void setMotorista(Motorista motorista) {
+		this.motorista = motorista;
+	}
+
+	public Locais getLocais() {
+		return locais;
+	}
+
+	public void setLocais(Locais locais) {
+		this.locais = locais;
+	}
+
+	public List<Passagem> getPassageiros() {
+		return passageiros;
+	}
+
+	public void setPassageiros(List<Passagem> passageiros) {
+		this.passageiros = passageiros;
 	}
 
 

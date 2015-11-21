@@ -3,14 +3,20 @@ package modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import modelo.entidade.Cliente;
 import modelo.entidade.Passagem;
+import modelo.entidade.Viagem;
 
 public class PassagemDAO extends BaseCrudDAO<Passagem>{
 	
 	private final String tabelaPassagem = "passagem";
+	private ClienteDAO clienteDAO;
+	private ViagemDAO viagemDAO;
 
 	public PassagemDAO(ConexaoDAO conexao) {
 		super(conexao);
@@ -60,12 +66,20 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
         	passagem.setId(registro.getInt("id"));
         	passagem.setIdOnibus(registro.getInt("id_onibus"));
         	passagem.setNumeroPoltrona(registro.getInt("numero_poltrona"));
-        	passagem.setPreco(registro.getDouble("preco"));
-        	passagem.setIdViagem(registro.getInt("id_viagem"));
-        	passagem.setCpfCliente(registro.getString("cpf_cliente"));
+        	passagem.setPreco(String.valueOf(registro.getDouble("preco")));
+        	viagemDAO = new ViagemDAO(conexao);
+        	passagem.setViagem(viagemDAO.buscar(registro.getInt("id_viagem")));
+        	if (registro.getString("cpf_cliente") == null || registro.getString("cpf_cliente").trim().isEmpty()) {
+        		passagem.setCliente(new Cliente());
+        	}
+        	else {
+        		clienteDAO = new ClienteDAO(conexao);
+        		String cpf = registro.getString("cpf_cliente").trim();
+        		passagem.setCliente(clienteDAO.buscar(cpf));
+        	}
         	return passagem;
-        } catch (SQLException ex) {
-        	System.out.println("Erro ao pegar entidade no banco - " + ex);
+        } catch (Exception ex) {
+        	System.out.println("Erro ao pegar passagem no banco - " + ex);
             Logger.getLogger(PassagemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -74,7 +88,7 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 	@Override
 	public void incluirDadosNoBanco(PreparedStatement pst, Passagem passagem) {
 		try {
-			pst.setInt(1, passagem.getIdViagem());
+			pst.setInt(1, passagem.getViagem().getIdViagem());
 			pst.setInt(2, passagem.getIdOnibus());
 			pst.setInt(3, passagem.getNumeroPoltrona());
 			pst.setDouble(4, passagem.getPreco());
@@ -90,4 +104,36 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 		return null;
 	}
 
+	public List<Passagem> listarPassageirosDeUmaViagem(Integer idViagem) throws Exception {
+		String query = "Select * from passagem where id_viagem = " + idViagem + " and cpf_cliente != ''";
+		return Consulta(query);
+	}
+	
+	public List<Passagem> listarPassagensCliente(String cpf) throws Exception {
+		String query = "Select * from passagem where cpf_cliente = '" + cpf + "'";
+		return Consulta(query);
+	}
+	
+	public List<Passagem> PassagensMaisVendidadas(String consulta) throws Exception {
+        conectar = conexao.abrirConexao();
+        String query = consulta; 
+        List<Passagem> listaDeEntidade = new ArrayList<>();
+        try{
+            PreparedStatement pst = conectar.prepareStatement(query);
+            ResultSet registro = pst.executeQuery();
+            while(registro.next()){
+                Passagem passagem = new Passagem();
+                viagemDAO = new ViagemDAO(conexao);
+            	passagem.setViagem(viagemDAO.buscar(registro.getInt("id_viagem")));
+            	passagem.setPreco(String.valueOf(registro.getDouble("preco")));
+            	passagem.setQuantidade(registro.getInt("total_de_passagens"));
+                listaDeEntidade.add(passagem);
+            }
+        }catch(SQLException e){
+            System.out.println("Erro na consulta: " + e.getMessage());
+        }finally{
+            conexao.fecharConexao();
+        }
+        return listaDeEntidade; 
+    }
 }

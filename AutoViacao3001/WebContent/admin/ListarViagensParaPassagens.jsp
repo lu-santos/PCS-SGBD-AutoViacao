@@ -1,18 +1,6 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<style type="text/css">
-	tr.odd 
-	{
-	        background-color: #fff
-	}
-	
-	tr.tableRowEven,tr.even 
-	{
-	        background-color: #eee
-	}
-</style>
-
 <div id="global" style="height: 100%">
 	<div class="conteudo clearfix">
 		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
@@ -23,9 +11,14 @@
 			<div align="center">
 				<display:table id="tabelaViagensPassagens" name="listaDeViagens" pagesize="20" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
 					<display:column property="dataHoraPartidaFormatada" title="Data/Hora de Partida"/>
-					<display:column property="labelLocais" title="Partida/Destino/Distância(KM)"/>
-					<display:column property="labelOnibus" title="Ônibus"/>
-					<display:column href="PrepararGerarPassagens" paramId="viagem.idViagem" property="idViagem" title="Gerar Passagens"/>
+					<display:column property="locais.label" title="Partida/Destino/Distância(KM)"/>
+					<display:column property="onibus.label" title="Ônibus"/>
+					<s:url var="gerarPassagemUrl" action="PrepararGerarPassagens">
+						<s:param name="viagem.idViagem" value="%{#attr.tabelaViagensPassagens.idViagem}"/>
+					</s:url>
+					<display:column title="Gerar Passagens">
+						<s:a href="%{#gerarPassagemUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_passagem.png"></s:a>
+					</display:column>
 				</display:table>
 			</div>
 		</c:if>

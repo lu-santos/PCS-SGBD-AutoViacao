@@ -13,6 +13,7 @@ import modelo.dao.LocalDAO;
 import modelo.entidade.Cliente;
 import modelo.entidade.Locais;
 import modelo.entidade.Local;
+import modelo.entidade.Viagem;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -57,14 +58,15 @@ public class LocalAction extends ActionSupport {
 	
 	public String adicionarDistancia() {
 		try {
-			this.local = localDAO.buscar(localComDistancia.getIdLocalOrigem());			
+			this.local = localDAO.buscar(localComDistancia.getLocalDeOrigem().getId());			
 			this.listaDeLocaisSemDistancia = localDAO.Consulta(getQueryDeListarLocaisAposCadastro(local.getId().intValue()));
 			
 			if (locaisComDistanciaDAO.incluir(this.localComDistancia) == true) {
 				mensagem = "Distância cadastrada com sucesso.";			
-				this.listaDeLocaisSemDistancia = localDAO.Consulta(getQueryDeListarLocaisAposCadastro(local.getId().intValue()));
+				carregarAlteracao();
 			}
 			else {
+				carregarAlteracao();
 				mensagem = "Distância já cadastrada no banco. Escolha outro Destino";
 			}			
 		} catch (Exception e) {
@@ -94,6 +96,137 @@ public class LocalAction extends ActionSupport {
 			mensagem = e.getMessage();
 		}
 		return LocalAction.SUCCESS;
+	}
+	
+	public String listarDestinoMaisProcurado() {
+		try {
+			this.listaDeLocaisSemDistancia = localDAO.destinoMaisProcurado();
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+		}
+		return LocalAction.SUCCESS;
+	}
+	
+	public String excluirLocal() {
+		try {
+			this.local = localDAO.buscar(local.getId());
+			if(localDAO.remover(local) == true) {
+				this.listaDeLocaisSemDistancia = localDAO.listar();
+				mensagem = "Exclusão realizada com sucesso";
+			}
+			else {
+				this.listaDeLocaisSemDistancia = localDAO.listar();
+				mensagem = "Falha na exclusão";
+			}
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+		}
+		return LocalAction.SUCCESS;
+	}
+	
+	public String editarLocal() {
+		try {
+			if(camposEmBranco() == true) {
+				mensagem = "Não foram preenchidos todos os campos obrigatórios";
+				this.local = localDAO.buscar(local.getId());
+				carregarAlteracao();
+				return LocalAction.INPUT;
+			}		
+			
+			else if(localDAO.alterar(local) == true) {
+				this.local = localDAO.buscar(local.getId());
+				mensagem = "Alteração Realizada com Sucesso";
+				carregarAlteracao();
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Erro ao alterar nome do local : " + e.getMessage());
+			if (e.getMessage().contains("duplicate key value violates unique constraint"))
+				mensagem = "Local já cadastrado. Preencha outro Local.";
+			else
+				mensagem = e.getMessage();
+			return LocalAction.INPUT;
+		}
+		return LocalAction.SUCCESS;
+	}
+	
+	public String visualizar() {
+		try {
+			prepararPaginaDeVisualizacao();
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+		}
+		return LocalAction.SUCCESS;
+	}
+	
+	private void prepararPaginaDeVisualizacao() throws Exception {
+		this.local = localDAO.buscar(local.getId());
+		carregarAlteracao();
+	}
+	
+	public String prepararPaginaDeAlteracaoDistancia() {
+		try {
+			this.localComDistancia = locaisComDistanciaDAO.buscar(localComDistancia.getIdLocais());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return LocalAction.SUCCESS;
+	}
+	
+	public String editarDistancia(){
+		try {
+			Double distancia = localComDistancia.getDistancia();
+			this.localComDistancia = locaisComDistanciaDAO.buscar(localComDistancia.getIdLocais());
+			this.localComDistancia.setDistancia(String.valueOf(distancia));
+			
+			if(locaisComDistanciaDAO.alterar(localComDistancia) == true) {
+				mensagem = "Alteração realizada com sucesso";
+			}
+			else {
+				mensagem = "Falha na alteração";
+				return LocalAction.INPUT;
+			}
+
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+			e.printStackTrace();
+		}
+		
+		return LocalAction.SUCCESS;
+	}
+	
+	public String excluirDistancia() {
+		try {
+			this.localComDistancia = locaisComDistanciaDAO.buscar(localComDistancia.getIdLocais()); 
+			this.local = localDAO.buscar(localComDistancia.getLocalDeOrigem().getId());			
+			
+			if(locaisComDistanciaDAO.remover(localComDistancia) == true) {
+				mensagem = "Exclusão realizada com sucesso";
+				carregarAlteracao();
+			}
+			else {
+				mensagem = "Falha na exclusão";
+				carregarAlteracao();
+				return ClienteAction.INPUT;
+			}
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+			e.printStackTrace();
+		}
+		return ClienteAction.SUCCESS;
+	}
+	
+	private boolean camposEmBranco() {
+		if(this.local.getNome().isEmpty()) {
+			return true;
+		}
+		return false;
+	}
+	
+	private void carregarAlteracao() throws Exception {
+		this.listaDeLocaisSemDistancia = localDAO.Consulta(getQueryDeListarLocaisAposCadastro(local.getId().intValue()));
+		String query = "SELECT * FROM locais where id_local_origem = " + local.getId() + " or id_local_destino = " + local.getId();
+		this.locais = locaisComDistanciaDAO.Consulta(query);
 	}
 
 	public List<Locais> getLocais() {

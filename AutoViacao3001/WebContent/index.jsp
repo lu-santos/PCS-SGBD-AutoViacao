@@ -6,9 +6,9 @@
 <div class="conteudo clearfix">
 	<section id="item" class="clearfix">
 		<div>
-			<a href="#"><img src="${pageContext.request.contextPath}/images/icon_viagem.png">
+			<s:a action="ConsultarViagem"><img src="${pageContext.request.contextPath}/images/icon_viagem.png">
 				<p>Viagens</p>
-			</a>
+			</s:a>
 		</div>
 		<div>
 			<a href=""><img src="${pageContext.request.contextPath}/images/icon_onibus.png">

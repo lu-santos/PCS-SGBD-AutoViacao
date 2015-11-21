@@ -141,6 +141,8 @@ footer {
 	color: #fff;
 	padding: 10px 0px;
 	margin-top: 50px;
+    position: absolute;
+    width: 100%;
 }
 
 form {
@@ -175,7 +177,7 @@ select {
 	margin-top: 10px;
 }
 
-input[type="text"], input[type="number"], input[type="password"], input[type="date"] {
+input[type="text"], input[type="number"], input[type="password"], input[type="date"], input[type="datetime-local"] {
 	padding: 3px 3px 3px 1px;
 	margin: 10px 0;
 	height: 25px;
@@ -213,6 +215,14 @@ thead {
 
 th, td {
 	padding: 15px;
+}
+
+tr.odd {
+	background-color: #fff;
+}
+	
+tr.tableRowEven,tr.even {
+	background-color: #eee;
 }
 
 /* --- página de login --- */

@@ -15,10 +15,12 @@ import modelo.entidade.Motorista;
 public class MotoristaDAO extends BaseCrudDAO<Motorista> {
 	private final String tabelaMotorista = "motorista";
 	private final String tabelaPessoa = "pessoa";
-	private final String nomeDasColunasPessoa = "nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular, cpf";
+	private final String nomeDasColunasPessoa = "nome, data_nascimento, endereco, bairro, cidade, cep, estado, telefone_residencial, telefone_celular, cpf";
 	private final String nomeDasColunasMotorista = "salario, data_contratacao, cpf_motorista";
 	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
   
+	public MotoristaDAO() {}
+	
     public MotoristaDAO(ConexaoDAO conexao) {
         super(conexao);
     }	
@@ -31,12 +33,12 @@ public class MotoristaDAO extends BaseCrudDAO<Motorista> {
 
 	@Override
 	public String getQueryDeInclusao() {
-		return "INSERT INTO " + tabelaPessoa + " (" + nomeDasColunasPessoa + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?); INSERT INTO " + tabelaMotorista + " (" + nomeDasColunasMotorista + ") VALUES(?, ?, ?)";
+		return "INSERT INTO " + tabelaPessoa + " (" + nomeDasColunasPessoa + ") VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?); INSERT INTO " + tabelaMotorista + " (" + nomeDasColunasMotorista + ") VALUES(?, ?, ?)";
 	}
 
 	@Override
 	public String getQueryDeAlteracao(Motorista motorista) {
-		return "UPDATE " + tabelaPessoa + " SET nome = ?, data_nascimento = ?, endereco = ?, bairro = ?, cep = ?, estado = ?, telefone_residencial = ?, telefone_celular = ? WHERE cpf = ?; UPDATE " + tabelaMotorista + " SET salario = ?, data_contratacao = ? WHERE cpf_motorista = ?";
+		return "UPDATE " + tabelaPessoa + " SET nome = ?, data_nascimento = ?, endereco = ?, bairro = ?, cidade = ?, cep = ?, estado = ?, telefone_residencial = ?, telefone_celular = ? WHERE cpf = ?; UPDATE " + tabelaMotorista + " SET salario = ?, data_contratacao = ? WHERE cpf_motorista = ?";
 	}
 
 	@Override
@@ -64,6 +66,7 @@ public class MotoristaDAO extends BaseCrudDAO<Motorista> {
         	motorista.setDataDeNascimento(DATETIME_FORMAT.format(registro.getDate(("data_nascimento"))));
         	motorista.setEndereco(registro.getString("endereco"));
         	motorista.setBairro(registro.getString("bairro"));
+        	motorista.setCidade(registro.getString("cidade"));
         	motorista.setCep(registro.getString("cep").trim());
         	motorista.setEstado(registro.getString("estado"));
         	motorista.setTelefoneResidencial(registro.getString("telefone_residencial").trim());
@@ -74,7 +77,9 @@ public class MotoristaDAO extends BaseCrudDAO<Motorista> {
         } catch (SQLException | ParseException ex) {
         	System.out.println("Erro ao pegar entidade no banco - " + ex);
             Logger.getLogger(MotoristaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
         return null;
 	}
 
@@ -85,14 +90,15 @@ public class MotoristaDAO extends BaseCrudDAO<Motorista> {
 		    pst.setDate(2, new java.sql.Date(DATETIME_FORMAT.parse(motorista.getDataDeNascimento()).getTime()));
 		    pst.setString(3, motorista.getEndereco());
 		    pst.setString(4, motorista.getBairro());
-		    pst.setString(5, motorista.getCep());
-		    pst.setString(6, motorista.getEstado());
-		    pst.setString(7, motorista.getTelefoneResidencial());
-		    pst.setString(8, motorista.getTelefoneCelular());
-            pst.setString(9, motorista.getCpf());
-            pst.setDouble(10, motorista.getSalario());
-            pst.setDate(11, new java.sql.Date(DATETIME_FORMAT.parse(motorista.getDataDeContratacao()).getTime()));
-            pst.setString(12, motorista.getCpf());
+		    pst.setString(5, motorista.getCidade());
+		    pst.setString(6, motorista.getCep());
+		    pst.setString(7, motorista.getEstado());
+		    pst.setString(8, motorista.getTelefoneResidencial());
+		    pst.setString(9, motorista.getTelefoneCelular());
+            pst.setString(10, motorista.getCpf());
+            pst.setDouble(11, motorista.getSalario());
+            pst.setDate(12, new java.sql.Date(DATETIME_FORMAT.parse(motorista.getDataDeContratacao()).getTime()));
+            pst.setString(13, motorista.getCpf());
         } catch (SQLException | ParseException ex) {
         	System.out.println("Erro ao incluir/alterar no banco - " + ex);
             Logger.getLogger(MotoristaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,8 +120,20 @@ public class MotoristaDAO extends BaseCrudDAO<Motorista> {
 	}
 	
 	public List<Motorista> listarMotoristas() throws Exception{
-		String query = "SELECT cpf, nome, data_nascimento, endereco, bairro, cep, estado, telefone_residencial, telefone_celular, salario, data_contratacao FROM pessoa JOIN motorista ON cpf = cpf_motorista";
+		String query = "SELECT cpf, nome, data_nascimento, endereco, bairro, cidade, cep, estado, telefone_residencial, telefone_celular, salario, data_contratacao FROM pessoa JOIN motorista ON cpf = cpf_motorista";
 		return Consulta(query);
 	}
 
+	public List<Motorista> listarMotoristaComMaisViagem(String dataHoraPartida, String dataHoraChegada) throws Exception {
+		String query = "select cpf, nome, data_nascimento, endereco, bairro, cidade, cep, estado, telefone_residencial, telefone_celular, salario, data_contratacao, count(v.cpf_motorista) as total " 
+						+ "from viagem v join pessoa p " 
+						+ "on v.cpf_motorista = p.cpf "
+						+ "join motorista m "
+						+ "on v.cpf_motorista = m.cpf_motorista "
+						+ "where data_hora_partida >= '" + dataHoraPartida 
+						+ "' and data_hora_chegada <= '" + dataHoraChegada
+						+ "' group by p.cpf, m.data_contratacao, m.salario "
+						+ "order by total desc";
+		return Consulta(query);
+	}
 }

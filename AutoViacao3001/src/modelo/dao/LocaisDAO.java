@@ -17,13 +17,17 @@ public class LocaisDAO extends BaseCrudDAO<Locais> {
 	private final String tabelaLocais = "locais";
 	private final String nomeDasColunasLocais = "id_local_destino, id_local_origem, distancia";
 
+	private LocalDAO localDAO;
+	
+	public LocaisDAO() {}
+	
 	public LocaisDAO(ConexaoDAO conexao) {
 		super(conexao);
 	}
 
 	@Override
 	public String getQueryDeExiste(Locais locais) {
-		return "SELECT " + nomeDasColunasLocais + " FROM " + tabelaLocais + " WHERE id_local_destino = " + locais.getIdLocalDestino() + " AND id_local_origem = " + locais.getIdLocalOrigem();
+		return "SELECT " + nomeDasColunasLocais + " FROM " + tabelaLocais + " WHERE id_local_destino = " + locais.getLocalDeDestino().getId() + " AND id_local_origem = " + locais.getLocalDeOrigem().getId();
 	}
 
 	@Override
@@ -32,15 +36,13 @@ public class LocaisDAO extends BaseCrudDAO<Locais> {
 	}
 
 	@Override
-	public String getQueryDeAlteracao(Locais entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getQueryDeAlteracao(Locais locais) {
+		return "UPDATE " + tabelaLocais + " SET id_local_destino = ?, id_local_origem = ?, distancia = ? WHERE id = " + locais.getIdLocais();
 	}
 
 	@Override
-	public String getQueryDeRemocao(Locais entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getQueryDeRemocao(Locais locais) {
+		return "DELETE FROM " + tabelaLocais + " WHERE id = " + locais.getIdLocais();
 	}
 
 	@Override
@@ -59,23 +61,25 @@ public class LocaisDAO extends BaseCrudDAO<Locais> {
         try {
         	locais = new Locais();
         	locais.setIdLocais(registro.getInt("id"));
-        	locais.setIdLocalOrigem(registro.getInt("id_local_origem"));
-        	locais.setIdLocalDestino(registro.getInt("id_local_destino"));
-        	locais.setDistancia(registro.getDouble("distancia"));
-        	
+        	localDAO = new LocalDAO(conexao);
+        	locais.setLocalDeOrigem((localDAO.buscar(registro.getInt("id_local_origem"))));
+        	locais.setLocalDeDestino((localDAO.buscar(registro.getInt("id_local_destino"))));
+        	locais.setDistancia(String.valueOf(registro.getDouble("distancia"))); 	
         	return locais;
         } catch (SQLException ex) {
-        	System.out.println("Erro ao pegar entidade no banco - " + ex);
+        	System.out.println("Erro ao pegar locais no banco - " + ex);
             Logger.getLogger(ViagemDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
         return null;
 	}
 
 	@Override
 	public void incluirDadosNoBanco(PreparedStatement pst, Locais entidade) {
 		try {
-		    pst.setInt(1, entidade.getIdLocalDestino());
-		    pst.setInt(2, entidade.getIdLocalOrigem());
+		    pst.setInt(1, entidade.getLocalDeDestino().getId());
+		    pst.setInt(2, entidade.getLocalDeOrigem().getId());
 		    pst.setDouble(3, entidade.getDistancia());
         } catch (SQLException ex) {
         	System.out.println("Erro ao incluir/alterar no banco - " + ex);

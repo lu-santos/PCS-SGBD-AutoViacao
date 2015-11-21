@@ -1,19 +1,7 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<style type="text/css">
-	tr.odd 
-	{
-	        background-color: #fff
-	}
-	
-	tr.tableRowEven,tr.even 
-	{
-	        background-color: #eee
-	}
-</style>
-
-<div id="global" style="height: 100%">
+<div id="global">
 	<div class="conteudo clearfix">
 		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
 			<s:property value="mensagem"/>
@@ -28,14 +16,14 @@
 				<li>Telefones: <s:label name="motorista.telefoneResidencial"></s:label> / <s:label name="motorista.telefoneCelular"></s:label></li>
 			</ul>
 			<hr>
-		<c:if test="${not empty viagens}">
+		<c:if test="${fn:length(motorista.viagens) >= 1}">
 			<p style="color: #777">A tabela pode ser exportada como .csv, .xls, .xml ou .pdf.</p>
 			<div align="center">
-				<display:table id="tabelaViagensMotorista" name="viagens" pagesize="20" export="true" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
+				<display:table id="tabelaViagensMotorista" name="motorista.viagens" pagesize="20" export="true" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
 					<display:column property="dataHoraPartidaFormatada" title="Data/Hora de Partida"/>
 					<display:column property="dataHoraChegadaFormatada" title="Data/Hora de Chegada"/>
-					<display:column property="labelLocais" title="Partida/Destino/Distância(KM)"/>
-					<display:column property="labelOnibus" title="Ônibus"/>
+					<display:column property="locais.label" title="Partida/Destino/Distância(KM)"/>
+					<display:column property="onibus.label" title="Ônibus"/>
 					<display:setProperty name="export.pdf" value="true" />
 					<display:setProperty name="export.pdf.filename" value="viagens_motorista.pdf"/>
 					<display:setProperty name="export.excel.filename" value="viagens_motorista.xls"/>
@@ -45,7 +33,7 @@
 			</div>
 		</c:if>
 	
-		<c:if test="${empty viagens}">
+		<c:if test="${fn:length(motorista.viagens) == 0}">
 			<p>Sem viagens cadastradas para o motorista selecionado.</p>
 		</c:if>
 	</div>

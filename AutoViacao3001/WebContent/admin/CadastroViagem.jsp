@@ -11,7 +11,7 @@
 				</p>
 				<div class="caixa-padrao" style="margin-left: 0px; width: 90%">
 					<label>Local de Partida / Local de Origem / Distância (KM)*</label><br>
-					<s:select listKey="idLocais" listValue="label" headerKey="-1" list="listaDeLocais" name="viagem.idLocais"/><br>
+					<s:select listKey="idLocais" listValue="label" headerKey="-1" list="listaDeLocais" name="viagem.locais.idLocais"/><br>
 	            </div>
 				<div class="caixa-padrao" style="margin-left: 0px; width: 35%">
 					<label>Data/Hora de Partida*</label><br>
@@ -23,11 +23,11 @@
 	            </div>
 	  			 <div class="caixa-padrao" style="width: 40%; margin-left: 0px">
 					<label>Ônibus*</label><br>
-					<s:select listKey="idOnibus" listValue="modelo + ' - ' + placa" headerKey="-1" list="listaDeOnibus" name="viagem.idOnibus"/><br>
+					<s:select listKey="idOnibus" listValue="modelo + ' - ' + placa" headerKey="-1" list="listaDeOnibus" name="viagem.onibus.idOnibus"/><br>
 	    		</div>
 	    		<div class="caixa-padrao" style="width: 50%">
 					<label>Motorista*</label><br>
-					<s:select listKey="cpf" listValue="nome" headerKey="-1" list="listaDeMotoristas" name="viagem.cpf"/><br><br>
+					<s:select listKey="cpf" listValue="nome" headerKey="-1" list="listaDeMotoristas" name="viagem.motorista.cpf"/><br><br>
 	    		</div>
 	   			<div align="center">
 	   				<input type="submit" value="Cadastrar" class="button-green" style="width: 20%; display: block; clear: both">

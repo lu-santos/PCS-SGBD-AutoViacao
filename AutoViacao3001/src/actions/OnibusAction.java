@@ -5,6 +5,7 @@ import java.util.List;
 import modelo.dao.ConexaoPostgres;
 import modelo.dao.OnibusDAO;
 import modelo.dao.PoltronaDAO;
+import modelo.dao.ViagemDAO;
 import modelo.entidade.Onibus;
 import modelo.entidade.Poltrona;
 
@@ -16,6 +17,7 @@ public class OnibusAction extends ActionSupport{
 	private List<Onibus> listaDeOnibus;
 	private ConexaoPostgres conexao = new ConexaoPostgres();
 	private OnibusDAO oDAO = new OnibusDAO(conexao);
+	private ViagemDAO vDAO = new ViagemDAO(conexao);
 	private PoltronaDAO pDAO = new PoltronaDAO(conexao);
 	private String mensagem;
 	
@@ -101,6 +103,21 @@ public class OnibusAction extends ActionSupport{
 		}
 		
 		return OnibusAction.INPUT;
+		
+	}
+	
+	public String viagensOnibus(){
+		
+		try {
+			onibus = oDAO.buscar(onibus.getIdOnibus());
+			onibus.setViagens(vDAO.listarViagensOnibus(onibus.getIdOnibus()));
+			return SUCCESS;
+		} catch (Exception e) {
+			mensagem = "Falha na busca das viagens do motorista: " + e.getMessage();
+			e.printStackTrace();
+		}
+		
+		return INPUT;
 		
 	}
 	

@@ -17,6 +17,9 @@
 			</s:a><br>
 			<s:a action="ListarLocais">
 				Listar Locais
+			</s:a><br>
+			<s:a action="ListarDestinoMaisProcurado">
+				Listar Destinos Mais Procurados
 			</s:a>
 		</section>
 	</div>

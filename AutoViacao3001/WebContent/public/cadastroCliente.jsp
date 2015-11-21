@@ -31,46 +31,23 @@
             </div>
 			<div class="caixa-padrao" style="width: 12%">
 				<label>Estado*</label>
-				<select name="cliente.estado" id="estados">
-    				<option value="AC">AC</option>
-					<option value="AL">AL</option>
-					<option value="AM">AM</option>
-					<option value="AP">AP</option>
-					<option value="BA">BA</option>
-					<option value="CE">CE</option>
-					<option value="DF">DF</option>
-					<option value="ES">ES</option>
-					<option value="GO">GO</option>
-					<option value="MA">MA</option>
-					<option value="MG">MG</option>
-					<option value="MS">MS</option>
-					<option value="MT">MT</option>
-					<option value="PA">PA</option>
-					<option value="PB">PB</option>
-					<option value="PE">PE</option>
-					<option value="PI">PI</option>
-					<option value="PR">PR</option>
-					<option value="RJ">RJ</option>
-					<option value="RN">RN</option>
-					<option value="RO">RO</option>
-					<option value="RR">RR</option>
-					<option value="RS">RS</option>
-					<option value="SC">SC</option>
-					<option value="SE">SE</option>
-					<option value="SP">SP</option>
-					<option value="TO">TO</option>
-				</select>
+				<s:select name="cliente.estado" 
+					list="estados"  
+					value="cliente.estado" />
             </div>
             <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
+				<label>Cidade*</label>
+				<input type="text" maxlength="50" required name="cliente.cidade">
+    		</div>
+            <div class="caixa-padrao" style="width: 22%">
 				<label>Telefone Residencial*</label>
 				<input type="number" maxlength="10" required name="cliente.telefoneResidencial">
     		</div>
-  
   			 <div class="caixa-padrao" style="width: 22%">
 				<label>Telefone Celular*</label>
 				<input type="number" maxlength="11" required name="cliente.telefoneCelular"><br>
     		</div>
-    		<div style="clear: both; width: 22%; padding-top: 15px;">
+    		<div class="caixa-padrao" style="width: 24%">
 				<label>Senha*</label>
 				<input type="password" maxlength="20" required name="cliente.senha">
     		</div>

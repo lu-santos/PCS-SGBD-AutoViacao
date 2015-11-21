@@ -1,19 +1,7 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<style type="text/css">
-	tr.odd 
-	{
-	        background-color: #fff
-	}
-	
-	tr.tableRowEven,tr.even 
-	{
-	        background-color: #eee
-	}
-</style>
-
-<div id="global" style="height: 100%">
+<div id="global">
 	<div class="conteudo clearfix">
 		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
 			<s:property value="mensagem"/>
@@ -25,10 +13,30 @@
 					<display:column property="cpf" title="CPF"/>
 					<display:column property="nome" title="Nome"/>
 					<display:column property="dataDeNascimento" title="Data de Nascimento"/>
-					<display:column href="VisualizarCliente" paramId="cliente.cpf" property="cpf" title="Visualizar"/>
-					<display:column href="PrepararAlteracaoCliente" paramId="cliente.cpf" property="cpf" title="Alterar"/>
-					<display:column href="ExcluirCliente" paramId="cliente.cpf" property="cpf" title="Remover"/>
-					<display:column href="HistoricoDeCompra" paramId="cliente.cpf" property="cpf" title="Histórico de Compras"/>
+					<s:url var="visualizarUrl" action="VisualizarCliente">
+						<s:param name="cliente.cpf" value="%{#attr.tabelaClientes.cpf}"/>
+					</s:url>
+					<display:column title="Visualizar">
+						<s:a href="%{#visualizarUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_visualizar.png"></s:a>
+					</display:column>
+					<s:url var="editarUrl" action="PrepararAlteracaoCliente">
+						<s:param name="cliente.cpf" value="%{#attr.tabelaClientes.cpf}"/>
+					</s:url>
+					<display:column title="Editar">
+						<s:a href="%{#editarUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_editar.png"></s:a>
+					</display:column>
+					<s:url var="removerUrl" action="ExcluirCliente">
+						<s:param name="cliente.cpf" value="%{#attr.tabelaClientes.cpf}"/>
+					</s:url>
+					<display:column title="Remover">
+						<s:a href="%{#removerUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_remover.png"></s:a>
+					</display:column>
+					<s:url var="historicoDeCompraUrl" action="HistoricoDeCompra">
+						<s:param name="cliente.cpf" value="%{#attr.tabelaClientes.cpf}"/>
+					</s:url>
+					<display:column title="Histórico de Compras">
+						<s:a href="%{#historicoDeCompraUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_passagem.png"></s:a>
+					</display:column>
 				</display:table>
 			</div>
 		</c:if>

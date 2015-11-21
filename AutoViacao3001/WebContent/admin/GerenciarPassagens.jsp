@@ -12,6 +12,9 @@
 			<s:a action="ListarPassagens">
 				Listar Passagens
 			</s:a><br>
+			<s:a action="ConsultarEpocaDoAnoComMaisVendas">
+				Consultar Época do Ano com mais Venda de Passagens
+			</s:a><br>
 		</section>
 	</div>
 </div>

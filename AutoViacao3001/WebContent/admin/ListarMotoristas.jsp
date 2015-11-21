@@ -1,19 +1,7 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<style type="text/css">
-	tr.odd 
-	{
-	        background-color: #fff
-	}
-	
-	tr.tableRowEven,tr.even 
-	{
-	        background-color: #eee
-	}
-</style>
-
-<div id="global" style="height: 100%">
+<div id="global">
 	<div class="conteudo clearfix">
 		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
 			<s:property value="mensagem"/>
@@ -25,10 +13,30 @@
 					<display:column property="cpf" title="CPF"/>
 					<display:column property="nome" title="Nome"/>
 					<display:column property="dataDeNascimentoFormatada" title="Data de Nascimento"/>
-					<display:column href="VisualizarMotorista" paramId="motorista.cpf" property="cpf" title="Visualizar"/>
-					<display:column href="PrepararAlteracaoMotorista" paramId="motorista.cpf" property="cpf" title="Alterar"/>
-					<display:column href="ExcluirMotorista" paramId="motorista.cpf" property="cpf" title="Remover"/>
-					<display:column href="ViagensMotorista" paramId="motorista.cpf" property="cpf" title="Viagens"/>
+					<s:url var="visualizarUrl" action="VisualizarMotorista">
+						<s:param name="motorista.cpf" value="%{#attr.tabelaMotoristas.cpf}"/>
+					</s:url>
+					<display:column title="Visualizar">
+						<s:a href="%{#visualizarUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_visualizar.png"></s:a>
+					</display:column>
+					<s:url var="editarUrl" action="PrepararAlteracaoMotorista">
+						<s:param name="motorista.cpf" value="%{#attr.tabelaMotoristas.cpf}"/>
+					</s:url>
+					<display:column title="Editar">
+						<s:a href="%{#editarUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_editar.png"></s:a>
+					</display:column>
+					<s:url var="removerUrl" action="ExcluirMotorista">
+						<s:param name="motorista.cpf" value="%{#attr.tabelaMotoristas.cpf}"/>
+					</s:url>
+					<display:column title="Remover">
+						<s:a href="%{#removerUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_remover.png"></s:a>
+					</display:column>
+					<s:url var="viagemUrl" action="ViagensMotorista">
+						<s:param name="motorista.cpf" value="%{#attr.tabelaMotoristas.cpf}"/>
+					</s:url>
+					<display:column title="Viagens">
+						<s:a href="%{#viagemUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_viagem.png"></s:a>
+					</display:column>
 				</display:table>
 			</div>
 		</c:if>

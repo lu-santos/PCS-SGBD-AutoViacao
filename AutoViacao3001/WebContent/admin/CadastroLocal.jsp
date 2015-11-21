@@ -25,11 +25,11 @@
 											listValue="nome" 
 											list="listaDeLocaisSemDistancia" 
 											headerKey="-1"
-											name="localComDistancia.idLocalDestino"
+											name="localComDistancia.localDeDestino.id"
 											theme="simple" style="margin-top:0px"/>
 							</td>
 							<td>
-								<s:textfield theme="simple" type="hidden" name="localComDistancia.idLocalOrigem" value="%{#idDoLocalDeOrigem}"/>
+								<s:textfield theme="simple" type="hidden" name="localComDistancia.localDeOrigem.id" value="%{#idDoLocalDeOrigem}"/>
 								<s:textfield type="number" theme="simple" value="0" name="localComDistancia.distancia"/>
 							</td>
 						</tr>

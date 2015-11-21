@@ -1,19 +1,7 @@
 <%@taglib prefix="s" uri="/struts-tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
-<style type="text/css">
-	tr.odd 
-	{
-	        background-color: #fff
-	}
-	
-	tr.tableRowEven,tr.even 
-	{
-	        background-color: #eee
-	}
-</style>
-
-<div id="global" style="height: 100%">
+<div id="global">
 	<div>
 		<p style="text-align: center; margin-bottom: 20px; color: #007f00">
 			<s:property value="mensagem"/>
@@ -43,7 +31,7 @@
 					<display:column title="Remover">
 						<s:a href="%{#removerUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_remover.png"></s:a>
 					</display:column>
-					<s:url var="viagemUrl" action="ViagensDoOnibus">
+					<s:url var="viagemUrl" action="ViagensOnibus">
 						<s:param name="onibus.idOnibus" value="%{#attr.tabelaOnibus.idOnibus}"/>
 					</s:url>
 					<display:column title="Viagem">

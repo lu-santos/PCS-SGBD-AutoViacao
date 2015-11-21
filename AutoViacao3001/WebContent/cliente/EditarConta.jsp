@@ -36,6 +36,10 @@
 					value="cliente.estado" />
             </div>
             <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
+				<label>Cidade*</label>
+				<s:textfield disabled="false" type="text" maxlength="50" name="cliente.cidade"/>
+    		</div>
+            <div class="caixa-padrao" style="width: 22%">
 				<label>Telefone Residencial*</label>
 				<s:textfield disabled="false" type="number" maxlength="10" name="cliente.telefoneResidencial"/>
     		</div>
@@ -43,7 +47,7 @@
 				<label>Telefone Celular*</label>
 				<s:textfield disabled="false" type="number" maxlength="11" name="cliente.telefoneCelular"/><br>
     		</div>
-    		<div style="clear: both; width: 22%; padding-top: 15px;">
+    		<div class="caixa-padrao" style="width: 24%">
 				<label>Senha*</label>
 				<s:textfield disabled="false" maxlength="20" name="cliente.senha"/>
     		</div>

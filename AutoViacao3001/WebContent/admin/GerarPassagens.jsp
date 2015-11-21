@@ -7,12 +7,12 @@
 			<h2>Gerar Passagens para a Viagem</h2>
 			<p style="color: #e62117">
 				<s:property value="mensagem" />
-				<s:hidden name="viagem.idOnibus"/>
+				<s:hidden name="viagem.onibus.idOnibus"/>
 				<s:hidden name="viagem.idViagem"/>
 			</p>
 			<div class="caixa-padrao" style="margin-left: 0px; width: 90%">
 				<label>Local de Partida / Local de Origem / Distância (KM)</label><br>
-				<s:textfield disabled="true" name="viagem.labelLocais" />
+				<s:textfield disabled="true" name="viagem.locais.label" />
 				<br>
 			</div>
 			<div class="caixa-padrao" style="margin-left: 0px; width: 35%">
@@ -25,7 +25,7 @@
 			</div>
 			<div class="caixa-padrao" style="width: 40%; margin-left: 0px">
 				<label>Ônibus</label><br>
-				<s:textfield disabled="true" name="viagem.labelOnibus" />
+				<s:textfield disabled="true" name="viagem.onibus.label" />
 				<br>
 			</div>
 			<div class="caixa-padrao" style="width: 30%">

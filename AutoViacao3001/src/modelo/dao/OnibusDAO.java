@@ -15,6 +15,8 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
 //	private final String tabelaViagem = "viagem";
 //	private final String tabelaPassagem = "passagem";
 	
+	public OnibusDAO() {}
+	
 	public OnibusDAO(ConexaoDAO conexao) {
 		super(conexao);
 	}
@@ -97,7 +99,7 @@ public class OnibusDAO extends BaseCrudDAO<Onibus> {
         	onibus.setDvd(registro.getBoolean("dvd"));	
         	return onibus;
         } catch (SQLException ex) {
-        	System.out.println("Erro ao pegar entidade no banco - " + ex);
+        	System.out.println("Erro ao pegar ônibus no banco - " + ex);
             Logger.getLogger(OnibusDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

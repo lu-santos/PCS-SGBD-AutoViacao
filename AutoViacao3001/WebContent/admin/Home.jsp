@@ -1,4 +1,4 @@
-<div id="global" style="height: 100%">
+<div id="global">
 	<div class="conteudo clearfix">
 		<section class="clearfix" style="margin: 0 auto; width: 90%;">
 			<p style="text-align: center; margin-bottom: 40px; color: #007f00">

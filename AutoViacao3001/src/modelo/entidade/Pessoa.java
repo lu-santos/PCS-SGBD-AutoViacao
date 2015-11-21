@@ -11,6 +11,7 @@ public abstract class Pessoa {
 	protected Date dataDeNascimento;
 	protected String endereco;
 	protected String bairro;
+	protected String cidade;
 	protected String cep;
 	protected String estado;
 	protected String telefoneResidencial;
@@ -72,5 +73,11 @@ public abstract class Pessoa {
 	public void setDataDeNascimento(String dataDeNascimento) throws ParseException {
 		Date dataFormatada = DATETIME_FORMAT.parse(dataDeNascimento);
 		this.dataDeNascimento = dataFormatada;
+	}
+	public String getCidade() {
+		return cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 }

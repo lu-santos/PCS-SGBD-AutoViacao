@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,6 +16,8 @@ public class LocalDAO extends BaseCrudDAO<Local> {
 	private final String tabelaLocal = "local";
 	private final String nomeDasColunasLocal = "nome";
 
+	public LocalDAO() {}
+	
 	public LocalDAO(ConexaoDAO conexao) {
 		super(conexao);
 	}
@@ -31,15 +34,14 @@ public class LocalDAO extends BaseCrudDAO<Local> {
 	}
 
 	@Override
-	public String getQueryDeAlteracao(Local entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getQueryDeAlteracao(Local local) {
+		return "UPDATE " + tabelaLocal + " SET nome = ? WHERE id = " + local.getId();
 	}
 
 	@Override
-	public String getQueryDeRemocao(Local entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getQueryDeRemocao(Local local) {
+		return "DELETE FROM locais WHERE id_local_origem = " + local.getId() + " or id_local_destino = " + local.getId() 
+				+ "; DELETE FROM " + tabelaLocal + " WHERE id = " + local.getId();
 	}
 
 	@Override
@@ -98,6 +100,17 @@ public class LocalDAO extends BaseCrudDAO<Local> {
 			e.printStackTrace();
 		}
 		return nome;
+	}
+	
+	public List<Local> destinoMaisProcurado() throws Exception {
+		String query = "select id_local_destino as id, nome, count(id_local_destino) as total "
+				+ "from viagem v join locais l " 
+				+ "on v.id_locais = l.id "
+				+ "join local lo "
+				+ "on l.id_local_destino = lo.id "
+				+ "group by id_local_destino, nome "
+				+ "order by total desc";
+		return Consulta(query);
 	}
 	
 }

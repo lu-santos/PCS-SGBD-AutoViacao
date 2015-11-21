@@ -5,18 +5,20 @@ public class Passagem {
 	private Integer idOnibus;
 	private Integer numeroPoltrona;
 	private Double preco;
-	private Integer idViagem;
-	private String cpfCliente;
+	private Viagem viagem;
+	private Cliente cliente;
+	private int quantidade;
+	private Double total;
 
 	public Passagem() {
 	}
 
-	public Passagem(Integer idOnibus, Double preco, Integer idViagem,
-			String cpfCliente) {
+	public Passagem(Integer idOnibus, Double preco, Viagem viagem,
+			Cliente cliente) {
 		this.idOnibus = idOnibus;
 		this.preco = preco;
-		this.idViagem = idViagem;
-		this.cpfCliente = cpfCliente;
+		this.viagem = viagem;
+		this.cliente = cliente;
 	}
 
 	public Integer getId() {
@@ -39,28 +41,24 @@ public class Passagem {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
 	public void setPreco(String preco) {
 		this.preco = Double.parseDouble(preco);
 	}
 
-	public Integer getIdViagem() {
-		return idViagem;
+	public Viagem getViagem() {
+		return viagem;
 	}
 
-	public void setIdViagem(Integer idViagem) {
-		this.idViagem = idViagem;
+	public void setViagem(Viagem viagem) {
+		this.viagem = viagem;
 	}
 
-	public String getCpfCliente() {
-		return cpfCliente;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setCpfCliente(String cpfCliente) {
-		this.cpfCliente = cpfCliente;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public Integer getNumeroPoltrona() {
@@ -69,6 +67,18 @@ public class Passagem {
 
 	public void setNumeroPoltrona(Integer numeroPoltrona) {
 		this.numeroPoltrona = numeroPoltrona;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+	
+	public Double getTotal() {
+		return this.total = preco*quantidade;
 	}
 
 }

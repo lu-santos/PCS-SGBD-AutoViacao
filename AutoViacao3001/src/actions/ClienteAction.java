@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import modelo.dao.ClienteDAO;
 import modelo.dao.ConexaoPostgres;
+import modelo.dao.PassagemDAO;
 import modelo.entidade.Cliente;
 
 import org.apache.struts2.ServletActionContext;
@@ -21,6 +22,7 @@ public class ClienteAction extends ActionSupport{
 	private List<Cliente> clientes;
 	private ConexaoPostgres conexao = new ConexaoPostgres();
 	private ClienteDAO cDAO = new ClienteDAO(conexao);
+	private PassagemDAO pDAO;
 	private String mensagem;
 	private List<String> estados;
 	
@@ -49,6 +51,17 @@ public class ClienteAction extends ActionSupport{
 	public String visualizar() {
 		try {
 			this.cliente = cDAO.buscar(this.cliente.getCpf());
+		} catch (Exception e) {
+			mensagem = e.getMessage();
+		}
+		return ClienteAction.SUCCESS;
+	}
+	
+	public String visualizarCompras(){
+		try {
+			this.cliente = cDAO.buscar(this.cliente.getCpf());
+			pDAO = new PassagemDAO(conexao);
+			this.cliente.setPassagens(pDAO.listarPassagensCliente(this.cliente.getCpf()));
 		} catch (Exception e) {
 			mensagem = e.getMessage();
 		}
@@ -110,6 +123,7 @@ public class ClienteAction extends ActionSupport{
 		if (cliente.getNome().length() == 0 || cliente.getEndereco().length() == 0 || 
 				cliente.getBairro().length() == 0 || cliente.getCep().length() == 0 ||
 				cliente.getTelefoneResidencial().length() == 0 || 
+				cliente.getCidade().length() == 0 ||
 				cliente.getTelefoneCelular().length() == 0 || cliente.getSenha().length() == 0) {
 			return true;
 		}

@@ -36,6 +36,10 @@
 					value="motorista.estado" />
             </div>
             <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
+				<label>Cidade*</label>
+				<s:textfield disabled="false" type="text" maxlength="50" name="motorista.cidade"/>
+    		</div>
+            <div class="caixa-padrao" style="width: 22%;">
 				<label>Telefone Residencial*</label>
 				<s:textfield disabled="false" type="number" maxlength="10" name="motorista.telefoneResidencial"/>
     		</div>
@@ -43,11 +47,11 @@
 				<label>Telefone Celular*</label>
 				<s:textfield disabled="false" type="number" maxlength="11" name="motorista.telefoneCelular"/><br>
     		</div>
-    		<div class="caixa-padrao" style="width: 21%">
+    		<div class="caixa-padrao" style="width: 24%">
 				<label>Salario*</label>
 				<s:textfield disabled="false" type="number" maxlength="10" name="motorista.salario"/>
     		</div>
-    		<div class="caixa-padrao" style="width: 21%;">
+    		<div class="caixa-padrao" style="width: 21%; margin-left:0px">
 				<label>Data de Contratação*</label><br>
 				<s:textfield disabled="false" type="date" name="motorista.dataDeContratacao"/><br>
             </div>
