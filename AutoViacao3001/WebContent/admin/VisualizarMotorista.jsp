@@ -6,51 +6,51 @@
 				<s:property value="mensagem"/>
 			</p>
 			<div class="caixa-padrao" style="margin-left: 0px">
-				<label>CPF*</label><br>
+				<label>CPF</label><br>
 				<s:textfield disabled="true" name="motorista.cpf"/><br>
             </div>
 			<div class="caixa-padrao" style="width: 50%">
-				<label>Nome*</label>
+				<label>Nome</label>
 				<s:textfield disabled="true" name="motorista.nome"/>
             </div>
 			<div class="caixa-padrao" style="width: 21%">
-				<label>Data de Nascimento*</label><br>
+				<label>Data de Nascimento</label><br>
 				<s:textfield type="date" disabled="true" name="motorista.dataDeNascimento"/><br>
             </div>
  			<div class="caixa-padrao" style="width: 35.5%; margin-left: 0px">
-				<label>Endereço*</label>
+				<label>Endereço</label>
 				<s:textfield disabled="true" name="motorista.endereco"/>
             </div>
 			<div class="caixa-padrao" style="width: 21%">
-				<label>Bairro*</label><br>
+				<label>Bairro</label><br>
 				<s:textfield disabled="true" name="motorista.bairro"/><br>
             </div>
-  			<div class="caixa-padrao" style="width: 21.6%">
-				<label>CEP*</label>
-				<s:textfield disabled="true" name="motorista.cep"/>
+            <div class="caixa-padrao" style="width: 21%">
+				<label>Cidade</label><br>
+				<s:textfield disabled="true" name="motorista.cidade"/><br>
             </div>
 			<div class="caixa-padrao" style="width: 12%">
-				<label>Estado*</label>
+				<label>Estado</label>
 				<s:textfield disabled="true" name="motorista.estado" id="estados"/>
             </div>
-            <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
-				<label>Cidade*</label>
-				<s:textfield disabled="true" name="motorista.cidade"/>
-    		</div>
-            <div class="caixa-padrao" style="width: 22%;">
-				<label>Telefone Residencial*</label>
+            <div class="caixa-padrao" style="width: 21.6%; margin-left: 0px">
+				<label>CEP</label>
+				<s:textfield disabled="true" name="motorista.cep"/>
+            </div>
+            <div class="caixa-padrao" style="width: 20%">
+				<label>Telefone Residencial</label>
 				<s:textfield disabled="true" name="motorista.telefoneResidencial"/>
     		</div>
-  			 <div class="caixa-padrao" style="width: 22%">
-				<label>Telefone Celular*</label>
+  			 <div class="caixa-padrao" style="width: 20%">
+				<label>Telefone Celular</label>
 				<s:textfield disabled="true" name="motorista.telefoneCelular"/><br>
     		</div>
-    		<div class="caixa-padrao" style="width: 24%">
+    		<div class="caixa-padrao" style="width: 10%">
 				<label>Salario*</label>
 				<s:textfield disabled="true" name="motorista.salario"/>
     		</div>
-    		<div class="caixa-padrao" style="width: 21%; float: none; margin-left:0px">
-				<label>Data de Contratação*</label><br>
+    		<div class="caixa-padrao" style="width: 15%; float: none">
+				<label>Contratação</label><br>
 				<s:textfield type="date" disabled="true" name="motorista.dataDeContratacao"/><br>
             </div>
    		</form>

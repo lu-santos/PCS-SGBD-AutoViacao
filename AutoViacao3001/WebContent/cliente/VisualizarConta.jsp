@@ -25,19 +25,19 @@
 				<label>Bairro*</label><br>
 				<s:textfield disabled="true" name="cliente.bairro"/><br>
             </div>
-  			<div class="caixa-padrao" style="width: 21.6%">
-				<label>CEP*</label>
-				<s:textfield disabled="true" name="cliente.cep"/>
+            <div class="caixa-padrao" style="width: 21%">
+				<label>Cidade*</label><br>
+				<s:textfield disabled="true" name="cliente.cidade"/><br>
             </div>
 			<div class="caixa-padrao" style="width: 12%">
 				<label>Estado*</label>
 				<s:textfield disabled="true" name="cliente.estado"/>
             </div>
-            <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
-				<label>Cidade*</label>
-				<s:textfield disabled="true" name="cliente.cidade"/>
-    		</div>
-            <div class="caixa-padrao" style="width: 22%;">
+            <div class="caixa-padrao" style="width: 21.6%; margin-left: 0px">
+				<label>CEP*</label>
+				<s:textfield disabled="true" name="cliente.cep"/>
+            </div>
+            <div class="caixa-padrao" style="width: 22%">
 				<label>Telefone Residencial*</label>
 				<s:textfield disabled="true" name="cliente.telefoneResidencial"/>
     		</div>
@@ -45,7 +45,7 @@
 				<label>Telefone Celular*</label>
 				<s:textfield disabled="true" name="cliente.telefoneCelular"/><br>
     		</div>
-    		<div class="caixa-padrao" style="width: 24%">
+    		<div style="clear: both; width: 22%; padding-top: 15px;">
 				<label>Senha*</label>
 				<s:textfield disabled="true" name="cliente.senha"/>
     		</div>

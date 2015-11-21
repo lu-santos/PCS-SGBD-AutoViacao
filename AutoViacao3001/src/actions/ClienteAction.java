@@ -1,7 +1,5 @@
 package actions;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +23,6 @@ public class ClienteAction extends ActionSupport{
 	private PassagemDAO pDAO;
 	private String mensagem;
 	private List<String> estados;
-	
-	private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public String adicionar() {
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -121,7 +117,7 @@ public class ClienteAction extends ActionSupport{
 	
 	public boolean camposEmBranco() {
 		if (cliente.getNome().length() == 0 || cliente.getEndereco().length() == 0 || 
-				cliente.getBairro().length() == 0 || cliente.getCep().length() == 0 ||
+				cliente.getBairro().length() == 0 || cliente.getCidade().length() == 0 || cliente.getCep().length() == 0 ||
 				cliente.getTelefoneResidencial().length() == 0 || 
 				cliente.getCidade().length() == 0 ||
 				cliente.getTelefoneCelular().length() == 0 || cliente.getSenha().length() == 0) {

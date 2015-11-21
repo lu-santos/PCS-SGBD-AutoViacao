@@ -12,13 +12,14 @@ public class Cliente extends Pessoa{
 		this.passagens = new ArrayList<>();
 	}
 	
-	public Cliente(String cpf, String nome, Date dataDeNascimento, String endereco, String cidade, String bairro, String cep, String estado, String telefoneResidencial, String telefoneCelular, String senha) {
+	public Cliente(String cpf, String nome, Date dataDeNascimento, String endereco, String bairro, String cidade, String cep, String estado, String telefoneResidencial, String telefoneCelular, String senha) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.dataDeNascimento = dataDeNascimento;
 		this.endereco = endereco;
 		this.cidade = cidade;
 		this.bairro = bairro;
+		this.cidade = cidade;
 		this.cep = cep;
 		this.estado = estado;
 		this.telefoneResidencial = telefoneResidencial;

@@ -25,9 +25,9 @@
 				<label>Bairro*</label><br>
 				<s:textfield disabled="false" maxlength="100" name="motorista.bairro"/><br>
             </div>
-  			<div class="caixa-padrao" style="width: 21.6%">
-				<label>CEP*</label>
-				<s:textfield disabled="false" type="number" maxlength="8" name="motorista.cep"/>
+            <div class="caixa-padrao" style="width: 21%">
+				<label>Cidade*</label><br>
+				<s:textfield disabled="false" maxlength="50" name="motorista.cidade"/><br>
             </div>
 			<div class="caixa-padrao" style="width: 12%">
 				<label>Estado*</label>
@@ -35,27 +35,29 @@
 					list="estados"  
 					value="motorista.estado" />
             </div>
-            <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
-				<label>Cidade*</label>
-				<s:textfield disabled="false" type="text" maxlength="50" name="motorista.cidade"/>
-    		</div>
-            <div class="caixa-padrao" style="width: 22%;">
+            <div class="caixa-padrao" style="width: 21.6%; margin-left: 0px">
+				<label>CEP*</label>
+				<s:textfield disabled="false" type="number" maxlength="8" name="motorista.cep"/>
+            </div>
+            <div class="caixa-padrao" style="width: 20%">
 				<label>Telefone Residencial*</label>
 				<s:textfield disabled="false" type="number" maxlength="10" name="motorista.telefoneResidencial"/>
     		</div>
-  			 <div class="caixa-padrao" style="width: 22%">
+  			 <div class="caixa-padrao" style="width: 20%">
 				<label>Telefone Celular*</label>
 				<s:textfield disabled="false" type="number" maxlength="11" name="motorista.telefoneCelular"/><br>
     		</div>
-    		<div class="caixa-padrao" style="width: 24%">
+    		<div class="caixa-padrao" style="width: 10%">
 				<label>Salario*</label>
 				<s:textfield disabled="false" type="number" maxlength="10" name="motorista.salario"/>
     		</div>
-    		<div class="caixa-padrao" style="width: 21%; margin-left:0px">
-				<label>Data de Contratação*</label><br>
+    		<div class="caixa-padrao" style="width: 15%">
+				<label>Contratação*</label><br>
 				<s:textfield disabled="false" type="date" name="motorista.dataDeContratacao"/><br>
             </div>
-    		<center><input type="submit" value="Alterar" class="button-green" style="width: 20%; display: block; clear: both"></center>
+    		<div align="center">
+    			<input type="submit" value="Alterar" class="button-green" style="width: 20%; display: block; clear: both">
+    		</div>
    		</form>
 	</div>
 </div>

@@ -25,20 +25,20 @@
 				<label>Bairro*</label><br>
 				<input type="text" maxlength="100" required name="cliente.bairro"><br>
             </div>
-  			<div class="caixa-padrao" style="width: 21.6%">
-				<label>CEP*</label>
-				<input type="number" maxlength="8" required name="cliente.cep">
+            <div class="caixa-padrao" style="width: 21%">
+				<label>Cidade*</label><br>
+				<input type="text" maxlength="50" required name="cliente.cidade"><br>
             </div>
-			<div class="caixa-padrao" style="width: 12%">
+            <div class="caixa-padrao" style="width: 12%">
 				<label>Estado*</label>
 				<s:select name="cliente.estado" 
 					list="estados"  
 					value="cliente.estado" />
             </div>
-            <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
-				<label>Cidade*</label>
-				<input type="text" maxlength="50" required name="cliente.cidade">
-    		</div>
+  			<div class="caixa-padrao" style="width: 21.6%; margin-left: 0px">
+				<label>CEP*</label>
+				<input type="number" maxlength="8" required name="cliente.cep">
+            </div>			
             <div class="caixa-padrao" style="width: 22%">
 				<label>Telefone Residencial*</label>
 				<input type="number" maxlength="10" required name="cliente.telefoneResidencial">
@@ -47,11 +47,13 @@
 				<label>Telefone Celular*</label>
 				<input type="number" maxlength="11" required name="cliente.telefoneCelular"><br>
     		</div>
-    		<div class="caixa-padrao" style="width: 24%">
+    		<div style="clear: both; width: 22%; padding-top: 15px;">
 				<label>Senha*</label>
 				<input type="password" maxlength="20" required name="cliente.senha">
     		</div>
-   			<center><input type="submit" value="Cadastrar" class="button-green" style="width: 20%"></center>
+   			<div align="center">
+   				<input type="submit" value="Cadastrar" class="button-green" style="width: 20%">
+   			</div>
 		</form>
 	</div>
 </div>

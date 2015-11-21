@@ -25,9 +25,9 @@
 				<label>Bairro*</label><br>
 				<s:textfield disabled="false" maxlength="100" name="cliente.bairro"/><br>
             </div>
-  			<div class="caixa-padrao" style="width: 21.6%">
-				<label>CEP*</label>
-				<s:textfield disabled="false" type="number" maxlength="8" name="cliente.cep"/>
+            <div class="caixa-padrao" style="width: 21%">
+				<label>Cidade*</label><br>
+				<s:textfield disabled="false" maxlength="50" name="cliente.cidade"/><br>
             </div>
 			<div class="caixa-padrao" style="width: 12%">
 				<label>Estado*</label>
@@ -35,10 +35,10 @@
 					list="estados"  
 					value="cliente.estado" />
             </div>
-            <div class="caixa-padrao" style="width: 22%; margin-left: 0px">
-				<label>Cidade*</label>
-				<s:textfield disabled="false" type="text" maxlength="50" name="cliente.cidade"/>
-    		</div>
+            <div class="caixa-padrao" style="width: 21.6%; margin-left: 0px">
+				<label>CEP*</label>
+				<s:textfield disabled="false" type="number" maxlength="8" name="cliente.cep"/>
+            </div>
             <div class="caixa-padrao" style="width: 22%">
 				<label>Telefone Residencial*</label>
 				<s:textfield disabled="false" type="number" maxlength="10" name="cliente.telefoneResidencial"/>
@@ -47,11 +47,13 @@
 				<label>Telefone Celular*</label>
 				<s:textfield disabled="false" type="number" maxlength="11" name="cliente.telefoneCelular"/><br>
     		</div>
-    		<div class="caixa-padrao" style="width: 24%">
+    		<div style="clear: both; width: 22%; padding-top: 15px;">
 				<label>Senha*</label>
 				<s:textfield disabled="false" maxlength="20" name="cliente.senha"/>
     		</div>
-    		<center><input type="submit" value="Alterar" class="button-green" style="width: 20%"></center>
+    		<div align="center">
+    			<input type="submit" value="Alterar" class="button-green" style="width: 20%">
+    		</div>
    		</form>
 	</div>
 </div>
