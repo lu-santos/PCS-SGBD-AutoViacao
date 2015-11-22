@@ -6,9 +6,9 @@
 			</p>
 			<img src="${pageContext.request.contextPath}/images/icon_gerenciar_cliente.png">
 			<h2>Gerenciar Clientes</h2>
-			<a href="${pageContext.request.contextPath}/public/cadastroCliente.jsp">
+			<s:a action="PaginaDeCadastrarCliente">
 				Cadastrar Cliente
-			</a><br>
+			</s:a><br>
 			<s:a action="ListarClientes">
 				Listar Clientes
 			</s:a>
