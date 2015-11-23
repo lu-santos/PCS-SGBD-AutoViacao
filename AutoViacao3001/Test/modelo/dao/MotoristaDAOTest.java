@@ -45,12 +45,11 @@ public class MotoristaDAOTest {
 		
 		assertEquals(4, listaMotoristas.size());
 		
-		Motorista motoristaEsperado = motoristaDAO.buscar(motorista.getCpf());
+		Motorista motoristaObtido = motoristaDAO.buscar(motorista.getCpf());
 		
-		assertEquals(motoristaEsperado.getClass(), motorista.getClass());
-		assertEquals(motoristaEsperado.getCpf(), motorista.getCpf());
-		assertEquals(motoristaEsperado.getNome(), motorista.getNome());
-		assertEquals(motoristaEsperado.getCep(), motorista.getCep());
+		assertEquals(cpf, motoristaObtido.getCpf());
+		assertEquals("Alfredo Gomes Faria", motoristaObtido.getNome());
+		assertEquals("22290030", motoristaObtido.getCep());
 	
 	}
 	
@@ -73,14 +72,15 @@ public class MotoristaDAOTest {
 		
 		motoristaDAO.alterar(motorista);
 		
-		assertEquals("Alfredo de Faria Gomes", motoristaDAO.buscar(cpf).getNome());
-		assertEquals("1962-02-27", motoristaDAO.buscar(cpf).getDataDeNascimento());
-		assertEquals("Rua Lauro Muller", motoristaDAO.buscar(cpf).getEndereco());
-		assertEquals("22290160", motoristaDAO.buscar(cpf).getCep());
-		assertEquals("25429090", motoristaDAO.buscar(cpf).getTelefoneResidencial());
-		assertEquals("99809765", motoristaDAO.buscar(cpf).getTelefoneCelular());
-		assertEquals(0.1, 4500.0, motoristaDAO.buscar(cpf).getSalario());
-		assertEquals("2005-04-27", motoristaDAO.buscar(cpf).getDataDeContratacao());	
+		Motorista motoristaObtido =  motoristaDAO.buscar(cpf);
+		assertEquals("Alfredo de Faria Gomes", motoristaObtido.getNome());
+		assertEquals("1962-02-27", motoristaObtido.getDataDeNascimento());
+		assertEquals("Rua Lauro Muller", motoristaObtido.getEndereco());
+		assertEquals("22290160", motoristaObtido.getCep());
+		assertEquals("25429090", motoristaObtido.getTelefoneResidencial());
+		assertEquals("99809765", motoristaObtido.getTelefoneCelular());
+		assertEquals(0.1, 4500.0, motoristaObtido.getSalario());
+		assertEquals("2005-04-27",motoristaObtido.getDataDeContratacao());	
 	}
 	
 	@Test
