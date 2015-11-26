@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.opensymphony.xwork2.ActionSupport;
+
 import modelo.dao.ConexaoPostgres;
 import modelo.dao.OnibusDAO;
 import modelo.dao.PassagemDAO;
 import modelo.dao.ViagemDAO;
+import modelo.entidade.FileiraPoltronas;
 import modelo.entidade.Onibus;
 import modelo.entidade.Passagem;
 import modelo.entidade.Poltrona;
 import modelo.entidade.Viagem;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
 public class PassagemAction extends ActionSupport {
@@ -25,6 +26,7 @@ public class PassagemAction extends ActionSupport {
 	private String mensagem;
 	private List<Viagem> listaDeViagens;
 	private List<Passagem> listaDePassagens;
+	private List<FileiraPoltronas> fileiras;
 	private Viagem viagem;
 	private Passagem passagem;
 	private List<Integer> listaDeAno;
@@ -130,6 +132,42 @@ public class PassagemAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	public String passagensDaViagem(){
+		try {
+			Viagem viagem = vDAO.buscar(this.viagem.getIdViagem());
+			Onibus onibus = viagem.getOnibus();
+			
+			int quantidadeFileiras = onibus.getCapacidade() / 4;
+			if (onibus.getCapacidade() % 4 != 0){
+				quantidadeFileiras++;
+			}
+			
+			List<Passagem> passagens = pDAO.listarPassagensDeUmaViagem(viagem.getIdViagem());
+			
+			if (passagens.isEmpty()){
+				mensagem = "Nenhuma passagem encontrada para a viagem escolhida";
+			}
+			
+			fileiras = new ArrayList<FileiraPoltronas>();
+			
+			for (int i=0; i<quantidadeFileiras; i++){
+				FileiraPoltronas fileira = new FileiraPoltronas();
+				fileira.setPassagemPoltronaJanelaLadoEsquerdo(passagens.get(i*4));
+				fileira.setPassagemPoltronaCorredorLadoEsquerdo(passagens.get(i*4 + 1));
+				fileira.setPassagemPoltronaCorredorLadoDireito(passagens.get(i*4 + 2));
+				fileira.setPassagemPoltronaJanelaLadoDireito(passagens.get(i*4 + 3));
+				fileiras.add(fileira);
+				
+			}
+			
+			} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return SUCCESS;
+	}
 
 	public String getMensagem() {
 		return mensagem;
@@ -186,5 +224,15 @@ public class PassagemAction extends ActionSupport {
 	public void setAno(int ano) {
 		this.ano = ano;
 	}
+
+	public List<FileiraPoltronas> getFileiras() {
+		return fileiras;
+	}
+
+	public void setFileiras(List<FileiraPoltronas> fileiras) {
+		this.fileiras = fileiras;
+	}
+	
+	
 
 }

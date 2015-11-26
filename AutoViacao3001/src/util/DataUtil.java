@@ -29,7 +29,9 @@ public class DataUtil {
 	 * @return String formatada
 	 */
 	public static String converterDataComHoraParaString(Date data){
-		return DATETIME_FORMAT.format(data);
+		if (data != null)
+			return DATETIME_FORMAT.format(data);
+		return "";
 	}
 	
 	/**

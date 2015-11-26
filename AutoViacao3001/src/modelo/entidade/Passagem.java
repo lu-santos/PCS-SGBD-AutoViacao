@@ -9,8 +9,7 @@ public class Passagem {
 	private Viagem viagem;
 	private Cliente cliente;
 	private int quantidade;
-	private Double total;
-
+	
 	public Passagem() {
 	}
 
@@ -80,7 +79,7 @@ public class Passagem {
 	}
 	
 	public Double getTotal() {
-		return this.total = preco*quantidade;
+		return preco*quantidade;
 	}
 
 	public Poltrona getPoltrona() {

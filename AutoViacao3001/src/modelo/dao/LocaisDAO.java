@@ -3,14 +3,10 @@ package modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import util.DataUtil;
 import modelo.entidade.Locais;
-import modelo.entidade.Local;
-import modelo.entidade.Viagem;
 
 public class LocaisDAO extends BaseCrudDAO<Locais> {
 

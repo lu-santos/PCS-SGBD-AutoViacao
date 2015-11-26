@@ -105,6 +105,7 @@ public class Viagem {
 
 	public void setDataHoraPartidaFormatoJSP(String dataHoraPartidaFormatoJSP) {
 		try {
+			if (dataHoraPartidaFormatoJSP.length() > 0)
 			dataHoraPartida = DataUtil.converterStringParaDataComHora(dataHoraPartidaFormatoJSP);
 		} catch (ParseException e) {
 			e.printStackTrace();

@@ -3,6 +3,7 @@ package modelo.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -104,6 +105,11 @@ public class PoltronaDAO extends BaseCrudDAO<Poltrona> {
 			
 		}
 		
+	}
+	
+	public List<Poltrona> buscarPoltronasOnibus(Integer idOnibus) throws Exception{
+		String query = "SELECT * FROM " + tabelaPoltrona + " WHERE id_onibus=" + idOnibus + " ORDER BY numero";
+		return Consulta(query);
 	}
 	
 	public boolean onibusPossuiViagem(Integer idOnibus) throws Exception{

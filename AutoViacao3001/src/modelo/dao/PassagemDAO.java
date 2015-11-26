@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import modelo.entidade.Cliente;
 import modelo.entidade.Passagem;
 import modelo.entidade.Poltrona;
-import modelo.entidade.Viagem;
 
 public class PassagemDAO extends BaseCrudDAO<Passagem>{
 	
@@ -114,6 +113,11 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 	
 	public List<Passagem> listarPassagensCliente(String cpf) throws Exception {
 		String query = "Select * from passagem where cpf_cliente = '" + cpf + "'";
+		return Consulta(query);
+	}
+	
+	public List<Passagem> listarPassagensDeUmaViagem(Integer idViagem) throws Exception{
+		String query = "SELECT * FROM " + tabelaPassagem + " WHERE id_viagem=" + idViagem + " ORDER BY numero_poltrona";
 		return Consulta(query);
 	}
 	

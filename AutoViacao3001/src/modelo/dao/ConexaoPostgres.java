@@ -20,7 +20,9 @@ public class ConexaoPostgres implements ConexaoDAO {
             throw e;
         }
         try{
-            conexao = DriverManager.getConnection(bdURL, usuario, senha);
+        	if (conexao == null || conexao.isClosed()){
+        		conexao = DriverManager.getConnection(bdURL, usuario, senha);
+        	}
         }catch(SQLException e){
             System.out.println("Erro na conexao");
             throw e;

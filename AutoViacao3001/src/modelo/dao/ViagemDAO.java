@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -193,6 +192,16 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	
 	public List<Viagem> ListarResultadoDaConsultaViagens(Integer idLocais, String data) throws Exception {
 		String query = "SELECT * FROM " + tabelaViagem + " WHERE id_locais = " + idLocais + " and data_hora_partida >= '" + data + "' ORDER BY data_hora_partida";
+		return Consulta(query);
+	}
+	
+	public List<Viagem> listarResultadoDaConsultaViagensPorLocais(Integer idLocais) throws Exception{
+		String query = "SELECT * FROM " + tabelaViagem + " WHERE id_locais = " + idLocais + " ORDER BY data_hora_partida";
+		return Consulta(query);
+	}
+	
+	public List<Viagem> listarResultadoDaConsultaViagemPorData(String data) throws Exception{
+		String query = "SELECT * FROM " + tabelaViagem + " WHERE data_hora_partida >= '" + data + "' ORDER BY data_hora_partida";
 		return Consulta(query);
 	}
 }

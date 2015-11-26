@@ -481,5 +481,13 @@
 			</interceptor-ref>
 			<result name="success">/public/ConsultarViagem.jsp</result>
 		</action>
+		<action name="PassagensDaViagem" class="actions.PassagemAction"
+			method="passagensDaViagem">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin, cliente</param>
+			</interceptor-ref>
+			<result name="success">/public/EscolherPoltrona.jsp</result>
+		</action>
 	</package>
 </struts>

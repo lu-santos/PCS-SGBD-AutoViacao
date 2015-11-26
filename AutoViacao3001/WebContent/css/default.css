@@ -279,3 +279,25 @@ tr.tableRowEven,tr.even {
 	display: block;
 	margin-bottom: 20px;
 }
+
+/* --- compra de passagem --- */
+
+#onibus{
+	border: 1px solid black;
+	border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    background-color: #e7ebef;
+}
+
+#onibus td{
+    padding: 3px 0px 0px 0px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+
+#onibus tr{
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+}

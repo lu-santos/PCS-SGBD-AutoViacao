@@ -147,9 +147,19 @@ public class ViagemAction extends ActionSupport {
 	public String resultadoDaConsultaViagem(){
 		try {			
 			obterListasParaFormulario();
-			this.listaDeViagens = vDAO.ListarResultadoDaConsultaViagens(viagem.getLocais().getIdLocais(), viagem.getDataHoraPartidaString());
+			
+			if (viagem.getLocais() != null && viagem.getLocais().getIdLocais() != null && viagem.getDataHoraPartidaString() != null && viagem.getDataHoraPartidaString().length() != 0)
+				this.listaDeViagens = vDAO.ListarResultadoDaConsultaViagens(viagem.getLocais().getIdLocais(), viagem.getDataHoraPartidaString());
+			else if (viagem.getLocais() != null && viagem.getLocais().getIdLocais() != null)
+				this.listaDeViagens = vDAO.listarResultadoDaConsultaViagensPorLocais(viagem.getLocais().getIdLocais());
+			else if (viagem.getDataHoraPartidaString().length() != 0)
+				this.listaDeViagens = vDAO.listarResultadoDaConsultaViagemPorData(viagem.getDataHoraPartidaString());
+			else
+				this.mensagem = "Favor preencher um dos campos e realizar nova busca.";
+			
 			if (this.listaDeViagens.size() == 0)
 				this.mensagem = "Não foram encontrados resultados para os filtros selecionados.";
+			
 		} catch (Exception e) {
 			mensagem = e.getMessage();
 		}
