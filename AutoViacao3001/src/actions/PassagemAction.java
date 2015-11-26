@@ -10,6 +10,7 @@ import modelo.dao.PassagemDAO;
 import modelo.dao.ViagemDAO;
 import modelo.entidade.Onibus;
 import modelo.entidade.Passagem;
+import modelo.entidade.Poltrona;
 import modelo.entidade.Viagem;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -60,9 +61,11 @@ public class PassagemAction extends ActionSupport {
 
 			for (int numero = 1; numero <= onibus.getCapacidade(); numero++) {
 				Passagem passagem = new Passagem();
-				passagem.setIdOnibus(viagem.getOnibus().getIdOnibus());
+				Poltrona poltrona = new Poltrona();
+				poltrona.setIdOnibus(viagem.getOnibus().getIdOnibus());
+				poltrona.setNumero(numero);
+				passagem.setPoltrona(poltrona);
 				passagem.setViagem(viagem);
-				passagem.setNumeroPoltrona(numero);
 				passagem.setPreco(String.valueOf(this.passagem.getPreco()));
 				pDAO.incluir(passagem);
 			}

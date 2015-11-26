@@ -2,8 +2,9 @@ package modelo.entidade;
 
 public class Passagem {
 	private Integer id;
-	private Integer idOnibus;
-	private Integer numeroPoltrona;
+	private Poltrona poltrona;
+//	private Integer idOnibus;
+//	private Integer numeroPoltrona;
 	private Double preco;
 	private Viagem viagem;
 	private Cliente cliente;
@@ -13,9 +14,10 @@ public class Passagem {
 	public Passagem() {
 	}
 
-	public Passagem(Integer idOnibus, Double preco, Viagem viagem,
-			Cliente cliente) {
-		this.idOnibus = idOnibus;
+	public Passagem(Double preco, Viagem viagem,
+			Cliente cliente, Poltrona poltrona) {
+		//this.idOnibus = idOnibus;
+		this.poltrona = poltrona;
 		this.preco = preco;
 		this.viagem = viagem;
 		this.cliente = cliente;
@@ -29,14 +31,14 @@ public class Passagem {
 		this.id = id;
 	}
 
-	public Integer getIdOnibus() {
+/*	public Integer getIdOnibus() {
 		return idOnibus;
 	}
 
 	public void setIdOnibus(Integer idOnibus) {
 		this.idOnibus = idOnibus;
 	}
-
+*/
 	public Double getPreco() {
 		return preco;
 	}
@@ -61,14 +63,14 @@ public class Passagem {
 		this.cliente = cliente;
 	}
 
-	public Integer getNumeroPoltrona() {
+/*	public Integer getNumeroPoltrona() {
 		return numeroPoltrona;
 	}
 
 	public void setNumeroPoltrona(Integer numeroPoltrona) {
 		this.numeroPoltrona = numeroPoltrona;
 	}
-
+*/
 	public int getQuantidade() {
 		return quantidade;
 	}
@@ -79,6 +81,14 @@ public class Passagem {
 	
 	public Double getTotal() {
 		return this.total = preco*quantidade;
+	}
+
+	public Poltrona getPoltrona() {
+		return poltrona;
+	}
+
+	public void setPoltrona(Poltrona poltrona) {
+		this.poltrona = poltrona;
 	}
 
 }

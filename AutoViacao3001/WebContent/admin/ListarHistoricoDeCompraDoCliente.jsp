@@ -10,7 +10,7 @@
 		<c:if test="${not empty cliente.passagens}">
 			<div align="center">
 				<display:table id="tabelaComprasViagens" name="cliente.passagens" pagesize="20" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
-					<display:column property="numeroPoltrona" title="Número Da Poltrona"/>
+					<display:column property="poltrona.numero" title="Número Da Poltrona"/>
 					<display:column property="preco" title="Preço"/>
 					<display:column property="viagem.locais.label" title="Viagem"/>
 				</display:table>

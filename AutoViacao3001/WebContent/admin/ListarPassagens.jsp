@@ -11,7 +11,7 @@
 			<div align="center">
 				<display:table id="tabelaPassagens" name="listaDePassagens" pagesize="20" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
 					<display:column property="viagem.idViagem" title="ID da Viagem"/>
-					<display:column property="numeroPoltrona" title="Nº da Poltrona"/>
+					<display:column property="poltrona.numero" title="Nº da Poltrona"/>
 					<display:column property="preco" title="Preço"/>
 					<display:column property="cliente.cpf" title="CPF do Cliente"/>
 					<s:url var="visualizarUrl" action="VisualizarPassagem">

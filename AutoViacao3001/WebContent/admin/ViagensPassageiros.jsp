@@ -22,7 +22,7 @@
 				<display:table id="tabelaViagensOnibus" name="viagem.passageiros" pagesize="20" export="true" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
 					<display:column property="cliente.cpf" title="CPF"/>
 					<display:column property="cliente.nome" title="Nome"/>
-					<display:column property="numeroPoltrona" title="Número da Poltrona"/>
+					<display:column property="poltrona.numero" title="Número da Poltrona"/>
 					<display:setProperty name="export.pdf" value="true" />
 					<display:setProperty name="export.pdf.filename" value="viagens_passageiros.pdf"/>
 					<display:setProperty name="export.excel.filename" value="viagens_passageiros.xls"/>

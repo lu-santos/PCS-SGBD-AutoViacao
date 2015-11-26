@@ -86,13 +86,9 @@ public class MotoristaDAOTest {
 	@Test
 	public void dadoUmaDataPartidaEUmaDataDestinoConsultaMotoristaComMaisViagens() throws Exception{
 		Motorista motorista = new Motorista();
-		listaMotoristas = motoristaDAO.listarMotoristaComMaisViagem("20160104 10:00:00", "20160104 12:30:00");
-		
-		motorista.setCpf("70527752398");
-		assertEquals(listaMotoristas.get(0).getCpf(), motorista.getCpf());
 	
-		listaMotoristas = motoristaDAO.listarMotoristaComMaisViagem("20151221 08:00:00", "20151221 14:00:00");
-		motorista.setCpf("34638754627");
+		listaMotoristas = motoristaDAO.listarMotoristaComMaisViagem("20151221 08:00:00", "20160101 14:00:00");
+		motorista.setCpf("88");
 		assertEquals(listaMotoristas.get(0).getCpf(), motorista.getCpf());
 	
 	}

@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import modelo.entidade.Cliente;
 import modelo.entidade.Passagem;
+import modelo.entidade.Poltrona;
 import modelo.entidade.Viagem;
 
 public class PassagemDAO extends BaseCrudDAO<Passagem>{
@@ -64,8 +65,10 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
         try {
         	passagem = new Passagem();
         	passagem.setId(registro.getInt("id"));
-        	passagem.setIdOnibus(registro.getInt("id_onibus"));
-        	passagem.setNumeroPoltrona(registro.getInt("numero_poltrona"));
+        	Poltrona poltrona = new Poltrona();
+        	poltrona.setIdOnibus(registro.getInt("id_onibus"));
+        	poltrona.setNumero(registro.getInt("numero_poltrona"));
+        	passagem.setPoltrona(poltrona);
         	passagem.setPreco(String.valueOf(registro.getDouble("preco")));
         	viagemDAO = new ViagemDAO(conexao);
         	passagem.setViagem(viagemDAO.buscar(registro.getInt("id_viagem")));
@@ -89,8 +92,8 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 	public void incluirDadosNoBanco(PreparedStatement pst, Passagem passagem) {
 		try {
 			pst.setInt(1, passagem.getViagem().getIdViagem());
-			pst.setInt(2, passagem.getIdOnibus());
-			pst.setInt(3, passagem.getNumeroPoltrona());
+			pst.setInt(2, passagem.getPoltrona().getIdOnibus());
+			pst.setInt(3, passagem.getPoltrona().getNumero());
 			pst.setDouble(4, passagem.getPreco());
 		} catch (SQLException e) {
 			e.printStackTrace();

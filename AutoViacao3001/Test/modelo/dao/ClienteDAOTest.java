@@ -39,7 +39,7 @@ public class ClienteDAOTest {
 	public void dadoUmaListaComCincoClientesCadastradosNoBDVerificaSeExistemCincoClientes() throws Exception {
 		List<Cliente> listaClientes = clienteDAO.listar();
 		
-		assertEquals(5, listaClientes.size());
+		assertEquals(4, listaClientes.size());
 	}
 	
 	@Test
