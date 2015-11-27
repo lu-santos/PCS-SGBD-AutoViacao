@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 import modelo.dao.ConexaoPostgres;
 import modelo.dao.OnibusDAO;
 import modelo.dao.PassagemDAO;
 import modelo.dao.ViagemDAO;
 import modelo.entidade.FileiraPoltronas;
+import modelo.entidade.Locais;
 import modelo.entidade.Onibus;
 import modelo.entidade.Passagem;
 import modelo.entidade.Poltrona;
 import modelo.entidade.Viagem;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
 public class PassagemAction extends ActionSupport {
@@ -29,6 +30,9 @@ public class PassagemAction extends ActionSupport {
 	private List<FileiraPoltronas> fileiras;
 	private Viagem viagem;
 	private Passagem passagem;
+	private Poltrona poltrona;
+	private Onibus onibus;
+	private Locais locais;
 	private List<Integer> listaDeAno;
 	private int ano;
 
@@ -153,10 +157,19 @@ public class PassagemAction extends ActionSupport {
 			
 			for (int i=0; i<quantidadeFileiras; i++){
 				FileiraPoltronas fileira = new FileiraPoltronas();
-				fileira.setPassagemPoltronaJanelaLadoEsquerdo(passagens.get(i*4));
-				fileira.setPassagemPoltronaCorredorLadoEsquerdo(passagens.get(i*4 + 1));
-				fileira.setPassagemPoltronaCorredorLadoDireito(passagens.get(i*4 + 2));
-				fileira.setPassagemPoltronaJanelaLadoDireito(passagens.get(i*4 + 3));
+				
+				if (passagens.get(i*4) != null)
+					fileira.setPassagemPoltronaJanelaLadoEsquerdo(passagens.get(i*4));
+				
+				if (passagens.get(i*4 + 1) != null)
+					fileira.setPassagemPoltronaCorredorLadoEsquerdo(passagens.get(i*4 + 1));
+				
+				if (passagens.get(i*4 + 2) != null)
+					fileira.setPassagemPoltronaCorredorLadoDireito(passagens.get(i*4 + 2));
+				
+				if (passagens.get(i*4 + 3) != null)
+					fileira.setPassagemPoltronaJanelaLadoDireito(passagens.get(i*4 + 3));
+				
 				fileiras.add(fileira);
 				
 			}
@@ -167,6 +180,23 @@ public class PassagemAction extends ActionSupport {
 		}
 		
 		return SUCCESS;
+	}
+	
+	public String prepararDadosPassagem(){
+		try {
+			passagem = pDAO.buscar(passagem.getId());
+			viagem = passagem.getViagem();
+			poltrona = passagem.getPoltrona();
+			onibus = viagem.getOnibus();
+			locais = viagem.getLocais();
+		} catch (Exception e) {
+			mensagem = "Ocorreu um erro ao recuperar a passagem.";
+			e.printStackTrace();
+			return ERROR;
+		}
+		
+		return SUCCESS;
+		
 	}
 
 	public String getMensagem() {
@@ -232,7 +262,31 @@ public class PassagemAction extends ActionSupport {
 	public void setFileiras(List<FileiraPoltronas> fileiras) {
 		this.fileiras = fileiras;
 	}
-	
-	
 
+	public Poltrona getPoltrona() {
+		return poltrona;
+	}
+
+	public void setPoltrona(Poltrona poltrona) {
+		this.poltrona = poltrona;
+	}
+
+	public Onibus getOnibus() {
+		return onibus;
+	}
+
+	public void setOnibus(Onibus onibus) {
+		this.onibus = onibus;
+	}
+
+	public Locais getLocais() {
+		return locais;
+	}
+
+	public void setLocais(Locais locais) {
+		this.locais = locais;
+	}
+	
+	
+	
 }

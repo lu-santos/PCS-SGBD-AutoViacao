@@ -298,6 +298,7 @@ tr.tableRowEven,tr.even {
 }
 
 #onibus tr{
+	padding: 0px;
     border-radius: 10px;
     -moz-border-radius: 10px;
 }

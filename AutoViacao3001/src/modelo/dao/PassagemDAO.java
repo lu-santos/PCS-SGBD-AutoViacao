@@ -54,8 +54,7 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 
 	@Override
 	public String getQueryDeBusca(Object identificador) {
-		// TODO Auto-generated method stub
-		return null;
+		return "SELECT * FROM " + tabelaPassagem + " WHERE id = " + identificador;
 	}
 
 	@Override
@@ -101,9 +100,16 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 	}
 
 	@Override
-	public Passagem metodoDeBusca(ResultSet registro, Passagem entidade) {
-		// TODO Auto-generated method stub
-		return null;
+	public Passagem metodoDeBusca(ResultSet registro, Passagem passagem) {
+		try {
+			while (registro.next()) {
+				passagem = getEntidade(registro);
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro no método de busca: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return passagem;
 	}
 
 	public List<Passagem> listarPassageirosDeUmaViagem(Integer idViagem) throws Exception {
