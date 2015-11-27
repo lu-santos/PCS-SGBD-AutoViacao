@@ -12,7 +12,6 @@
 				<display:table id="tabelaClientes" name="clientes" pagesize="20" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
 					<display:column property="cpf" title="CPF"/>
 					<display:column property="nome" title="Nome"/>
-					<display:column property="dataDeNascimento" title="Data de Nascimento"/>
 					<s:url var="visualizarUrl" action="VisualizarCliente">
 						<s:param name="cliente.cpf" value="%{#attr.tabelaClientes.cpf}"/>
 					</s:url>

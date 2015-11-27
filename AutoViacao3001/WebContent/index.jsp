@@ -11,7 +11,7 @@
 			</s:a>
 		</div>
 		<div>
-			<a href=""><img src="${pageContext.request.contextPath}/images/icon_onibus.png">
+			<a href="${pageContext.request.contextPath}/public/ConsultarOnibus.jsp"><img src="${pageContext.request.contextPath}/images/icon_onibus.png">
 				<h3>Ônibus</h3>
 			</a>
 		</div>

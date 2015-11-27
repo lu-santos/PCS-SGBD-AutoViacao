@@ -57,7 +57,7 @@ public class MotoristaAction extends ActionSupport{
 		try {
 			this.motorista = mDAO.buscar(this.motorista.getCpf());
 		} catch (Exception e) {
-			mensagem = e.getMessage();
+			mensagem = "Não foi possível recuperar os dados do motorista: " + e.getMessage();
 		}
 		return MotoristaAction.SUCCESS;
 	}
@@ -66,7 +66,7 @@ public class MotoristaAction extends ActionSupport{
 		try {
 			this.motoristas = mDAO.listar();
 		} catch (Exception e) {
-			mensagem = e.getMessage();
+			mensagem = "Não foi possível recuperar a lista de motoristas: " + e.getMessage();
 		}
 		return MotoristaAction.SUCCESS;
 	}

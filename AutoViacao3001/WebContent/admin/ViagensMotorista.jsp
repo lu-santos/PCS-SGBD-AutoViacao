@@ -17,15 +17,13 @@
 			</ul>
 			<hr>
 		<c:if test="${fn:length(motorista.viagens) >= 1}">
-			<p style="color: #777">A tabela pode ser exportada como .csv, .xls, .xml ou .pdf.</p>
+			<p style="color: #777">A tabela pode ser exportada como .csv, .xls ou .xml.</p>
 			<div align="center">
 				<display:table id="tabelaViagensMotorista" name="motorista.viagens" pagesize="20" export="true" cellpadding="5px;" cellspacing="5px;" style="align: center;" requestURI="">
 					<display:column property="dataHoraPartidaFormatada" title="Data/Hora de Partida"/>
 					<display:column property="dataHoraChegadaFormatada" title="Data/Hora de Chegada"/>
 					<display:column property="locais.label" title="Partida/Destino/Distância(KM)"/>
 					<display:column property="onibus.label" title="Ônibus"/>
-					<display:setProperty name="export.pdf" value="true" />
-					<display:setProperty name="export.pdf.filename" value="viagens_motorista.pdf"/>
 					<display:setProperty name="export.excel.filename" value="viagens_motorista.xls"/>
 					<display:setProperty name="export.csv.filename" value="viagens_motorista.csv"/>
 					<display:setProperty name="export.xml.filename" value="viagens_motorista.xml"/>

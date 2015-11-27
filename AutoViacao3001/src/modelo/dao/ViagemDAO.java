@@ -191,17 +191,17 @@ public class ViagemDAO extends BaseCrudDAO<Viagem>{
 	}
 	
 	public List<Viagem> ListarResultadoDaConsultaViagens(Integer idLocais, String data) throws Exception {
-		String query = "SELECT * FROM " + tabelaViagem + " WHERE id_locais = " + idLocais + " and data_hora_partida >= '" + data + "' ORDER BY data_hora_partida";
+		String query = "SELECT * FROM " + tabelaViagem + " WHERE id_locais = " + idLocais + " and data_hora_partida >= '" + data + "' AND data_hora_partida > current_timestamp ORDER BY data_hora_partida";
 		return Consulta(query);
 	}
 	
 	public List<Viagem> listarResultadoDaConsultaViagensPorLocais(Integer idLocais) throws Exception{
-		String query = "SELECT * FROM " + tabelaViagem + " WHERE id_locais = " + idLocais + " ORDER BY data_hora_partida";
+		String query = "SELECT * FROM " + tabelaViagem + " WHERE id_locais = " + idLocais + " AND data_hora_partida > current_timestamp ORDER BY data_hora_partida";
 		return Consulta(query);
 	}
 	
 	public List<Viagem> listarResultadoDaConsultaViagemPorData(String data) throws Exception{
-		String query = "SELECT * FROM " + tabelaViagem + " WHERE data_hora_partida >= '" + data + "' ORDER BY data_hora_partida";
+		String query = "SELECT * FROM " + tabelaViagem + " WHERE data_hora_partida >= '" + data + "'  AND data_hora_partida > current_timestamp ORDER BY data_hora_partida";
 		return Consulta(query);
 	}
 }

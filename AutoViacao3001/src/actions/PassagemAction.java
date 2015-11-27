@@ -96,10 +96,21 @@ public class PassagemAction extends ActionSupport {
 		try {
 			listaDePassagens = pDAO.listar();
 		} catch (Exception e) {
-			mensagem = "Falha ao listar passagens: " + e.getMessage();
+			mensagem = "Não foi possível recuperar a lista de passagens: " + e.getMessage();
 			e.printStackTrace();
 		}
 
+		return SUCCESS;
+	}
+	
+	public String visualizar(){
+		try {
+			passagem = pDAO.buscar(passagem.getId());
+		} catch (Exception e) {
+			mensagem = "Não foi possível recuperar os dados da passagem: " + e.getMessage();
+			e.printStackTrace();
+		}
+		
 		return SUCCESS;
 	}
 

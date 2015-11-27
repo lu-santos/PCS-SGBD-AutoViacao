@@ -40,9 +40,11 @@
 					<s:url var="passagemUrl" action="PassagensDaViagem">
 						<s:param name="viagem.idViagem" value="%{#attr.tabelaViagens.idViagem}"/>
 					</s:url>
-					<display:column title="Passagens">
-						<s:a href="%{#passagemUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_passagem.png"></s:a>
-					</display:column>
+					<s:if test="%{#session.usuario != null}">
+						<display:column title="Passagens">
+							<s:a href="%{#passagemUrl}"><img src="${pageContext.request.contextPath}/images/icone_tabela_passagem.png"></s:a>
+						</display:column>
+					</s:if>
 				</display:table>
 			</div>
 		</c:if>

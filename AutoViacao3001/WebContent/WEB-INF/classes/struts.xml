@@ -235,7 +235,11 @@
 			<result name="success">/admin/ViagensOnibus.jsp</result>
 			<result name="input">/admin/GerenciarOnibus.jsp</result>
 		</action>
-		
+		<action name="ConsultarOnibus" class="actions.OnibusAction"
+			method="consultarOnibus">
+			<result name="input">/public/ConsultarOnibus.jsp</result>
+			<result name="success">/public/ResultadoConsultaOnibus.jsp</result>
+		</action>
 		
 		<action name="ObterLocaisSemDistancia" class="actions.LocalAction"
 			method="listarLocaisSemDistancia">
@@ -369,10 +373,6 @@
 		</action>
 		<action name="VisualizarViagem" class="actions.ViagemAction"
 			method="visualizar">
-			<interceptor-ref name="defaultStack" />
-			<interceptor-ref name="acessoActions">
-				<param name="allowedRoles">admin, cliente</param>
-			</interceptor-ref>
 			<result name="success">/public/VisualizarViagem.jsp</result>
 		</action>
 		<action name="PrepararAlteracaoViagem" class="actions.ViagemAction"
@@ -431,6 +431,14 @@
 			</interceptor-ref>
 			<result name="success">/admin/ListarPassagens.jsp</result>
 		</action>
+		<action name="VisualizarPassagem" class="actions.PassagemAction"
+			method="visualizar">
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="acessoActions">
+				<param name="allowedRoles">admin</param>
+			</interceptor-ref>
+			<result name="success">/admin/VisualizarPassagem.jsp</result>
+		</action>
 		<action name="ConsultarEpocaDoAnoComMaisVendas" class="actions.PassagemAction"
 			method="consultarEpocaDoAnoComMaisVendas">
 			<interceptor-ref name="defaultStack" />
@@ -467,18 +475,10 @@
 		</action>
 		<action name="ConsultarViagem" class="actions.ViagemAction"
 			method="consultarViagem">
-			<interceptor-ref name="defaultStack" />
-			<interceptor-ref name="acessoActions">
-				<param name="allowedRoles">admin, cliente</param>
-			</interceptor-ref>
 			<result name="success">/public/ConsultarViagem.jsp</result>
 		</action>
 		<action name="ListarResultadoViagem" class="actions.ViagemAction"
 			method="resultadoDaConsultaViagem">
-			<interceptor-ref name="defaultStack" />
-			<interceptor-ref name="acessoActions">
-				<param name="allowedRoles">admin, cliente</param>
-			</interceptor-ref>
 			<result name="success">/public/ConsultarViagem.jsp</result>
 		</action>
 		<action name="PassagensDaViagem" class="actions.PassagemAction"

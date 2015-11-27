@@ -12,7 +12,7 @@ import modelo.entidade.Poltrona;
 import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
-public class OnibusAction extends ActionSupport{
+public class OnibusAction extends ActionSupport {
 	private Onibus onibus = new Onibus();
 	private List<Onibus> listaDeOnibus;
 	private ConexaoPostgres conexao = new ConexaoPostgres();
@@ -20,39 +20,60 @@ public class OnibusAction extends ActionSupport{
 	private ViagemDAO vDAO = new ViagemDAO(conexao);
 	private PoltronaDAO pDAO = new PoltronaDAO(conexao);
 	private String mensagem;
-	
+	private boolean onibusEncontrado = false;
+
+	public String consultarOnibus() {
+		try {
+			List<Onibus> lista = oDAO.Consulta("SELECT * FROM onibus WHERE placa = '" + onibus.getPlaca() + "'");
+
+			if (lista == null || lista.isEmpty()) {
+				mensagem = "Nenhum ônibus encontrado.";
+				onibusEncontrado = false;
+				return INPUT;
+			} else {
+				onibus = lista.iterator().next();
+			}
+
+		} catch (Exception e) {
+			mensagem = "Erro ao realizar a consulta: " + e.getMessage();
+			e.printStackTrace();
+			return INPUT;
+		}
+
+		return SUCCESS;
+	}
+
 	public String adicionar() {
 		try {
-			Integer idOnibus; 
+			Integer idOnibus;
 			if ((idOnibus = oDAO.incluirComRetornoDeId(this.onibus)) != null) {
-				mensagem = "Ônibus cadastrado com sucesso.";	
+				mensagem = "Ônibus cadastrado com sucesso.";
 			}
-			
+
 			// criação das poltronas do ônibus:
-			for (int numero=1; numero <= onibus.getCapacidade(); numero++){
-				
+			for (int numero = 1; numero <= onibus.getCapacidade(); numero++) {
+
 				Poltrona poltrona = new Poltrona();
 				poltrona.setIdOnibus(idOnibus);
 				poltrona.setNumero(numero);
 				pDAO.incluir(poltrona);
-				
+
 			}
-			
+
 		} catch (Exception e) {
 			mensagem = e.getMessage();
 			return OnibusAction.INPUT;
 		}
 		this.onibus = new Onibus();
-		return OnibusAction.SUCCESS ;
+		return OnibusAction.SUCCESS;
 	}
-	
+
 	public String editar() {
 		try {
-			if(camposEmBranco() == true) {
+			if (camposEmBranco() == true) {
 				mensagem = "Preencha os campos obrigatórios";
 				return ClienteAction.INPUT;
-			}
-			else if (oDAO.alterar(this.onibus) == true) {
+			} else if (oDAO.alterar(this.onibus) == true) {
 				mensagem = "Alteração realizada com sucesso";
 			}
 		} catch (Exception e) {
@@ -61,7 +82,7 @@ public class OnibusAction extends ActionSupport{
 		this.onibus = new Onibus();
 		return OnibusAction.SUCCESS;
 	}
-	
+
 	public String visualizar() {
 		try {
 			this.onibus = oDAO.buscar(this.onibus.getIdOnibus());
@@ -70,7 +91,7 @@ public class OnibusAction extends ActionSupport{
 		}
 		return OnibusAction.SUCCESS;
 	}
-	
+
 	public String listar() {
 		try {
 			this.listaDeOnibus = oDAO.listar();
@@ -79,35 +100,35 @@ public class OnibusAction extends ActionSupport{
 		}
 		return OnibusAction.SUCCESS;
 	}
-	
+
 	public String excluir() {
 		try {
-			if (pDAO.removerPoltronasOnibus(onibus.getIdOnibus())){
-				
-				if(oDAO.remover(onibus)) {
+			if (pDAO.removerPoltronasOnibus(onibus.getIdOnibus())) {
+
+				if (oDAO.remover(onibus)) {
 					mensagem = "Exclusão realizada com sucesso";
 					return OnibusAction.SUCCESS;
-				}else {
+				} else {
 					mensagem = "Falha na exclusão";
 				}
-				
+
 			}
-			
+
 			else {
 				mensagem = "Falha na exclusão. Verifique se não há viagens cadastradas com esse ônibus.";
 			}
-			
+
 		} catch (Exception e) {
 			mensagem = "Ocorreu o seguinte erro: " + e.getMessage();
 			e.printStackTrace();
 		}
-		
+
 		return OnibusAction.INPUT;
-		
+
 	}
-	
-	public String viagensOnibus(){
-		
+
+	public String viagensOnibus() {
+
 		try {
 			onibus = oDAO.buscar(onibus.getIdOnibus());
 			onibus.setViagens(vDAO.listarViagensOnibus(onibus.getIdOnibus()));
@@ -116,15 +137,14 @@ public class OnibusAction extends ActionSupport{
 			mensagem = "Falha na busca das viagens do motorista: " + e.getMessage();
 			e.printStackTrace();
 		}
-		
+
 		return INPUT;
-		
+
 	}
-	
+
 	public boolean camposEmBranco() {
-		if (onibus.getPlaca().length() == 0 || onibus.getModelo().length() == 0 || 
-				onibus.getFabricante().length() == 0 || onibus.getCapacidade() == null ||
-						onibus.getAno() == null){
+		if (onibus.getPlaca().length() == 0 || onibus.getModelo().length() == 0 || onibus.getFabricante().length() == 0
+				|| onibus.getCapacidade() == null || onibus.getAno() == null) {
 			return true;
 		}
 		return false;
@@ -153,8 +173,17 @@ public class OnibusAction extends ActionSupport{
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
-	
-	public List<String> getTiposLeito(){
+
+	public List<String> getTiposLeito() {
 		return MetodosAuxiliares.tiposLeitoOnibus();
 	}
+
+	public boolean isOnibusEncontrado() {
+		return onibusEncontrado;
+	}
+
+	public void setOnibusEncontrado(boolean onibusEncontrado) {
+		this.onibusEncontrado = onibusEncontrado;
+	}
+
 }
