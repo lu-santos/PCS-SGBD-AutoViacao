@@ -38,7 +38,7 @@
 								<s:a action="HomeCliente">Home</s:a>
 							</c:if>
 							</li>
-							<li><s:a action="ConsultarViagem">Viagens</s:a></li>
+							<li><s:a action="ConsultarViagem">Comprar Passagem</s:a></li>
 							<li><a href="">Ônibus</a></li>
 						</ul>
 					</nav>

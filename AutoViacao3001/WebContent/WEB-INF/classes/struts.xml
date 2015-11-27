@@ -498,14 +498,13 @@
 			<result name="success">/cliente/ComprarPassagem.jsp</result>
 			<result name="error">/cliente/ComprarPassagem.jsp</result>
 		</action>
-		<action name="ConfirmarCompra" class="actions.PassagemAction"
-			method="confirmarCompra">
+		<action name="ConfirmarCompra" class="actions.PassagemAction" method="confirmarCompra">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="acessoActions">
 				<param name="allowedRoles">admin, cliente</param>
 			</interceptor-ref>
 			<result name="success">/cliente/CompraConfirmada.jsp</result>
-			<result name="error">/cliente/ComprarPassagem.jsp</result>
+			<result name="input">/cliente/ComprarPassagem.jsp</result>
 		</action>
 	</package>
 </struts>

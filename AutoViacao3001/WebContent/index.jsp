@@ -7,12 +7,12 @@
 	<section id="item" class="clearfix">
 		<div>
 			<s:a action="ConsultarViagem"><img src="${pageContext.request.contextPath}/images/icon_viagem.png">
-				<p>Viagens</p>
+				<h3>Viagens</h3>
 			</s:a>
 		</div>
 		<div>
 			<a href=""><img src="${pageContext.request.contextPath}/images/icon_onibus.png">
-				<p>Ônibus</p>
+				<h3>Ônibus</h3>
 			</a>
 		</div>
 	</section>

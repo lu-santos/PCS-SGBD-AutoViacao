@@ -4,18 +4,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
 import modelo.dao.ConexaoPostgres;
 import modelo.dao.OnibusDAO;
 import modelo.dao.PassagemDAO;
 import modelo.dao.ViagemDAO;
+import modelo.entidade.Cliente;
 import modelo.entidade.FileiraPoltronas;
 import modelo.entidade.Locais;
 import modelo.entidade.Onibus;
 import modelo.entidade.Passagem;
 import modelo.entidade.Poltrona;
 import modelo.entidade.Viagem;
-
-import com.opensymphony.xwork2.ActionSupport;
 
 @SuppressWarnings("serial")
 public class PassagemAction extends ActionSupport {
@@ -33,6 +39,7 @@ public class PassagemAction extends ActionSupport {
 	private Poltrona poltrona;
 	private Onibus onibus;
 	private Locais locais;
+	private Cliente cliente;
 	private List<Integer> listaDeAno;
 	private int ano;
 
@@ -41,8 +48,7 @@ public class PassagemAction extends ActionSupport {
 			listaDeViagens = vDAO.listarViagensSemPassagem();
 			return SUCCESS;
 		} catch (Exception e) {
-			mensagem = "Falha ao listar viagens sem passagem: "
-					+ e.getMessage();
+			mensagem = "Falha ao listar viagens sem passagem: " + e.getMessage();
 			e.printStackTrace();
 		}
 		return INPUT;
@@ -93,23 +99,22 @@ public class PassagemAction extends ActionSupport {
 			mensagem = "Falha ao listar passagens: " + e.getMessage();
 			e.printStackTrace();
 		}
-		
+
 		return SUCCESS;
 	}
-	
+
 	public String consultarEpocaDoAnoComMaisVendas() {
 		listarAnoDeViagensComPassagem();
 		return SUCCESS;
 	}
-	
+
 	private void listarAnoDeViagensComPassagem() {
 		String query = "select distinct v.id_viagem, data_hora_partida, data_hora_chegada, v.id_onibus, cpf_motorista, id_locais "
-				+ "from passagem p join viagem v on p.id_viagem = v.id_viagem "
-				+ "where p.cpf_cliente != ''";
+				+ "from passagem p join viagem v on p.id_viagem = v.id_viagem " + "where p.cpf_cliente != ''";
 		try {
 			listaDeViagens = vDAO.Consulta(query);
 			listaDeAno = new ArrayList<>();
-			for(Viagem viagem : listaDeViagens) {
+			for (Viagem viagem : listaDeViagens) {
 				Calendar ano = Calendar.getInstance();
 				ano.setTime(viagem.getDataHoraPartida());
 				listaDeAno.add(ano.get(Calendar.YEAR));
@@ -118,71 +123,77 @@ public class PassagemAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String listarEpocaDoAnoComMaisVendas() {
 		String query = "select p.id_viagem, preco, count(p.id_viagem) as total_de_passagens "
-						+ "from passagem p join viagem v on p.id_viagem = v.id_viagem " 
-						+ "where p.cpf_cliente != '' and extract (year from v.data_hora_partida) = " 
-						+ ano
-						+ " group by p.id_viagem, p.preco order by total_de_passagens desc";
-		
+				+ "from passagem p join viagem v on p.id_viagem = v.id_viagem "
+				+ "where p.cpf_cliente != '' and extract (year from v.data_hora_partida) = " + ano
+				+ " group by p.id_viagem, p.preco order by total_de_passagens desc";
+
 		try {
 			this.listaDePassagens = pDAO.PassagensMaisVendidadas(query);
 			listarAnoDeViagensComPassagem();
-			if(this.listaDePassagens.size() == 0)
+			if (this.listaDePassagens.size() == 0)
 				this.mensagem = "Não foram encontrados resultados para os filtros selecionados.";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return SUCCESS;
 	}
-	
-	public String passagensDaViagem(){
+
+	public String passagensDaViagem() {
 		try {
 			Viagem viagem = vDAO.buscar(this.viagem.getIdViagem());
+			this.viagem = viagem;
 			Onibus onibus = viagem.getOnibus();
-			
+			this.onibus = onibus;
+
 			int quantidadeFileiras = onibus.getCapacidade() / 4;
-			if (onibus.getCapacidade() % 4 != 0){
+			if (onibus.getCapacidade() % 4 != 0) {
 				quantidadeFileiras++;
 			}
-			
+
 			List<Passagem> passagens = pDAO.listarPassagensDeUmaViagem(viagem.getIdViagem());
-			
-			if (passagens.isEmpty()){
+
+			if (passagens.isEmpty()) {
 				mensagem = "Nenhuma passagem encontrada para a viagem escolhida";
 			}
 			
+			int quantidadePassagens = passagens.size();
+
 			fileiras = new ArrayList<FileiraPoltronas>();
 			
-			for (int i=0; i<quantidadeFileiras; i++){
-				FileiraPoltronas fileira = new FileiraPoltronas();
+			if (quantidadePassagens > 0){
 				
-				if (passagens.get(i*4) != null)
-					fileira.setPassagemPoltronaJanelaLadoEsquerdo(passagens.get(i*4));
-				
-				if (passagens.get(i*4 + 1) != null)
-					fileira.setPassagemPoltronaCorredorLadoEsquerdo(passagens.get(i*4 + 1));
-				
-				if (passagens.get(i*4 + 2) != null)
-					fileira.setPassagemPoltronaCorredorLadoDireito(passagens.get(i*4 + 2));
-				
-				if (passagens.get(i*4 + 3) != null)
-					fileira.setPassagemPoltronaJanelaLadoDireito(passagens.get(i*4 + 3));
-				
-				fileiras.add(fileira);
-				
+				for (int i = 0; i < quantidadeFileiras; i++) {
+					FileiraPoltronas fileira = new FileiraPoltronas();
+
+					if ((i * 4) < quantidadePassagens && passagens.get(i * 4) != null)
+						fileira.setPassagemPoltronaJanelaLadoEsquerdo(passagens.get(i * 4));
+
+					if ((i * 4 + 1) < quantidadePassagens && passagens.get(i * 4 + 1) != null)
+						fileira.setPassagemPoltronaCorredorLadoEsquerdo(passagens.get(i * 4 + 1));
+
+					if ((i * 4 + 2) < quantidadePassagens && passagens.get(i * 4 + 2) != null)
+						fileira.setPassagemPoltronaCorredorLadoDireito(passagens.get(i * 4 + 2));
+
+					if ((i * 4 + 3) < quantidadePassagens && passagens.get(i * 4 + 3) != null)
+						fileira.setPassagemPoltronaJanelaLadoDireito(passagens.get(i * 4 + 3));
+
+					fileiras.add(fileira);
+
+				}				
 			}
-			
-			} catch (Exception e) {
+
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return SUCCESS;
 	}
-	
-	public String prepararDadosPassagem(){
+
+	public String prepararDadosPassagem() {
 		try {
 			passagem = pDAO.buscar(passagem.getId());
 			viagem = passagem.getViagem();
@@ -194,9 +205,30 @@ public class PassagemAction extends ActionSupport {
 			e.printStackTrace();
 			return ERROR;
 		}
-		
+
 		return SUCCESS;
+
+	}
+
+	public String confirmarCompra() {
 		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		if(session.getAttribute("papel") != null && session.getAttribute("papel").equals("admin")){
+			mensagem = "Para confirmar a compra é necessário ser um cliente cadastrado";
+			return INPUT;
+		}
+		
+		try {
+			if (pDAO.confirmarCompra(passagem.getId(), ((Cliente) session.getAttribute("usuario")).getCpf())){
+				return SUCCESS;
+			}
+		} catch (Exception e) {
+			mensagem = "Ocorreu uma falha ao confirmar a compra.";
+			e.printStackTrace();
+		}
+		
+		return INPUT;
 	}
 
 	public String getMensagem() {
@@ -286,7 +318,13 @@ public class PassagemAction extends ActionSupport {
 	public void setLocais(Locais locais) {
 		this.locais = locais;
 	}
-	
-	
-	
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 }

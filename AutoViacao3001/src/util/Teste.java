@@ -1,7 +1,9 @@
 package util;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Locale;
 
 public class Teste {
 
@@ -15,6 +17,8 @@ public class Teste {
 			System.out.println(DataUtil.converterDataParaString(data));
 			
 			System.out.println(DataUtil.converterDataComHoraParaFormatoJSP(data));
+			
+			System.out.println(NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(2.0));
 			
 		} catch (ParseException e) {
 			e.printStackTrace();

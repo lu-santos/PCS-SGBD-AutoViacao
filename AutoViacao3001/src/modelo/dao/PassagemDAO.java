@@ -127,6 +127,16 @@ public class PassagemDAO extends BaseCrudDAO<Passagem>{
 		return Consulta(query);
 	}
 	
+	public boolean confirmarCompra(Integer idPassagem, String cpfCliente) throws Exception{
+		String query = "UPDATE " + tabelaPassagem + " SET cpf_cliente='" + cpfCliente + "' WHERE id=" + idPassagem;
+		conectar = conexao.abrirConexao();
+        PreparedStatement pst = conectar.prepareStatement(query);
+        int compraConfirmada = pst.executeUpdate();
+        
+        return compraConfirmada != 0;
+        
+	}
+	
 	public List<Passagem> PassagensMaisVendidadas(String consulta) throws Exception {
         conectar = conexao.abrirConexao();
         String query = consulta; 

@@ -1,5 +1,8 @@
 package modelo.entidade;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Passagem {
 	private Integer id;
 	private Poltrona poltrona;
@@ -88,6 +91,10 @@ public class Passagem {
 
 	public void setPoltrona(Poltrona poltrona) {
 		this.poltrona = poltrona;
+	}
+	
+	public String getPrecoFormatado(){
+		return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(preco);
 	}
 
 }
